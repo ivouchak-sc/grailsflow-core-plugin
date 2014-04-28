@@ -1,0 +1,5 @@
+com.jcatalog.grailsflow.messagebundle
+com.jcatalog.grailsflow.messagebundle.i18n
+com.jcatalog.grailsflow.test
+com.jcatalog.grailsflow.utils
+org.christianschenk.simplecache

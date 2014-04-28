@@ -1,0 +1,144 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+                      "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en">
+<head>
+    <title>3.6.1 Actions Of Node 1.3.4-SNAPSHOT</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+    <link rel="stylesheet" href="../css/main.css" type="text/css" media="screen, print" title="Style" charset="utf-8"/>
+    <link rel="stylesheet" href="../css/pdf.css" type="text/css" media="print" title="PDF" charset="utf-8"/>
+    <script type="text/javascript">
+function addJsClass() {
+    var classes = document.body.className.split(" ");
+    classes.push("js");
+    document.body.className = classes.join(" ");
+}
+    </script>
+</head>
+
+<body class="body" onload="addJsClass();">
+<div id="navigation">
+    <ul>
+        <li>
+            <div id="nav-summary" onmouseover="toggleNavSummary(false)" onmouseout="toggleNavSummary(true)">
+                <a href="../../guide/index.html" class="button">Table of contents</a>
+
+                <div id="nav-summary-childs" style="display:none;">
+                    
+                    <div class="toc-item" style="margin-left:0"><a href="../../guide/overview.html"><strong>1</strong><span>Overview</span></a>
+                    </div>
+                    
+                    <div class="toc-item" style="margin-left:0"><a href="../../guide/installation.html"><strong>2</strong><span>Installation</span></a>
+                    </div>
+                    
+                    <div class="toc-item" style="margin-left:0"><a href="../../guide/usersGuide.html"><strong>3</strong><span>User's Guide</span></a>
+                    </div>
+                    
+                    <div class="toc-item" style="margin-left:0"><a href="../../guide/developersGuide.html"><strong>4</strong><span>Developer's Guide</span></a>
+                    </div>
+                    
+                    <div class="toc-item" style="margin-left:0"><a href="../../guide/faq.html"><strong>5</strong><span>Frequently Asked Questions</span></a>
+                    </div>
+                    
+                </div>
+            </div>
+        </li>
+        <li class="separator selected">
+            <a id="ref-button" onclick="localToggle(); return false;" href="#">Quick Reference</a>
+        </li>
+    </ul>
+</div>
+<div id="header">
+    <div class="images clearfix">
+        
+        
+    </div>
+    <p>jCatalog Software AG</p>
+</div>
+
+
+<table id="colset" border="0" cellpadding="0" cellspacing="0">
+    <tr>
+        <td id="col1">
+            <div id="main" class="corner-all">
+
+                
+                    <div class="toc-item prev-left"><a href="../../guide/installation.html">&lt;&lt; <strong>2</strong><span>Installation</span></a></div>
+                
+
+                <span id='toggle-col1' class="toggle">(<a href="#" onclick="localToggle(); return false;">Quick Reference</a>)</span>
+
+                
+                    <div class="toc-item next-right"><a href="../../guide/developersGuide.html"><strong>4</strong><span>Developer's Guide</span> >></a></div>
+                
+
+
+                <div class="project">
+                    <h1>3.6.1 Actions Of Node - Reference Documentation</h1>
+
+                    <p><strong>Authors:</strong> Stephan Albers, July Antonicheva</p>
+
+                    <p><strong>Version:</strong> 1.3.4-SNAPSHOT</p>
+
+                    
+                </div>
+
+                
+
+                
+
+<h2 id="actionsOfNode">3.6.1 Actions Of Node</h2>
+Actions define the operations to be performed in each node, internally. Basically action defines the operation of a
+node. You can develop code for the operation of each node using plain Groovy code.<p class="paragraph"/><strong class="bold">Create Action</strong><p class="paragraph"/>For example, we need to send a Notification if Holiday Request is rejected.
+<ol>
+<li>To open the <strong class="bold">Process Action Editor</strong> screen, click the following buttons:</li>
+</ol><p class="paragraph"/>Administration -&#62; Edit Process Types -&#62; <strong class="bold">Edit</strong> button for <strong class="bold">Request Holiday Process</strong> -&#62; <strong class="bold">Edit</strong> button for
+<strong class="bold">RejectNotification</strong> node -&#62; <strong class="bold">Edit Node Actions</strong> button.<p class="paragraph"/>The <strong class="bold">Process Action Editor</strong> screen will open:<p class="paragraph"/><img border="0" class="center" src="../img/usersGuide/actionEditor.jpg"></img><p class="paragraph"/>To create a <strong class="bold">SendNotificationMail</strong> action you can either write the plain code (using Variables and Actions from the
+drop-down list as a hint) or you can use 'plus' button to add Variables and Actions automatically.<p class="paragraph"/>Select <strong class="bold">SendNotificationMail</strong> from the drop-down list and click 'plus' button.<p class="paragraph"/><strong class="bold">Action Call Parameters</strong> editor will open in a new window. Fill in the necessary fields and click <strong class="bold">Apply</strong> button.<p class="paragraph"/><img border="0" class="center" src="../img/usersGuide/actionParameters.jpg"></img><p class="paragraph"/>Manually adjust the code and then click the <strong class="bold">Apply</strong> button.<p class="paragraph"/><div class="code"><pre><span class="java&#45;keyword">if</span> (requesterMail) &#123;
+SendMail(mailFrom:managerMail,mailTo: requesterMail,subject:'Rejected Notification',message: 'Your request was rejected.')
+&#125;
+<span class="java&#45;keyword">return</span> <span class="java&#45;quote">"finish"</span></pre></div><p class="paragraph"/>According to the node type you should pay attention to the actions. If the node is manual (type is 'Wait') then you
+don't need to trigger any transition and specify 'return' statement. The body of 'Wait' node is executed after
+transition definition (defined manually by the user). If the 'return' statement is specified in manual node it is
+ignored by process execution engine.<p class="paragraph"/>If node type is automatic (one from 'Activity', 'Fork', 'AndJoin', 'OrJoin') then you need to specify 'return'
+statement that triggers the next transition.<p class="paragraph"/>Return statement has the following syntax:<p class="paragraph"/><img border="0" class="center" src="../img/usersGuide/returnStatement.jpg"></img><p class="paragraph"/>If there is no 'return' statement for automatic node then the next node(nodes) cannot be activated.<p class="paragraph"/>From the version of Grailsflow-1.0.x when 'action' closure contains plain Groovy code then return statement can hold
+functions, expressions, etc.
+The evaluated value is transfered to String type and used for transition definition.<p class="paragraph"/>4. Click <strong class="bold">"Apply"</strong> button to save action of the node.<p class="paragraph"/>The Up and Down navigation icons are used to move statements up and down.<p class="paragraph"/>The <strong class="bold">'Delete'</strong> icon is used to delete the statement.<p class="paragraph"/>The <strong class="bold">Edit Node Action</strong> button is used both for create and edit actions.<p class="paragraph"/>Once you create process, add process variables, create process nodes, add transitions, and create actions for nodes,
+click <strong class="bold">Save Process Type</strong> button to save the process. The process definition is saved on the server to file
+&#60;processID&#62;Process.groovy.<p class="paragraph"/>You can view the process definition file saved on server, using <strong class="bold">Show Source Code</strong> button.<p class="paragraph"/><img border="0" class="center" src="../img/usersGuide/processScript.jpg"></img><p class="paragraph"/>You can reload definition that you currently edit from file &#60;processID&#62;Process.groovy by pressing <strong class="bold">Reload Process from File</strong>.<p class="paragraph"/>To view the process in pictorial or graphical representation, click <strong class="bold">Show Graphical Process</strong> button.<p class="paragraph"/><img border="0" class="center" src="../img/usersGuide/graphicalNotation.jpg"></img><p class="paragraph"/><strong class="bold">Export as HTML</strong> button will create HTML that describes the process. It's something like a report; you can view this
+HTML to get the common information about the process. Click <strong class="bold">Export as HTML</strong> button. A <strong class="bold">File Download</strong> window appears.
+Click “Open” or “Save”. A zipped folder appears. Open the zipped folder and open the html file.
+
+
+
+                <div style="clear:both;margin-top:15px;"></div>
+                
+                    <div class="toc-item prev-left"><a href="../../guide/installation.html">&lt;&lt; <strong>2</strong><span>Installation</span></a></div>
+                
+                    <div class="toc-item next-right"><a href="../../guide/developersGuide.html"><strong>4</strong><span>Developer's Guide</span> >></a></div>
+                
+                <div style="clear:both"></div>
+            </div>
+        </td>
+        <td id="col2">
+            <div class="local clearfix">
+                <div class="local-title">
+                    <a href="../../guide/index.html" target="mainFrame">Quick Reference</a>
+                    <span class="toggle">(<a href="#" onclick="localToggle(); return false;">hide</a>)</span>
+                </div>
+                <div class="menu">
+                    
+                </div>
+            </div>
+        </td>
+    </tr>
+</table>
+
+<div id="footer">
+    jCatalog Software AG
+    
+</div>
+
+<script type="text/javascript" src="../js/docs.js"></script>
+
+</body>
+</html>

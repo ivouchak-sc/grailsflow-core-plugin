@@ -1,0 +1,157 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+                      "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en">
+<head>
+    <title>4.3 Creating Actions 1.3.4-SNAPSHOT</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+    <link rel="stylesheet" href="../css/main.css" type="text/css" media="screen, print" title="Style" charset="utf-8"/>
+    <link rel="stylesheet" href="../css/pdf.css" type="text/css" media="print" title="PDF" charset="utf-8"/>
+    <script type="text/javascript">
+function addJsClass() {
+    var classes = document.body.className.split(" ");
+    classes.push("js");
+    document.body.className = classes.join(" ");
+}
+    </script>
+</head>
+
+<body class="body" onload="addJsClass();">
+<div id="navigation">
+    <ul>
+        <li>
+            <div id="nav-summary" onmouseover="toggleNavSummary(false)" onmouseout="toggleNavSummary(true)">
+                <a href="../../guide/index.html" class="button">Table of contents</a>
+
+                <div id="nav-summary-childs" style="display:none;">
+                    
+                    <div class="toc-item" style="margin-left:0"><a href="../../guide/overview.html"><strong>1</strong><span>Overview</span></a>
+                    </div>
+                    
+                    <div class="toc-item" style="margin-left:0"><a href="../../guide/installation.html"><strong>2</strong><span>Installation</span></a>
+                    </div>
+                    
+                    <div class="toc-item" style="margin-left:0"><a href="../../guide/usersGuide.html"><strong>3</strong><span>User's Guide</span></a>
+                    </div>
+                    
+                    <div class="toc-item" style="margin-left:0"><a href="../../guide/developersGuide.html"><strong>4</strong><span>Developer's Guide</span></a>
+                    </div>
+                    
+                    <div class="toc-item" style="margin-left:0"><a href="../../guide/faq.html"><strong>5</strong><span>Frequently Asked Questions</span></a>
+                    </div>
+                    
+                </div>
+            </div>
+        </li>
+        <li class="separator selected">
+            <a id="ref-button" onclick="localToggle(); return false;" href="#">Quick Reference</a>
+        </li>
+    </ul>
+</div>
+<div id="header">
+    <div class="images clearfix">
+        
+        
+    </div>
+    <p>jCatalog Software AG</p>
+</div>
+
+
+<table id="colset" border="0" cellpadding="0" cellspacing="0">
+    <tr>
+        <td id="col1">
+            <div id="main" class="corner-all">
+
+                
+                    <div class="toc-item prev-left"><a href="../../guide/usersGuide.html">&lt;&lt; <strong>3</strong><span>User's Guide</span></a></div>
+                
+
+                <span id='toggle-col1' class="toggle">(<a href="#" onclick="localToggle(); return false;">Quick Reference</a>)</span>
+
+                
+                    <div class="toc-item next-right"><a href="../../guide/faq.html"><strong>5</strong><span>Frequently Asked Questions</span> >></a></div>
+                
+
+
+                <div class="project">
+                    <h1>4.3 Creating Actions - Reference Documentation</h1>
+
+                    <p><strong>Authors:</strong> Stephan Albers, July Antonicheva</p>
+
+                    <p><strong>Version:</strong> 1.3.4-SNAPSHOT</p>
+
+                    
+                </div>
+
+                
+
+                
+
+<h2 id="actions">4.3 Creating Actions</h2>
+<h4>Actions</h4><p class="paragraph"/>Actions are the principal unit that execute all activities and operations in GrailsFlow. They are written in plain
+Groovy and stored in a specified folder. The folder can be customized in Spring configuration (like paths to processes
+scripts and document attachments), on default it is configured to 'actions' folder in workarea. When the node is
+executing, the necessary action script is loaded as file, dynamically parsed to Java class and then executed (method
+execute() of the class is called).<p class="paragraph"/>When you write a new action, you have to subclass the abstract class Action. All actions can then be used in the action
+editor and the 'action' closure of the process definition.<p class="paragraph"/><h4>How to implement a custom action</h4><p class="paragraph"/>The class Action provides several methods that are further described here.
+<ol>
+<li>Execute() method</li>
+</ol><p class="paragraph"/>The abstract Object execute() method need to be implemented. This methods "is" the actual action/does the operation that
+the action does. The result that is returned from this method is used as the action result and can be assigned to
+variable value or returned as the result of 'return' statement.
+<ol>
+<li>Helper method getObjectByName(String beanName)</li>
+</ol><p class="paragraph"/>Allows to use preconfigured Spring beans in the context of an action. The beans are look up in the Spring context
+configuration and if nothing is found - null result is returned. Can be used for arbitray operations eg. executing some
+DB operation, integrating external beans etc.
+<ol>
+<li>Map actionInfo</li>
+</ol><p class="paragraph"/>actionInfo contains basic information about the current process and execution context that can be used in the action
+implementation. It provides the
+<ul class="star">
+<li>   process key,</li>
+<li>   current node ID,</li>
+<li>   locale,</li>
+<li>   siteBase,</li>
+<li>   requester.</li>
+</ul><p class="paragraph"/>Grailsflow provides a number of basic actions that are useful many workflows. Among them are:
+<ul class="star">
+<li>LogAction - writes some log information in the trace or the log file.</li>
+<li>EvaluateAction - evaluates arbitrary Groovy expressions. This is very powerful and generic and reduces the number of</li>
+</ul><p class="paragraph"/>actions that you need to write.
+<ul class="star">
+<li>SendMailAction - sends mail to the give recipient</li>
+</ul><p class="paragraph"/>
+
+
+                <div style="clear:both;margin-top:15px;"></div>
+                
+                    <div class="toc-item prev-left"><a href="../../guide/usersGuide.html">&lt;&lt; <strong>3</strong><span>User's Guide</span></a></div>
+                
+                    <div class="toc-item next-right"><a href="../../guide/faq.html"><strong>5</strong><span>Frequently Asked Questions</span> >></a></div>
+                
+                <div style="clear:both"></div>
+            </div>
+        </td>
+        <td id="col2">
+            <div class="local clearfix">
+                <div class="local-title">
+                    <a href="../../guide/index.html" target="mainFrame">Quick Reference</a>
+                    <span class="toggle">(<a href="#" onclick="localToggle(); return false;">hide</a>)</span>
+                </div>
+                <div class="menu">
+                    
+                </div>
+            </div>
+        </td>
+    </tr>
+</table>
+
+<div id="footer">
+    jCatalog Software AG
+    
+</div>
+
+<script type="text/javascript" src="../js/docs.js"></script>
+
+</body>
+</html>

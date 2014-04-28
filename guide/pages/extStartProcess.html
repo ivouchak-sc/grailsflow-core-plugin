@@ -1,0 +1,184 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+                      "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en">
+<head>
+    <title>4.4 Extendable Start Process 1.3.4-SNAPSHOT</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+    <link rel="stylesheet" href="../css/main.css" type="text/css" media="screen, print" title="Style" charset="utf-8"/>
+    <link rel="stylesheet" href="../css/pdf.css" type="text/css" media="print" title="PDF" charset="utf-8"/>
+    <script type="text/javascript">
+function addJsClass() {
+    var classes = document.body.className.split(" ");
+    classes.push("js");
+    document.body.className = classes.join(" ");
+}
+    </script>
+</head>
+
+<body class="body" onload="addJsClass();">
+<div id="navigation">
+    <ul>
+        <li>
+            <div id="nav-summary" onmouseover="toggleNavSummary(false)" onmouseout="toggleNavSummary(true)">
+                <a href="../../guide/index.html" class="button">Table of contents</a>
+
+                <div id="nav-summary-childs" style="display:none;">
+                    
+                    <div class="toc-item" style="margin-left:0"><a href="../../guide/overview.html"><strong>1</strong><span>Overview</span></a>
+                    </div>
+                    
+                    <div class="toc-item" style="margin-left:0"><a href="../../guide/installation.html"><strong>2</strong><span>Installation</span></a>
+                    </div>
+                    
+                    <div class="toc-item" style="margin-left:0"><a href="../../guide/usersGuide.html"><strong>3</strong><span>User's Guide</span></a>
+                    </div>
+                    
+                    <div class="toc-item" style="margin-left:0"><a href="../../guide/developersGuide.html"><strong>4</strong><span>Developer's Guide</span></a>
+                    </div>
+                    
+                    <div class="toc-item" style="margin-left:0"><a href="../../guide/faq.html"><strong>5</strong><span>Frequently Asked Questions</span></a>
+                    </div>
+                    
+                </div>
+            </div>
+        </li>
+        <li class="separator selected">
+            <a id="ref-button" onclick="localToggle(); return false;" href="#">Quick Reference</a>
+        </li>
+    </ul>
+</div>
+<div id="header">
+    <div class="images clearfix">
+        
+        
+    </div>
+    <p>jCatalog Software AG</p>
+</div>
+
+
+<table id="colset" border="0" cellpadding="0" cellspacing="0">
+    <tr>
+        <td id="col1">
+            <div id="main" class="corner-all">
+
+                
+                    <div class="toc-item prev-left"><a href="../../guide/usersGuide.html">&lt;&lt; <strong>3</strong><span>User's Guide</span></a></div>
+                
+
+                <span id='toggle-col1' class="toggle">(<a href="#" onclick="localToggle(); return false;">Quick Reference</a>)</span>
+
+                
+                    <div class="toc-item next-right"><a href="../../guide/faq.html"><strong>5</strong><span>Frequently Asked Questions</span> >></a></div>
+                
+
+
+                <div class="project">
+                    <h1>4.4 Extendable Start Process - Reference Documentation</h1>
+
+                    <p><strong>Authors:</strong> Stephan Albers, July Antonicheva</p>
+
+                    <p><strong>Version:</strong> 1.3.4-SNAPSHOT</p>
+
+                    
+                </div>
+
+                
+
+                
+
+<h2 id="extStartProcess">4.4 Extendable Start Process</h2>
+In Grailsflow it is possible to start process in two ways:
+<ul class="star">
+<li> start process with defauls values by passing process name;</li>
+<li> start process from external system (with requested variables values).</li>
+</ul><p class="paragraph"/>Using first way, you can start process with default values (that are predefined in process definition script). When you
+start process and your first node is manual (the node of type 'Wait') you will be automatically redirected to the manual
+form and only when you submit it (change/set values for the process variables), the process will be started.<p class="paragraph"/>But sometimes there is a situation when external system wants to start the process. The system should provide the
+starting data for process (the values for process variables). For example, the several different systems use the same
+process definition 'CreateProduct' for creating product. For starting the process, the system should provide 'productId'
+and 'catalogId' values. The problem is that systems can have (and usually have) different formats for sending
+parameters, e.g. in XML. It means that for each and every system we need a special 'parser' script for parameters, and
+then when Grailsflow will get the parameters in usual form it can start process using standard procedure.<p class="paragraph"/>To start a process from external system is possible to do with using Grailsflow 'Extendable StartProcess' feature. When
+you want to use it you need:
+<ol>
+<li>Have a Groovy 'callback' script in application workarea (the application contains Grailsflow plugin installed). This</li>
+</ol><p class="paragraph"/>script should be places in workarea directory according to 'callbacksPath' bean value. The bean is defined in
+Grailsflow, and can be redefined in application, but the defauls value is "callbacks" folder.
+Callback script should parse request to get process variables (and possibly processType and user) to store them in the
+result parameter. Parameters that are available in the callback script:
+<ul class="star">
+<li>request - HttpServletRequest instance</li>
+<li>params - String valued parameters passed to the ProcessController by request</li>
+<li>result - object for storing parsed process parameters</li>
+</ul><p class="paragraph"/>Parameters that should be provided in the 'result' map (in callback script):
+<ul class="star">
+<li>variables - (optional) - map of name:value pairs of process variables that should be used.</li>
+<li>requester -  (optional, default is logged user) - ID of person that invokes event</li>
+<li>processType - (required) - the name of process definition that should be started</li>
+</ul>
+<ol>
+<li>Use URI for starting process:</li>
+</ol><p class="paragraph"/>   <strong class="bold">process/extendedStartProcess/&#60;id&#62;</strong><p class="paragraph"/>where 'id' - is a Groovy callback script name.<p class="paragraph"/>Lets check the example: your system provides the parameters for starting in the following view (as XML):<p class="paragraph"/><div class="code"><pre>&#60;?xml version='1.0' encoding='UTF&#45;8'?&#62;
+  &#60;test&#62; 
+    &#60;DOCUMENT&#62;   
+      &#60;PRODUCTID&#62;11240_Printer&#60;/PRODUCTID&#62;
+      &#60;CATALOGID&#62;HP&#60;/CATALOGID&#62;   
+      &#60;MANUFACTURER&#62;JC_MANUFACTURER&#60;/MANUFACTURER&#62;
+      &#60;STATUS&#62;UPDATED&#60;/STATUS&#62; 
+    &#60;/DOCUMENT&#62;
+  &#60;/test&#62;</pre></div><p class="paragraph"/>You create script 'TestScript.groovy' that knows how to get parameters from request:<p class="paragraph"/><div class="code"><pre>// Parsing request body<p class="paragraph"/>def doc = request.XML
+<span class="java&#45;keyword">if</span>(!doc || !doc.DOCUMENT) &#123;
+  result.message = <span class="java&#45;quote">"Cannot parse request"</span> 
+  result.statusCode = 500 
+  <span class="java&#45;keyword">return</span>
+&#125;
+// Getting process parameters
+def productId = doc.DOCUMENT&#91;0&#93;.PRODUCTID&#91;0&#93;
+def catalogId = doc.DOCUMENT&#91;0&#93;.CATALOGID&#91;0&#93;
+def manufacturer = doc.DOCUMENT&#91;0&#93;.MANUFACTURER&#91;0&#93;
+ef SAP_Status = doc.DOCUMENT&#91;0&#93;.STATUS&#91;0&#93;<p class="paragraph"/>def variables = &#91;productId: productId,                
+                 catalogId: catalogId,                
+                 manufacturer: manufacturer,                
+                 SAP_Status: SAP_Status&#93;<p class="paragraph"/>def securityHelper = applicationContext.getBean(<span class="java&#45;quote">"securityHelper"</span>)
+<span class="java&#45;keyword">if</span> (!securityHelper) &#123; 
+  result.message = <span class="java&#45;quote">"Security Helper bean is not configured."</span> 
+  result.statusCode = 500 
+  <span class="java&#45;keyword">return</span>
+&#125;<p class="paragraph"/>result.processType = <span class="java&#45;quote">"TestProduct"</span>
+result.requester = securityHelper.getUser(<span class="java&#45;keyword">null</span>)
+result.variables = variables</pre></div><p class="paragraph"/>Then you place script 'TestScript' in workarea (in callbacksPath folder) and start the process by passing URL:<p class="paragraph"/>&#60;your_application_context_path&#62;/process/extendedStartProcess/TestScript<p class="paragraph"/>For example:<p class="paragraph"/> <em class="italic">http://localhost:8080/pim-grails/process/extendedStartProcess/TestScript</em> 
+
+
+
+                <div style="clear:both;margin-top:15px;"></div>
+                
+                    <div class="toc-item prev-left"><a href="../../guide/usersGuide.html">&lt;&lt; <strong>3</strong><span>User's Guide</span></a></div>
+                
+                    <div class="toc-item next-right"><a href="../../guide/faq.html"><strong>5</strong><span>Frequently Asked Questions</span> >></a></div>
+                
+                <div style="clear:both"></div>
+            </div>
+        </td>
+        <td id="col2">
+            <div class="local clearfix">
+                <div class="local-title">
+                    <a href="../../guide/index.html" target="mainFrame">Quick Reference</a>
+                    <span class="toggle">(<a href="#" onclick="localToggle(); return false;">hide</a>)</span>
+                </div>
+                <div class="menu">
+                    
+                </div>
+            </div>
+        </td>
+    </tr>
+</table>
+
+<div id="footer">
+    jCatalog Software AG
+    
+</div>
+
+<script type="text/javascript" src="../js/docs.js"></script>
+
+</body>
+</html>

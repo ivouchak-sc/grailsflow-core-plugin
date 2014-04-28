@@ -1,0 +1,141 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+                      "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en">
+<head>
+    <title>4.2 Changing a Node Owner dynamically 1.3.4-SNAPSHOT</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+    <link rel="stylesheet" href="../css/main.css" type="text/css" media="screen, print" title="Style" charset="utf-8"/>
+    <link rel="stylesheet" href="../css/pdf.css" type="text/css" media="print" title="PDF" charset="utf-8"/>
+    <script type="text/javascript">
+function addJsClass() {
+    var classes = document.body.className.split(" ");
+    classes.push("js");
+    document.body.className = classes.join(" ");
+}
+    </script>
+</head>
+
+<body class="body" onload="addJsClass();">
+<div id="navigation">
+    <ul>
+        <li>
+            <div id="nav-summary" onmouseover="toggleNavSummary(false)" onmouseout="toggleNavSummary(true)">
+                <a href="../../guide/index.html" class="button">Table of contents</a>
+
+                <div id="nav-summary-childs" style="display:none;">
+                    
+                    <div class="toc-item" style="margin-left:0"><a href="../../guide/overview.html"><strong>1</strong><span>Overview</span></a>
+                    </div>
+                    
+                    <div class="toc-item" style="margin-left:0"><a href="../../guide/installation.html"><strong>2</strong><span>Installation</span></a>
+                    </div>
+                    
+                    <div class="toc-item" style="margin-left:0"><a href="../../guide/usersGuide.html"><strong>3</strong><span>User's Guide</span></a>
+                    </div>
+                    
+                    <div class="toc-item" style="margin-left:0"><a href="../../guide/developersGuide.html"><strong>4</strong><span>Developer's Guide</span></a>
+                    </div>
+                    
+                    <div class="toc-item" style="margin-left:0"><a href="../../guide/faq.html"><strong>5</strong><span>Frequently Asked Questions</span></a>
+                    </div>
+                    
+                </div>
+            </div>
+        </li>
+        <li class="separator selected">
+            <a id="ref-button" onclick="localToggle(); return false;" href="#">Quick Reference</a>
+        </li>
+    </ul>
+</div>
+<div id="header">
+    <div class="images clearfix">
+        
+        
+    </div>
+    <p>jCatalog Software AG</p>
+</div>
+
+
+<table id="colset" border="0" cellpadding="0" cellspacing="0">
+    <tr>
+        <td id="col1">
+            <div id="main" class="corner-all">
+
+                
+                    <div class="toc-item prev-left"><a href="../../guide/usersGuide.html">&lt;&lt; <strong>3</strong><span>User's Guide</span></a></div>
+                
+
+                <span id='toggle-col1' class="toggle">(<a href="#" onclick="localToggle(); return false;">Quick Reference</a>)</span>
+
+                
+                    <div class="toc-item next-right"><a href="../../guide/faq.html"><strong>5</strong><span>Frequently Asked Questions</span> >></a></div>
+                
+
+
+                <div class="project">
+                    <h1>4.2 Changing a Node Owner dynamically - Reference Documentation</h1>
+
+                    <p><strong>Authors:</strong> Stephan Albers, July Antonicheva</p>
+
+                    <p><strong>Version:</strong> 1.3.4-SNAPSHOT</p>
+
+                    
+                </div>
+
+                
+
+                
+
+<h2 id="nodeOwner">4.2 Changing a Node Owner dynamically</h2>
+Grailsflow allows to define assignees or owners of node. An assignee or node owner could be a specific user, a list of
+roles or groups. These are the persons that see the workitems, work on them and move them to the next status.<p class="paragraph"/>The owners of a node are predefined in the process editor, however they can be overwritten within the workflow. When a
+worklist is shown, the system checks for all nodes that have the same user id, roles or groups in the assignee list that
+the current user has and shows those nodes in the worklist.<p class="paragraph"/>There are processes that require that the assignee of a node is determined/calculated dynamically, e.g some of them are
+visible only for an administrator, some are available for simple users, other for restricted groups, etc.<p class="paragraph"/>GrailsFlow supports this by providing a system variable nextOwners that allows to set the owners for the next nodes.
+This variable is not stored in the DB, but evaluated while executing a node and lives only in the action execution
+context.<p class="paragraph"/>The variable nextOwners has a type Map. The nodeId is the key and values are a list of users/role/groups. The variable
+nextOwner is of type List and contains a simple collection of user names/roles/groups.<p class="paragraph"/>When the actions of a node are finished, that next nodes are created and GrailsFlow writes the "nextOwners" as the
+"owners" into those nodes. In the definition of actions, they look and act like simple process variables.<p class="paragraph"/>The difference between 'nextOwners' and 'nextOwner' properties is that in 'nextOwners' we can specify different
+assignees for specific nodes, while 'nextOwner' allows to specify assignees for all following nodes. This is more
+convenient, if you have only one following node - in this case you do not need to specify 'nodeID' for that node.<p class="paragraph"/>The user names/roles/groups in assignees should have the same types/values, as the information coming from the
+AbstractWorklistProvider implementation. This is typically "USER_username", "ROLE_rolename" and "GROUP_groupname".<p class="paragraph"/>Example: if you want to create restrictions for user roles and your user class contains many roles, then you will have
+something like this in your process description:<p class="paragraph"/>In Process Definition:<p class="paragraph"/><div class="code"><pre>&#8230;
+    action &#123;
+      &#8230;
+      AssignTo(<span class="java&#45;keyword">var</span>:'nextAssignee') &#123;
+        Evaluate(expression: '&#91;<span class="java&#45;quote">"ROLE_USER"</span>, <span class="java&#45;quote">"ROLE_ADMIN"</span>&#93;')
+      &#125;<p class="paragraph"/>    &#125;</pre></div>
+
+
+                <div style="clear:both;margin-top:15px;"></div>
+                
+                    <div class="toc-item prev-left"><a href="../../guide/usersGuide.html">&lt;&lt; <strong>3</strong><span>User's Guide</span></a></div>
+                
+                    <div class="toc-item next-right"><a href="../../guide/faq.html"><strong>5</strong><span>Frequently Asked Questions</span> >></a></div>
+                
+                <div style="clear:both"></div>
+            </div>
+        </td>
+        <td id="col2">
+            <div class="local clearfix">
+                <div class="local-title">
+                    <a href="../../guide/index.html" target="mainFrame">Quick Reference</a>
+                    <span class="toggle">(<a href="#" onclick="localToggle(); return false;">hide</a>)</span>
+                </div>
+                <div class="menu">
+                    
+                </div>
+            </div>
+        </td>
+    </tr>
+</table>
+
+<div id="footer">
+    jCatalog Software AG
+    
+</div>
+
+<script type="text/javascript" src="../js/docs.js"></script>
+
+</body>
+</html>

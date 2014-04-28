@@ -1,0 +1,203 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+                      "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en">
+<head>
+    <title>3.5 Use Processes 1.3.4-SNAPSHOT</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+    <link rel="stylesheet" href="../css/main.css" type="text/css" media="screen, print" title="Style" charset="utf-8"/>
+    <link rel="stylesheet" href="../css/pdf.css" type="text/css" media="print" title="PDF" charset="utf-8"/>
+    <script type="text/javascript">
+function addJsClass() {
+    var classes = document.body.className.split(" ");
+    classes.push("js");
+    document.body.className = classes.join(" ");
+}
+    </script>
+</head>
+
+<body class="body" onload="addJsClass();">
+<div id="navigation">
+    <ul>
+        <li>
+            <div id="nav-summary" onmouseover="toggleNavSummary(false)" onmouseout="toggleNavSummary(true)">
+                <a href="../../guide/index.html" class="button">Table of contents</a>
+
+                <div id="nav-summary-childs" style="display:none;">
+                    
+                    <div class="toc-item" style="margin-left:0"><a href="../../guide/overview.html"><strong>1</strong><span>Overview</span></a>
+                    </div>
+                    
+                    <div class="toc-item" style="margin-left:0"><a href="../../guide/installation.html"><strong>2</strong><span>Installation</span></a>
+                    </div>
+                    
+                    <div class="toc-item" style="margin-left:0"><a href="../../guide/usersGuide.html"><strong>3</strong><span>User's Guide</span></a>
+                    </div>
+                    
+                    <div class="toc-item" style="margin-left:0"><a href="../../guide/developersGuide.html"><strong>4</strong><span>Developer's Guide</span></a>
+                    </div>
+                    
+                    <div class="toc-item" style="margin-left:0"><a href="../../guide/faq.html"><strong>5</strong><span>Frequently Asked Questions</span></a>
+                    </div>
+                    
+                </div>
+            </div>
+        </li>
+        <li class="separator selected">
+            <a id="ref-button" onclick="localToggle(); return false;" href="#">Quick Reference</a>
+        </li>
+    </ul>
+</div>
+<div id="header">
+    <div class="images clearfix">
+        
+        
+    </div>
+    <p>jCatalog Software AG</p>
+</div>
+
+
+<table id="colset" border="0" cellpadding="0" cellspacing="0">
+    <tr>
+        <td id="col1">
+            <div id="main" class="corner-all">
+
+                
+                    <div class="toc-item prev-left"><a href="../../guide/installation.html">&lt;&lt; <strong>2</strong><span>Installation</span></a></div>
+                
+
+                <span id='toggle-col1' class="toggle">(<a href="#" onclick="localToggle(); return false;">Quick Reference</a>)</span>
+
+                
+                    <div class="toc-item next-right"><a href="../../guide/developersGuide.html"><strong>4</strong><span>Developer's Guide</span> >></a></div>
+                
+
+
+                <div class="project">
+                    <h1>3.5 Use Processes - Reference Documentation</h1>
+
+                    <p><strong>Authors:</strong> Stephan Albers, July Antonicheva</p>
+
+                    <p><strong>Version:</strong> 1.3.4-SNAPSHOT</p>
+
+                    
+                </div>
+
+                
+                <div id="table-of-content">
+                    <h2>Table of Contents</h2>
+                    
+                    <div class="toc-item" style="margin-left:0px"><a href="#startProcess"><strong>3.1</strong><span>Start Process</span></a>
+                    </div>
+                    
+                    <div class="toc-item" style="margin-left:0px"><a href="#showWorklist"><strong>3.2</strong><span>Show Worklist</span></a>
+                    </div>
+                    
+                    <div class="toc-item" style="margin-left:0px"><a href="#showEmbeddedWorklist"><strong>3.3</strong><span>Show Embedded Worklist</span></a>
+                    </div>
+                    
+                    <div class="toc-item" style="margin-left:0px"><a href="#listProcesses"><strong>3.4</strong><span>List Processes</span></a>
+                    </div>
+                    
+                    <div class="toc-item" style="margin-left:0px"><a href="#killProcess"><strong>3.5</strong><span>Kill Process</span></a>
+                    </div>
+                    
+                </div>
+                
+
+                
+
+<h2 id="useProcesses">3.5 Use Processes</h2>
+
+
+
+
+<h2 id="startProcess">3.5.1 Start Process</h2>
+The <strong class="bold">Start Process</strong> menu enables you to execute the process.<p class="paragraph"/>To start a process, click <strong class="bold">Start</strong> option from <strong class="bold">Operation</strong> column on <strong class="bold">Show Types</strong> page:<p class="paragraph"/><img border="0" class="center" src="../img/usersGuide/startProcess.jpg"></img><p class="paragraph"/>The <strong class="bold">Node Details</strong> screen appears, if the start node is interactive (i.e., Wait type).<p class="paragraph"/><img border="0" class="center" src="../img/usersGuide/nodeDetails.jpg"></img><p class="paragraph"/>Enter the variable value and click <strong class="bold">Ok</strong> button. If the next node is non-interactive (i.e., nodes other than Wait type) the
+<strong class="bold">Process Details</strong> screen appears, else the <strong class="bold">Node Details</strong> screen appears.<p class="paragraph"/>If the start node is non-interactive (i.e., other than Wait type) the <strong class="bold">Process Details</strong> screen appears.<p class="paragraph"/><img border="0" class="center" src="../img/usersGuide/processDetails.jpg"></img><p class="paragraph"/>The 'Show Graphical Process' button provides a graphical representation of the process.<p class="paragraph"/>A process can be scheduled to start execution at a later point in time. Refer <strong class="bold">View Scheduler Details</strong> for more details.<p class="paragraph"/>
+
+
+<h2 id="showWorklist">3.5.2 Show Worklist</h2>
+The <strong class="bold">Worklist</strong> screen displays the nodes that are waiting for user input. These nodes are visible to user whose User ID
+or Role or group is assigned to the respective nodes.<p class="paragraph"/>To open <strong class="bold">Worklist</strong> screen click <strong class="bold">Show Worklist</strong> menu from left side of the screen. The <strong class="bold">Worklist</strong> screen appears.<p class="paragraph"/><img border="0" class="center" src="../img/usersGuide/embeddedWorklist.jpg"></img><p class="paragraph"/>The screen displays all the nodes which are of <strong class="bold">Wait</strong> type. The Filter by variable drop down is used to filter the nodes
+depending on the following criteria:
+<ul class="star">
+<li>Product ID</li>
+<li>Name</li>
+<li>RequesterName</li>
+</ul><p class="paragraph"/>Once any of these criteria are selected, the value drop down displays the values of the selected criteria respective to
+the process nodes.<p class="paragraph"/>For example, in the above figure the <strong class="bold">Node ID</strong> "CheckValues" has <strong class="bold">Product ID</strong> as "101570" and <strong class="bold">Product ID</strong> is selected
+as a filter variable, the value drop down displays "101507" in the drop down. Click the <strong class="bold">Filter</strong> button - the screen
+will display only the filtered node.<p class="paragraph"/><img border="0" class="center" src="../img/usersGuide/filteredWorklist.jpg"></img><p class="paragraph"/>Important! - The filtering can slow down your worklist loading, if you have a lot of processes in the list. If there are
+more then 500 processes in the worklist we get variables by splitting the parameter list into smaller chunks and then
+combining the results. But such functionality requires time for execution and can slow down performance. So, by default,
+the filtering works well if there are no more entries than then <strong class="bold">maxRestrictedProcesses</strong> size. The behaviour can be
+changed by reconfiguring some available Spring beans or even to disable filtering functionality at all.<p class="paragraph"/> <em class="italic">isWorklistFilterAvailable</em>  - this bean defines if we need the filtering functionality, the default value is configured
+to TRUE
+ <em class="italic">maxRestrictedProcesses</em>  - this bean contains the Integer value for common quantity of restricted processes used in SQL
+'in' clause (default value is '2000' entries)<p class="paragraph"/>
+Imagine you are a <strong class="bold">manager</strong> and you want to review all requests from your employees.<p class="paragraph"/>In the demo workflow, the <strong class="bold">admin user</strong> acts as an employee, manager and -  HR person at the same time, so that you don't
+have to login and logout for this demo.
+<ul class="minus">
+<li> Go to the 'Show Worklist' menu item to view the request for holidays from an employee.</li>
+<li> Click on the request to view the form that contains the employee name, request message, area for your resolution</li>
+</ul><p class="paragraph"/>notes and two buttons 'Approve' and 'Reject'.<p class="paragraph"/><img border="0" class="center" src="../img/usersGuide/nodeDetails_2.jpg"></img><p class="paragraph"/>Then, as a manager, you have to approve this request. Click the <strong class="bold">Approve</strong> button to approve the holiday request or click
+<strong class="bold">Reject</strong> to reject it. A note can be included (in the resolution field), if you reject the request.<p class="paragraph"/><img border="0" class="center" src="../img/usersGuide/worklist_1.jpg"></img><p class="paragraph"/>A letter about the successful holiday approval would be sent to the employee.<p class="paragraph"/>As a HR-person, you need to record how many holidays each employee has taken so far and if it is payable or not. Go to
+the 'Show Worklist' menu item. Here you have a list of approved holidays that you should take note of.<p class="paragraph"/>HR sees that the manager has approved the holidays
+Click on the request link and to view form with the employee name, manager's decision, manager notes and an input area
+for a log message.<p class="paragraph"/>You could enter a log, something like "approved; no critical projects at that time"<p class="paragraph"/>Then click the <strong class="bold">Save Log Info</strong> button to save the log message and complete the workflow.<p class="paragraph"/><img border="0" class="center" src="../img/usersGuide/worklist_2.jpg"></img><p class="paragraph"/>
+
+
+<h2 id="showEmbeddedWorklist">3.5.3 Show Embedded Worklist</h2>
+The functionality of the <strong class="bold">Show Embedded Worklist</strong> is the same as Show Worklist with the only difference being that the
+Worklist displays in a pop-up window, without any headers.<p class="paragraph"/>The Embedded worklist helps you to view the nodes simultaneously, while working on other screen<p class="paragraph"/>Refer Show Worklist section for more details.<p class="paragraph"/><img border="0" class="center" src="../img/usersGuide/embeddedWorklist.jpg"></img>
+
+
+<h2 id="listProcesses">3.5.4 List Processes</h2>
+<strong class="bold">List Processes</strong> displays all the Processes with status, create date, modified date and finished date.<p class="paragraph"/><img border="0" class="center" src="../img/usersGuide/listProcesses_1.jpg"></img><p class="paragraph"/>You can click on the <strong class="bold">Process (ID)</strong> to view details about the process.<p class="paragraph"/><img border="0" class="center" src="../img/usersGuide/listProcesses_2.jpg"></img><p class="paragraph"/>To kill a currently running process click on the link <strong class="bold">Kill</strong>.<p class="paragraph"/>To view the graphical representation of a Process click on the link Graphic.<p class="paragraph"/>The Graphical representation shows all nodes of the selected process
+(visited nodes, untouched nodes, interactive nodes which are currently waiting for user actions, etc.)
+with their statuses (color coded).<p class="paragraph"/><img border="0" class="center" src="../img/usersGuide/listProcesses_3.jpg"></img><p class="paragraph"/><p class="paragraph"/>
+
+
+<h2 id="killProcess">3.5.5 Kill Process</h2>
+A process can be killed - this means that all process activities should be stopped and all active nodes and process
+should be set to status 'KILLED'.<p class="paragraph"/>When the process starts the killing procedure from UI, first of all we interrupt the process invocation thread, then
+update process status (and all active nodes) to 'KILLING'.<p class="paragraph"/>In the next step - we check actions thread - the thread where we execute actions code. If there is no alive actions
+thread, then we update process status (and its active nodes) to "KILLED". If we have an actions thread, then try to
+interrupt it. This thread will check the interrupted flag for process. In case of interrupted flag, we set the process
+status (and its active nodes) to "KILLED".<p class="paragraph"/>During process execution we can have exceptions in the node execution. In case of exceptions, the process can be
+killed too.
+
+
+
+                <div style="clear:both;margin-top:15px;"></div>
+                
+                    <div class="toc-item prev-left"><a href="../../guide/installation.html">&lt;&lt; <strong>2</strong><span>Installation</span></a></div>
+                
+                    <div class="toc-item next-right"><a href="../../guide/developersGuide.html"><strong>4</strong><span>Developer's Guide</span> >></a></div>
+                
+                <div style="clear:both"></div>
+            </div>
+        </td>
+        <td id="col2">
+            <div class="local clearfix">
+                <div class="local-title">
+                    <a href="../../guide/index.html" target="mainFrame">Quick Reference</a>
+                    <span class="toggle">(<a href="#" onclick="localToggle(); return false;">hide</a>)</span>
+                </div>
+                <div class="menu">
+                    
+                </div>
+            </div>
+        </td>
+    </tr>
+</table>
+
+<div id="footer">
+    jCatalog Software AG
+    
+</div>
+
+<script type="text/javascript" src="../js/docs.js"></script>
+
+</body>
+</html>

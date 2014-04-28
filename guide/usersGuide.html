@@ -1,0 +1,578 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+                      "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en">
+<head>
+    <title>3 User's Guide 1.3.4-SNAPSHOT</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+    <link rel="stylesheet" href="../css/main.css" type="text/css" media="screen, print" title="Style" charset="utf-8"/>
+    <link rel="stylesheet" href="../css/pdf.css" type="text/css" media="print" title="PDF" charset="utf-8"/>
+    <script type="text/javascript">
+function addJsClass() {
+    var classes = document.body.className.split(" ");
+    classes.push("js");
+    document.body.className = classes.join(" ");
+}
+    </script>
+</head>
+
+<body class="body" onload="addJsClass();">
+<div id="navigation">
+    <ul>
+        <li>
+            <div id="nav-summary" onmouseover="toggleNavSummary(false)" onmouseout="toggleNavSummary(true)">
+                <a href="../guide/index.html" class="button">Table of contents</a>
+
+                <div id="nav-summary-childs" style="display:none;">
+                    
+                    <div class="toc-item" style="margin-left:0"><a href="../guide/overview.html"><strong>1</strong><span>Overview</span></a>
+                    </div>
+                    
+                    <div class="toc-item" style="margin-left:0"><a href="../guide/installation.html"><strong>2</strong><span>Installation</span></a>
+                    </div>
+                    
+                    <div class="toc-item" style="margin-left:0"><a href="../guide/usersGuide.html"><strong>3</strong><span>User's Guide</span></a>
+                    </div>
+                    
+                    <div class="toc-item" style="margin-left:0"><a href="../guide/developersGuide.html"><strong>4</strong><span>Developer's Guide</span></a>
+                    </div>
+                    
+                    <div class="toc-item" style="margin-left:0"><a href="../guide/faq.html"><strong>5</strong><span>Frequently Asked Questions</span></a>
+                    </div>
+                    
+                </div>
+            </div>
+        </li>
+        <li class="separator selected">
+            <a id="ref-button" onclick="localToggle(); return false;" href="#">Quick Reference</a>
+        </li>
+    </ul>
+</div>
+<div id="header">
+    <div class="images clearfix">
+        
+        
+    </div>
+    <p>jCatalog Software AG</p>
+</div>
+
+
+<table id="colset" border="0" cellpadding="0" cellspacing="0">
+    <tr>
+        <td id="col1">
+            <div id="main" class="corner-all">
+
+                
+                    <div class="toc-item prev-left"><a href="../guide/installation.html">&lt;&lt; <strong>2</strong><span>Installation</span></a></div>
+                
+
+                <span id='toggle-col1' class="toggle">(<a href="#" onclick="localToggle(); return false;">Quick Reference</a>)</span>
+
+                
+                    <div class="toc-item next-right"><a href="../guide/developersGuide.html"><strong>4</strong><span>Developer's Guide</span> >></a></div>
+                
+
+
+                <div class="project">
+                    <h1>3 User's Guide - Reference Documentation</h1>
+
+                    <p><strong>Authors:</strong> Stephan Albers, July Antonicheva</p>
+
+                    <p><strong>Version:</strong> 1.3.4-SNAPSHOT</p>
+
+                    
+                </div>
+
+                
+                <div id="table-of-content">
+                    <h2>Table of Contents</h2>
+                    
+                    <div class="toc-item" style="margin-left:0px"><a href="#processes"><strong>3.1</strong><span>Introduction</span></a>
+                    </div>
+                    
+                    <div class="toc-item" style="margin-left:0px"><a href="#analyseTime"><strong>3.2</strong><span>Analyse Response Time</span></a>
+                    </div>
+                    
+                    <div class="toc-item" style="margin-left:0px"><a href="#schedulerDetails"><strong>3.3</strong><span>View Scheduler Details</span></a>
+                    </div>
+                    
+                    <div class="toc-item" style="margin-left:0px"><a href="#showDocuments"><strong>3.4</strong><span>Show Documents</span></a>
+                    </div>
+                    
+                    <div class="toc-item" style="margin-left:0px"><a href="#useProcesses"><strong>3.5</strong><span>Use Processes</span></a>
+                    </div>
+                    
+                    <div class="toc-item" style="margin-left:10px"><a href="#startProcess"><strong>3.5.1</strong><span>Start Process</span></a>
+                    </div>
+                    
+                    <div class="toc-item" style="margin-left:10px"><a href="#showWorklist"><strong>3.5.2</strong><span>Show Worklist</span></a>
+                    </div>
+                    
+                    <div class="toc-item" style="margin-left:10px"><a href="#showEmbeddedWorklist"><strong>3.5.3</strong><span>Show Embedded Worklist</span></a>
+                    </div>
+                    
+                    <div class="toc-item" style="margin-left:10px"><a href="#listProcesses"><strong>3.5.4</strong><span>List Processes</span></a>
+                    </div>
+                    
+                    <div class="toc-item" style="margin-left:10px"><a href="#killProcess"><strong>3.5.5</strong><span>Kill Process</span></a>
+                    </div>
+                    
+                    <div class="toc-item" style="margin-left:0px"><a href="#processDefinition"><strong>3.6</strong><span>Process Definition</span></a>
+                    </div>
+                    
+                    <div class="toc-item" style="margin-left:10px"><a href="#actionsOfNode"><strong>3.6.1</strong><span>Actions Of Node</span></a>
+                    </div>
+                    
+                    <div class="toc-item" style="margin-left:10px"><a href="#addVariables"><strong>3.6.2</strong><span>Add Process Variables</span></a>
+                    </div>
+                    
+                    <div class="toc-item" style="margin-left:10px"><a href="#createProcess"><strong>3.6.3</strong><span>Create Process</span></a>
+                    </div>
+                    
+                    <div class="toc-item" style="margin-left:10px"><a href="#editProcess"><strong>3.6.4</strong><span>Edit Process</span></a>
+                    </div>
+                    
+                    <div class="toc-item" style="margin-left:10px"><a href="#deleteProcess"><strong>3.6.5</strong><span>Delete Process</span></a>
+                    </div>
+                    
+                    <div class="toc-item" style="margin-left:10px"><a href="#fixProcess"><strong>3.6.6</strong><span>Fix Buggy Process Code</span></a>
+                    </div>
+                    
+                    <div class="toc-item" style="margin-left:10px"><a href="#manageTranslation"><strong>3.6.7</strong><span>Manage Translation</span></a>
+                    </div>
+                    
+                    <div class="toc-item" style="margin-left:10px"><a href="#processNodes"><strong>3.6.8</strong><span>Process Nodes</span></a>
+                    </div>
+                    
+                    <div class="toc-item" style="margin-left:10px"><a href="#transitions"><strong>3.6.9</strong><span>Transitions</span></a>
+                    </div>
+                    
+                </div>
+                
+
+                
+
+<h1 id="usersGuide">3 User's Guide</h1>
+
+
+
+
+<h2 id="processes">3.1 Introduction</h2>
+Grailsflow allows you to manage processes, their definitions and activities related to a process. This user's guide
+describes some of the basic features of Grailsflow and how you can use them.<p class="paragraph"/>There are two major stages in Grailsflow:
+<ul class="star">
+<li> Process Definition</li>
+<li> Execute Process</li>
+</ul><p class="paragraph"/><strong class="bold">Process Definition</strong><p class="paragraph"/>In <strong class="bold">Process Definition</strong> stage, you can create a process, add process variables, nodes, transition, and actions. The
+functionality of these steps will be explained in later sections. Once you create a process, you can execute it any
+number of times. This in turn, allows reusing of process and reduces the process creation time.<p class="paragraph"/><img border="0" class="center" src="../img/usersGuide/processDefinition.jpg"></img><p class="paragraph"/><strong class="bold">Execute Process</strong><p class="paragraph"/>In the <strong class="bold">Execute Process</strong> stage, you can make use of the processes created in the <strong class="bold">Process Definition</strong> stage. Here it is
+possible to start a process, view the currently executing processes, view worklist, and execute the worklist item.<p class="paragraph"/>
+<img border="0" class="center" src="../img/usersGuide/executeProcess.jpg"></img><p class="paragraph"/>
+
+
+<h2 id="analyseTime">3.2 Analyse Response Time</h2>
+In this section, you can analyze response time based on process types and sort nodes by fields. It also allows you to
+analyze the response time of the executed processes. GrailsFlow searches all process nodes for a process type,
+determines the time used for each node, checks for min., max., and average time and then displays them on screen. The
+process type nodes can be sorted by minimum, maximum, average execution time, interactive, and non-interactive node.<p class="paragraph"/>Click on the Analyse Response Time menu from the left corner of the screen to view the Analyse Response Time screen.<p class="paragraph"/>To find the response time of a particular process node, follow the steps below:
+<ul class="star">
+<li>Select Process Type from the drop down menu.</li>
+<li>Select the criteria by which the process nodes have to be sorted, from the Sort Node By field.</li>
+<li>Click the <strong class="bold">"Search"</strong> button to display response time of the process</li>
+</ul><p class="paragraph"/>With respect to process nodes - these are sorted with respect to the average time.<p class="paragraph"/><img border="0" class="center" src="../img/usersGuide/analyseTime.jpg"></img><p class="paragraph"/>Protocolling Nodes Execution section allows to analyze execution time of protocol groups (consisting of one or several
+process nodes) for processes of the same type. See <strong class="bold">Protocoling Nodes Execution</strong> for ProtocolingTest Process:<p class="paragraph"/><img border="0" class="center" src="../img/usersGuide/protocolling_1.jpg"></img><p class="paragraph"/>To find the response time of a particular process node, follow the steps below:
+<ul class="star">
+<li> Select Process Type from the drop down menu.</li>
+<li> Select the criteria by which the process nodes has to be sorted, from Sort Node By field.</li>
+<li> Click <strong class="bold">"Search"</strong> button to display response time of the process, with respect to process nodes. Here, the process</li>
+</ul><p class="paragraph"/>nodes are sorted with respect to the average time.<p class="paragraph"/><img border="0" class="center" src="../img/usersGuide/protocolling_2.jpg"></img>
+
+
+<h2 id="schedulerDetails">3.3 View Scheduler Details</h2>
+The <strong class="bold">View Scheduler Details</strong> menu is used to schedule the execution of a process at a later date/time.<p class="paragraph"/>For example, the HR of a company has to track the leave taken by an employee, very frequently. The scheduler option will
+help to create a process to track the leave and schedule process execution frequently, at specific intervals.<p class="paragraph"/>Click the <strong class="bold">View Scheduler details</strong> menu from the left corner of the screen to open the Scheduler Details screen.<p class="paragraph"/>The <strong class="bold">Scheduler Details</strong> screen displays the currently running jobs and the scheduled jobs. 'Scheduler details' is used
+to monitor the Quartz jobs and the configuration of the Quartz library. It shows the Quartz configuration parameters and
+allows you to view all currently running jobs, to pause, delete and edit jobs. It displays the scheduler information
+with jobs and triggers.<p class="paragraph"/>Edit jobs allows you to modify the repeat interval, which is useful e.g. to tune the NodeActivatorJob.<p class="paragraph"/><img border="0" class="center" src="../img/usersGuide/schedulerDetails_1.jpg"></img><p class="paragraph"/>The <strong class="bold">Pause Scheduler</strong> button is used to pause all scheduled jobs listed under the Scheduled Jobs option.<p class="paragraph"/><strong class="bold">Running Jobs</strong> displays the job names which are running currently and also displays job names triggered at a specific
+time interval.<p class="paragraph"/>The <strong class="bold">Schedule Process</strong> button is used to schedule the process. To schedule a process, follow the steps below:
+<ul class="star">
+<li>Click <strong class="bold">Shedule Process</strong> button. The <strong class="bold">Schedule Process</strong> screen appears.</li>
+</ul><p class="paragraph"/><img border="0" class="center" src="../img/usersGuide/schedulerDetails_2.jpg"></img>
+<ul class="star">
+<li>Select the <strong class="bold">Process Type</strong> from the drop down.</li>
+<li>Enter values for <strong class="bold">Process Variables</strong>.</li>
+<li>Select the repeating sequence:</li>
+<ul class="star">
+<li>Once</li>
+<li>Minutely</li>
+<li>Daily</li>
+<li>Weekly</li>
+<li>Specify custom value – To specify the customized repeating value other than the above mentioned sequences.</li>
+</ul>
+<li>Enter the date in <strong class="bold">Day</strong> field.</li>
+<li>Enter time in <strong class="bold">Time</strong> field</li>
+<li>Click <strong class="bold">Add Job</strong> button.</li>
+</ul><p class="paragraph"/>The job is added under the <strong class="bold">Scheduled Jobs</strong> option, in <strong class="bold">Scheduler Details</strong> screen.<p class="paragraph"/><h3>Specify Custom Value</h3><p class="paragraph"/>The <strong class="bold">Specify Custom Value</strong> is used to enter the repeating sequences other than the available sequences.<p class="paragraph"/>Select <strong class="bold">Specify Custom Value</strong> from <strong class="bold">Repeating</strong> field.<p class="paragraph"/><img border="0" class="center" src="../img/usersGuide/schedulerDetails_3.jpg"></img>
+
+
+<h2 id="showDocuments">3.4 Show Documents</h2>
+The Show Documents menu displays directories which contain files (which has Document type variable) uploaded for the
+process.<p class="paragraph"/>Documents are a special type of process variables that allows storing arbitrary files in a process. You declare a
+process variable in your process class through the process designer with the type Documents. When you enter variables,
+GrailsFlow presents a â€œBrowserâ€ button to upload documents. The file is uploaded and stored in a directory.<p class="paragraph"/>A directory is created for each day. The file name is cleaned up and extended by the process id and a counter. The link
+to the file is stored in the DB.<p class="paragraph"/>If the variable can be changed in a later step, the file can be downloaded and a new version can be uploaded. The new
+version is stored the same way, so GrailsFlow provides a full version history for documents.<p class="paragraph"/><strong class="bold">'Show Documents'</strong> lists the documents that are attached to processes. Documents are stored as simple files in the file
+system.<p class="paragraph"/><img border="0" class="center" src="../img/usersGuide/documents.jpg"></img><p class="paragraph"/>
+
+
+<h2 id="useProcesses">3.5 Use Processes</h2>
+
+
+
+
+<h2 id="startProcess">3.5.1 Start Process</h2>
+The <strong class="bold">Start Process</strong> menu enables you to execute the process.<p class="paragraph"/>To start a process, click <strong class="bold">Start</strong> option from <strong class="bold">Operation</strong> column on <strong class="bold">Show Types</strong> page:<p class="paragraph"/><img border="0" class="center" src="../img/usersGuide/startProcess.jpg"></img><p class="paragraph"/>The <strong class="bold">Node Details</strong> screen appears, if the start node is interactive (i.e., Wait type).<p class="paragraph"/><img border="0" class="center" src="../img/usersGuide/nodeDetails.jpg"></img><p class="paragraph"/>Enter the variable value and click <strong class="bold">Ok</strong> button. If the next node is non-interactive (i.e., nodes other than Wait type) the
+<strong class="bold">Process Details</strong> screen appears, else the <strong class="bold">Node Details</strong> screen appears.<p class="paragraph"/>If the start node is non-interactive (i.e., other than Wait type) the <strong class="bold">Process Details</strong> screen appears.<p class="paragraph"/><img border="0" class="center" src="../img/usersGuide/processDetails.jpg"></img><p class="paragraph"/>The 'Show Graphical Process' button provides a graphical representation of the process.<p class="paragraph"/>A process can be scheduled to start execution at a later point in time. Refer <strong class="bold">View Scheduler Details</strong> for more details.<p class="paragraph"/>
+
+
+<h2 id="showWorklist">3.5.2 Show Worklist</h2>
+The <strong class="bold">Worklist</strong> screen displays the nodes that are waiting for user input. These nodes are visible to user whose User ID
+or Role or group is assigned to the respective nodes.<p class="paragraph"/>To open <strong class="bold">Worklist</strong> screen click <strong class="bold">Show Worklist</strong> menu from left side of the screen. The <strong class="bold">Worklist</strong> screen appears.<p class="paragraph"/><img border="0" class="center" src="../img/usersGuide/embeddedWorklist.jpg"></img><p class="paragraph"/>The screen displays all the nodes which are of <strong class="bold">Wait</strong> type. The Filter by variable drop down is used to filter the nodes
+depending on the following criteria:
+<ul class="star">
+<li>Product ID</li>
+<li>Name</li>
+<li>RequesterName</li>
+</ul><p class="paragraph"/>Once any of these criteria are selected, the value drop down displays the values of the selected criteria respective to
+the process nodes.<p class="paragraph"/>For example, in the above figure the <strong class="bold">Node ID</strong> "CheckValues" has <strong class="bold">Product ID</strong> as "101570" and <strong class="bold">Product ID</strong> is selected
+as a filter variable, the value drop down displays "101507" in the drop down. Click the <strong class="bold">Filter</strong> button - the screen
+will display only the filtered node.<p class="paragraph"/><img border="0" class="center" src="../img/usersGuide/filteredWorklist.jpg"></img><p class="paragraph"/>Important! - The filtering can slow down your worklist loading, if you have a lot of processes in the list. If there are
+more then 500 processes in the worklist we get variables by splitting the parameter list into smaller chunks and then
+combining the results. But such functionality requires time for execution and can slow down performance. So, by default,
+the filtering works well if there are no more entries than then <strong class="bold">maxRestrictedProcesses</strong> size. The behaviour can be
+changed by reconfiguring some available Spring beans or even to disable filtering functionality at all.<p class="paragraph"/> <em class="italic">isWorklistFilterAvailable</em>  - this bean defines if we need the filtering functionality, the default value is configured
+to TRUE
+ <em class="italic">maxRestrictedProcesses</em>  - this bean contains the Integer value for common quantity of restricted processes used in SQL
+'in' clause (default value is '2000' entries)<p class="paragraph"/>
+Imagine you are a <strong class="bold">manager</strong> and you want to review all requests from your employees.<p class="paragraph"/>In the demo workflow, the <strong class="bold">admin user</strong> acts as an employee, manager and -  HR person at the same time, so that you don't
+have to login and logout for this demo.
+<ul class="minus">
+<li> Go to the 'Show Worklist' menu item to view the request for holidays from an employee.</li>
+<li> Click on the request to view the form that contains the employee name, request message, area for your resolution</li>
+</ul><p class="paragraph"/>notes and two buttons 'Approve' and 'Reject'.<p class="paragraph"/><img border="0" class="center" src="../img/usersGuide/nodeDetails_2.jpg"></img><p class="paragraph"/>Then, as a manager, you have to approve this request. Click the <strong class="bold">Approve</strong> button to approve the holiday request or click
+<strong class="bold">Reject</strong> to reject it. A note can be included (in the resolution field), if you reject the request.<p class="paragraph"/><img border="0" class="center" src="../img/usersGuide/worklist_1.jpg"></img><p class="paragraph"/>A letter about the successful holiday approval would be sent to the employee.<p class="paragraph"/>As a HR-person, you need to record how many holidays each employee has taken so far and if it is payable or not. Go to
+the 'Show Worklist' menu item. Here you have a list of approved holidays that you should take note of.<p class="paragraph"/>HR sees that the manager has approved the holidays
+Click on the request link and to view form with the employee name, manager's decision, manager notes and an input area
+for a log message.<p class="paragraph"/>You could enter a log, something like "approved; no critical projects at that time"<p class="paragraph"/>Then click the <strong class="bold">Save Log Info</strong> button to save the log message and complete the workflow.<p class="paragraph"/><img border="0" class="center" src="../img/usersGuide/worklist_2.jpg"></img><p class="paragraph"/>
+
+
+<h2 id="showEmbeddedWorklist">3.5.3 Show Embedded Worklist</h2>
+The functionality of the <strong class="bold">Show Embedded Worklist</strong> is the same as Show Worklist with the only difference being that the
+Worklist displays in a pop-up window, without any headers.<p class="paragraph"/>The Embedded worklist helps you to view the nodes simultaneously, while working on other screen<p class="paragraph"/>Refer Show Worklist section for more details.<p class="paragraph"/><img border="0" class="center" src="../img/usersGuide/embeddedWorklist.jpg"></img>
+
+
+<h2 id="listProcesses">3.5.4 List Processes</h2>
+<strong class="bold">List Processes</strong> displays all the Processes with status, create date, modified date and finished date.<p class="paragraph"/><img border="0" class="center" src="../img/usersGuide/listProcesses_1.jpg"></img><p class="paragraph"/>You can click on the <strong class="bold">Process (ID)</strong> to view details about the process.<p class="paragraph"/><img border="0" class="center" src="../img/usersGuide/listProcesses_2.jpg"></img><p class="paragraph"/>To kill a currently running process click on the link <strong class="bold">Kill</strong>.<p class="paragraph"/>To view the graphical representation of a Process click on the link Graphic.<p class="paragraph"/>The Graphical representation shows all nodes of the selected process
+(visited nodes, untouched nodes, interactive nodes which are currently waiting for user actions, etc.)
+with their statuses (color coded).<p class="paragraph"/><img border="0" class="center" src="../img/usersGuide/listProcesses_3.jpg"></img><p class="paragraph"/><p class="paragraph"/>
+
+
+<h2 id="killProcess">3.5.5 Kill Process</h2>
+A process can be killed - this means that all process activities should be stopped and all active nodes and process
+should be set to status 'KILLED'.<p class="paragraph"/>When the process starts the killing procedure from UI, first of all we interrupt the process invocation thread, then
+update process status (and all active nodes) to 'KILLING'.<p class="paragraph"/>In the next step - we check actions thread - the thread where we execute actions code. If there is no alive actions
+thread, then we update process status (and its active nodes) to "KILLED". If we have an actions thread, then try to
+interrupt it. This thread will check the interrupted flag for process. In case of interrupted flag, we set the process
+status (and its active nodes) to "KILLED".<p class="paragraph"/>During process execution we can have exceptions in the node execution. In case of exceptions, the process can be
+killed too.
+
+
+
+<h2 id="processDefinition">3.6 Process Definition</h2>
+
+
+
+<h2 id="actionsOfNode">3.6.1 Actions Of Node</h2>
+Actions define the operations to be performed in each node, internally. Basically action defines the operation of a
+node. You can develop code for the operation of each node using plain Groovy code.<p class="paragraph"/><strong class="bold">Create Action</strong><p class="paragraph"/>For example, we need to send a Notification if Holiday Request is rejected.
+<ol>
+<li>To open the <strong class="bold">Process Action Editor</strong> screen, click the following buttons:</li>
+</ol><p class="paragraph"/>Administration -&#62; Edit Process Types -&#62; <strong class="bold">Edit</strong> button for <strong class="bold">Request Holiday Process</strong> -&#62; <strong class="bold">Edit</strong> button for
+<strong class="bold">RejectNotification</strong> node -&#62; <strong class="bold">Edit Node Actions</strong> button.<p class="paragraph"/>The <strong class="bold">Process Action Editor</strong> screen will open:<p class="paragraph"/><img border="0" class="center" src="../img/usersGuide/actionEditor.jpg"></img><p class="paragraph"/>To create a <strong class="bold">SendNotificationMail</strong> action you can either write the plain code (using Variables and Actions from the
+drop-down list as a hint) or you can use 'plus' button to add Variables and Actions automatically.<p class="paragraph"/>Select <strong class="bold">SendNotificationMail</strong> from the drop-down list and click 'plus' button.<p class="paragraph"/><strong class="bold">Action Call Parameters</strong> editor will open in a new window. Fill in the necessary fields and click <strong class="bold">Apply</strong> button.<p class="paragraph"/><img border="0" class="center" src="../img/usersGuide/actionParameters.jpg"></img><p class="paragraph"/>Manually adjust the code and then click the <strong class="bold">Apply</strong> button.<p class="paragraph"/><div class="code"><pre><span class="java&#45;keyword">if</span> (requesterMail) &#123;
+SendMail(mailFrom:managerMail,mailTo: requesterMail,subject:'Rejected Notification',message: 'Your request was rejected.')
+&#125;
+<span class="java&#45;keyword">return</span> <span class="java&#45;quote">"finish"</span></pre></div><p class="paragraph"/>According to the node type you should pay attention to the actions. If the node is manual (type is 'Wait') then you
+don't need to trigger any transition and specify 'return' statement. The body of 'Wait' node is executed after
+transition definition (defined manually by the user). If the 'return' statement is specified in manual node it is
+ignored by process execution engine.<p class="paragraph"/>If node type is automatic (one from 'Activity', 'Fork', 'AndJoin', 'OrJoin') then you need to specify 'return'
+statement that triggers the next transition.<p class="paragraph"/>Return statement has the following syntax:<p class="paragraph"/><img border="0" class="center" src="../img/usersGuide/returnStatement.jpg"></img><p class="paragraph"/>If there is no 'return' statement for automatic node then the next node(nodes) cannot be activated.<p class="paragraph"/>From the version of Grailsflow-1.0.x when 'action' closure contains plain Groovy code then return statement can hold
+functions, expressions, etc.
+The evaluated value is transfered to String type and used for transition definition.<p class="paragraph"/>4. Click <strong class="bold">"Apply"</strong> button to save action of the node.<p class="paragraph"/>The Up and Down navigation icons are used to move statements up and down.<p class="paragraph"/>The <strong class="bold">'Delete'</strong> icon is used to delete the statement.<p class="paragraph"/>The <strong class="bold">Edit Node Action</strong> button is used both for create and edit actions.<p class="paragraph"/>Once you create process, add process variables, create process nodes, add transitions, and create actions for nodes,
+click <strong class="bold">Save Process Type</strong> button to save the process. The process definition is saved on the server to file
+&#60;processID&#62;Process.groovy.<p class="paragraph"/>You can view the process definition file saved on server, using <strong class="bold">Show Source Code</strong> button.<p class="paragraph"/><img border="0" class="center" src="../img/usersGuide/processScript.jpg"></img><p class="paragraph"/>You can reload definition that you currently edit from file &#60;processID&#62;Process.groovy by pressing <strong class="bold">Reload Process from File</strong>.<p class="paragraph"/>To view the process in pictorial or graphical representation, click <strong class="bold">Show Graphical Process</strong> button.<p class="paragraph"/><img border="0" class="center" src="../img/usersGuide/graphicalNotation.jpg"></img><p class="paragraph"/><strong class="bold">Export as HTML</strong> button will create HTML that describes the process. It's something like a report; you can view this
+HTML to get the common information about the process. Click <strong class="bold">Export as HTML</strong> button. A <strong class="bold">File Download</strong> window appears.
+Click “Open” or “Save”. A zipped folder appears. Open the zipped folder and open the html file.
+
+
+
+<h2 id="addVariables">3.6.2 Add Process Variables</h2>
+A process requires variables to manipulate the process data. To add variables to a process follow the steps below:
+<ul class="star">
+<li>Click <strong class="bold">Add</strong> button, which is under <strong class="bold">Process Variable</strong> or click the corresponding <strong class="bold">Edit</strong> option under <strong class="bold">Operations</strong></li>
+</ul><p class="paragraph"/>column, in <strong class="bold">Edit Process Type</strong> screen. The <strong class="bold">Process Variables</strong> screen appears.<p class="paragraph"/><img border="0" class="center" src="../img/usersGuide/processVariable_1.jpg"></img>
+<ul class="star">
+<li>Enter variable name in <strong class="bold">Name</strong> field - field is mandatory and name should be a unique name</li>
+<li>Check the <strong class="bold">Is Process Identifier</strong> check box - used to make the variable as an identifier of the process - e.g. if</li>
+</ul><p class="paragraph"/>there is a process "My Process" has a variable "name" marked as process identifier. So, if you start that process
+with name="John" - while that process is running you cannot start another "MyProcess" with name="John". But you can
+start "MyProcess" with any other name.
+<ul class="star">
+<li>Check <strong class="bold">Required</strong> check box - defines the variable as mandatory. The application cannot perform the operation without</li>
+</ul><p class="paragraph"/>the variable value.
+<ul class="star">
+<li>Select the variable type from the <strong class="bold">Type</strong> drop down - by default, it displays String type.</li>
+</ul><p class="paragraph"/>Currently, Grailsflow supports the following variable types:<p class="paragraph"/>Boolean
+Double
+String
+Long
+Integer
+Date
+Document
+Link
+Object
+<ul class="star">
+<li>Enter default variable value in <strong class="bold">Value</strong>  field - it is the default value for the variable. The value will be set by</li>
+</ul><p class="paragraph"/>default when the process gets started.
+<ul class="star">
+<li>Select the type of variable view from the <strong class="bold">View</strong> drop down - view specifies the way the variable will be displayed on the UIs of the interactive nodes ('Wait' nodes). Refer Varible View section for more details.</li>
+<li>Click the <strong class="bold">Apply</strong> button to save the process variable.</li>
+</ul><p class="paragraph"/>Similarly, multiple variables can be created for a process.<p class="paragraph"/><strong class="bold">Variable View</strong><p class="paragraph"/>Values for select box are selected from the database.
+<ul class="star">
+<li>Property to display property of the domain is used as label for the select box option.</li>
+<li>Restriction is 'where' condition (without 'where' word) that will be used for selecting list of objects from the</li>
+</ul><p class="paragraph"/>database<p class="paragraph"/>
+The Variable View type consists of the following views:
+<ul class="star">
+<li> Simple View</li>
+<ul class="star">
+<li>Style Class - Defines CSS class for the input.</li>
+<li>Size is the size of the input. Default size is 20.</li>
+</ul></ul><p class="paragraph"/><img border="0" class="center" src="../img/usersGuide/simpleView.jpg"></img>
+<ul class="star">
+<li> Select Box View – It displays values in a drop down. It consists of one value per line.</li>
+</ul><p class="paragraph"/><img border="0" class="center" src="../img/usersGuide/selectBoxView.jpg"></img>
+<ul class="star">
+<li> Text Area View - Displays variable value in text area. Its size is defined with Rows and Columns property values.</li>
+</ul><p class="paragraph"/>  Default rows count is 10, for column default value is 50.<p class="paragraph"/><img border="0" class="center" src="../img/usersGuide/textAreaView.jpg"></img>
+<ul class="star">
+<li>Date View</li>
+<ul class="star">
+<li> Date Format – Defines the format of dates.</li>
+<li> Style Class - Defines CSS class for the input.</li>
+<li> Size - Size of the date input. Default size is 20.</li>
+</ul></ul><p class="paragraph"/><img border="0" class="center" src="../img/usersGuide/dateView.jpg"></img>
+<ul class="star">
+<li>Check Box View - Displays checkbox for the Boolean values.</li>
+</ul><p class="paragraph"/><img border="0" class="center" src="../img/usersGuide/checkBoxView.jpg"></img>
+<ul class="star">
+<li>Link View - Link view displays {{input}}s for editing the Link values.</li>
+</ul><p class="paragraph"/><img border="0" class="center" src="../img/usersGuide/linkView.jpg"></img>
+<ul class="star">
+<li>Document View - Document view allows to upload files as Document values.</li>
+</ul><p class="paragraph"/><img border="0" class="center" src="../img/usersGuide/documentView.jpg"></img>
+<ul class="star">
+<li> List Objects View - List Object view displays select box to choose value for domain object variable.</li>
+</ul><p class="paragraph"/>  Values for select box are selected form database.
+<ul class="star">
+<ul class="star">
+<li> Property to display property of the domain is used as label for the select box option.</li>
+<li> Restriction is 'where' condition (without 'where' word) that will be used for selecting list of objects</li>
+</ul></ul><p class="paragraph"/>        from the database.<p class="paragraph"/><img border="0" class="center" src="../img/usersGuide/listObjectView.jpg"></img>
+<ul class="star">
+<li> External Search Object View - Uses pop-up window for selecting value for domain object variable.</li>
+<ul class="star">
+<li> Property to display is the name of the domain property that will be displayed.</li>
+<li> Search URL is the URL for opening pop-up search window.</li>
+<li> Additional Fields are comma-separated property names, whoes value will be additionally shown.</li>
+</ul></ul><p class="paragraph"/><img border="0" class="center" src="../img/usersGuide/externalSearchObjectView.jpg"></img><p class="paragraph"/>  To edit or delete process variable, click the corresponding <strong class="bold">Edit</strong> or <strong class="bold">Delete</strong> option of variables, under <strong class="bold">Operations</strong>
+column, in <strong class="bold">Process Editor</strong> screen.<p class="paragraph"/><p class="paragraph"/>
+
+
+
+<h2 id="createProcess">3.6.3 Create Process</h2>
+To create a process, follow the steps below:
+<ul class="star">
+<li>Click <strong class="bold">Add</strong> button. The <strong class="bold">Process Editor</strong> window appears.</li>
+</ul><p class="paragraph"/><img border="0" class="center" src="../img/usersGuide/processEditor.jpg"></img>
+<ul class="star">
+<li>Enter <strong class="bold">Process ID.</strong></li>
+</ul><p class="paragraph"/>Enter a unique <strong class="bold">Process ID</strong>. <strong class="bold">Process ID</strong> is mandatory. The screen displays error message if you do not enter
+<strong class="bold">Process ID</strong>.<p class="paragraph"/><img border="0" class="center" src="../img/usersGuide/processEditorErrorMessage.jpg"></img>
+<ul class="star">
+<li> Enter process description in <strong class="bold">Description</strong> field.</li>
+</ul><p class="paragraph"/>The description is for current browser language (i.e. request language). Descriptions for other languages can be
+added/modified using <strong class="bold">Manage Translations</strong> option. Refer <strong class="bold">Manage Translation</strong> section for more details.
+<ul class="star">
+<li>Click <strong class="bold">Create</strong> button. The <strong class="bold">Process Editor</strong> screen displays the following options:</li>
+<ul class="star">
+<li>define <strong class="bold">Valid from/Valid to</strong> values to specify the valid range for process script definition,</li>
+<li>add assignees,</li>
+<li>add variables,</li>
+<li>add nodes.</li>
+</ul></ul><p class="paragraph"/><img border="0" class="center" src="../img/usersGuide/createProcesses.jpg"></img><p class="paragraph"/><p class="paragraph"/>
+
+
+<h2 id="editProcess">3.6.4 Edit Process</h2>
+To edit a process, click <strong class="bold">Edit</strong> option under <strong class="bold">Operations</strong> column, in <strong class="bold">Edit Process Types</strong> screen.
+
+
+<h2 id="deleteProcess">3.6.5 Delete Process</h2>
+To delete a process, click <strong class="bold">Delete</strong> option under <strong class="bold">Operations</strong> column, in <strong class="bold">Edit Process Types</strong> screen.
+
+
+<h2 id="fixProcess">3.6.6 Fix Buggy Process Code</h2>
+In case any process is invalid ( has buggy script ), its description field contains the following notification:<p class="paragraph"/><img border="0" class="center" src="../img/usersGuide/buggy.jpg"></img><p class="paragraph"/>To fix process script code, follow the steps below:
+<ul class="star">
+<li> Select <strong class="bold">Edit</strong> option from <strong class="bold">Operation</strong> column to open <strong class="bold">Process Script</strong> page.</li>
+<li> Notification message points to lines and columns containing errors. Fix errors right in the textarea.</li>
+<li> Before saving the fixed code, check whether it can be compiled by clicking the <strong class="bold">Check</strong> button.</li>
+<li> If the message  <em class="italic">The code of process script can be compiled appears</em>  , click <strong class="bold">Save</strong> button - and you will be redirected</li>
+</ul><p class="paragraph"/>to <strong class="bold">Edit Process Types</strong> page. Now the process is valid and available for editing.<p class="paragraph"/><img border="0" class="center" src="../img/usersGuide/editBuggy.jpg"></img><p class="paragraph"/>
+
+
+<h2 id="manageTranslation">3.6.7 Manage Translation</h2>
+The feature Manage Translation is used for translations of process, process variables, and process nodes description in
+different languages. Currently, descriptions are possible in two languages, i.e., English and German. The idea behind
+it is to localize the process definition to any desired language.<p class="paragraph"/>The Manage Translation option is available in the <strong class="bold">Process Editor</strong>, <strong class="bold">Process Variables</strong>, and <strong class="bold">Process Node</strong> screens.
+<ul class="star">
+<li>Click the Manage Translation option, to open the Process Translations screen</li>
+</ul><p class="paragraph"/><img border="0" class="center" src="../img/usersGuide/translation.jpg"></img>
+<ul class="star">
+<li>Select the language from the drop down.</li>
+<li>Enter data in text area.</li>
+<li>Click <strong class="bold">Add</strong> option.</li>
+<li>Click <strong class="bold">Apply</strong> button.</li>
+</ul><p class="paragraph"/>
+
+
+<h2 id="processNodes">3.6.8 Process Nodes</h2>
+Nodes are steps in a process. They define the steps to be performed, while executing a process. For example: If an
+employee has to request leave, following are the steps to be performed:
+<ul class="star">
+<li>Employee sends leave request to the manager</li>
+<li>Manager approves or rejects</li>
+<li>HR tracks the leave</li>
+</ul><p class="paragraph"/>Therefore, the nodes of a Leave request process is as follows:
+<ul class="star">
+<li>Send Leave request</li>
+<li>Manager Approval</li>
+<li>Manager Rejection</li>
+<li>HR Notification.</li>
+</ul><p class="paragraph"/>Node can have different types:
+<ul class="star">
+<li><strong class="bold">Wait</strong> - Nodes wait for input, so they are visible in the worklist of the user assigned to that node. You can define</li>
+</ul><p class="paragraph"/>actions and forms for this node type.
+<ul class="star">
+<li><strong class="bold">Activity</strong> - Nodes execute actions without waiting for user input. You can define actions for this node type.</li>
+<li><strong class="bold">Fork</strong> - From this node you can execute several new nodes simultaneously (several nodes will be activated not only one</li>
+</ul><p class="paragraph"/> as for 'Activity' node type).
+<ul class="star">
+<li><strong class="bold">AndJoin</strong> - Node should wait for all its incoming transitions (e.g. until all managers do not approve,  the payment is</li>
+</ul><p class="paragraph"/> not done).
+<ul class="star">
+<li><strong class="bold">OrJoin</strong> - Node should wait for at least one incoming transition and then can be activated/executed (e.g. if the</li>
+</ul><p class="paragraph"/>'letter about payment' was rejected or approved by manager -then go to the 'Final' node and finish the process flow).<p class="paragraph"/>
+<strong class="bold">Add Nodes</strong>
+<ul class="star">
+<li>Click the <strong class="bold">Edit Process Types</strong> menu.  Select its corresponding <strong class="bold">Edit</strong> option and click the <strong class="bold">Add</strong> button under Process</li>
+</ul><p class="paragraph"/>Nodes to open the Process Nodes screen.<p class="paragraph"/><img border="0" class="center" src="../img/usersGuide/processNode_1.jpg"></img>
+<ul class="star">
+<li>Enter <strong class="bold">Node ID</strong> (mandatory), select <strong class="bold">Type</strong> from the drop down list, fill in <strong class="bold">Due Date</strong> and <strong class="bold">Expected Duration</strong> fields</li>
+</ul><p class="paragraph"/>and enter <strong class="bold">Protocol Group</strong>.
+<ul class="star">
+<li>Click the <strong class="bold">Apply</strong> button to be redirected to the <strong class="bold">Process Editor</strong> page where there are links.</li>
+</ul><p class="paragraph"/><img border="0" class="center" src="../img/usersGuide/processNode_2.jpg"></img><p class="paragraph"/><strong class="bold">Add Assignee(s)</strong><p class="paragraph"/>You can assign the nodes to any user, role or group and define the visibility of variables - e.g. In the Request Leave
+process, a manager can only approve or reject leave. The Assignees column allows you to assign the nodes
+<strong class="bold">Manager Approval</strong> and <strong class="bold">Manager Rejection</strong> to manager role or user.<p class="paragraph"/>Use the following steps to add assignees:
+<ul class="star">
+<li>Select <strong class="bold">Users</strong>, <strong class="bold">Roles</strong> or <strong class="bold">Groups</strong> using radio buttons.</li>
+<li>Click the <strong class="bold">plus</strong> icon/button to select <strong class="bold">Process Assignees</strong> and a window opens displaying Users, Roles or Groups.</li>
+</ul><p class="paragraph"/><img border="0" class="center" src="../img/usersGuide/addRoles.jpg"></img>
+<ul class="star">
+<li>Select <strong class="bold">User</strong>, <strong class="bold">Role</strong> or <strong class="bold">Group</strong> and click <strong class="bold">Close</strong> button.</li>
+<li>Click <strong class="bold">Add</strong> button. The selected user or role is added to <strong class="bold">Assignees</strong>.</li>
+</ul><p class="paragraph"/><img border="0" class="center" src="../img/usersGuide/addAssignee.jpg"></img><p class="paragraph"/>You can click <strong class="bold">Delete</strong> option to delete an assignee.<p class="paragraph"/>Once you add assignee the next step is to define visibility of process variables.<p class="paragraph"/><strong class="bold">Visibility of Variables</strong><p class="paragraph"/>Visibility of variables is used to define whether the process variables are invisible, read only, or write and read
+variables. Available visibilities are listed below:<p class="paragraph"/>INVISIBLE
+READ_ONLY
+WRITE_READ
+REQUIRED<p class="paragraph"/>Select the visibilities for each of the process variables in the <strong class="bold">Visibility</strong> column of the *Visibility for
+Variables : Variable List*.<p class="paragraph"/><img border="0" class="center" src="../img/usersGuide/visibilityofVaraibles.jpg"></img><p class="paragraph"/>The "Preview Generated Form" button is used to preview the form generated for the nodes of “Wait” type. Refer
+<strong class="bold">Manual Form</strong> section for more details.<p class="paragraph"/><strong class="bold">Manual Form</strong><p class="paragraph"/>The Manual Form has the following options:
+<ul class="star">
+<li>External URL</li>
+<li>Use Automatic Form</li>
+<li>Use Customer Form</li>
+<li>Use Custom Controller and Form (for development mode only)</li>
+</ul><p class="paragraph"/> <em class="italic">External URL</em> <p class="paragraph"/>If you do not want to customize the form or use automatically generated form, but use external editor/view/page instead,
+you can specify the <strong class="bold">URL</strong> for the external page. When you try to open 'Manual Step page' the control is redirected to
+the specified <strong class="bold">External URL</strong>.<p class="paragraph"/> <em class="italic">Use Automatic Form</em> <p class="paragraph"/>The <strong class="bold">Use Automatic Form</strong> option will automatically generate a form for the node type "Wait".<p class="paragraph"/> <em class="italic">Use Custom Form</em> <p class="paragraph"/>The Use Custom Form option is used to create a customized form for the node type "Wait". The user can write the code
+in the Manual Form text area and click a button to generate the form. The <strong class="bold">Preview Generated Form</strong> button is used to
+preview the generated form as shown below:<p class="paragraph"/><img border="0" class="center" src="../img/usersGuide/manualForm.jpg"></img><p class="paragraph"/>Now, click "Preview Generated Form" button to display the preview of HolidayRequestForm as shown below:<p class="paragraph"/><img border="0" class="center" src="../img/usersGuide/previewofGeneratedForm.jpg"></img><p class="paragraph"/> <em class="italic">Use Custom Controller and Form (for development mode only)</em> <p class="paragraph"/>The <strong class="bold">Use Custom Controller and Form</strong> option is used to modify or add more features to the user customized form or to
+create a more complex user customized form. Similar to <strong class="bold">Use Custom Form</strong>, create write code in the Manual Form text area
+and click the <strong class="bold">Generate</strong> button. To preview the form, click the "Preview Generated Form" button.<p class="paragraph"/> <em class="italic">Custom Page and Controller Rules</em> <p class="paragraph"/>It displays a pop-up with some code rules and information for the user who wants to specify custom controller/page. The
+page contains a list of variables that are available on the page (variables, transitions etc.).<p class="paragraph"/><p class="paragraph"/><p class="paragraph"/>
+
+
+<h2 id="transitions">3.6.9 Transitions</h2>
+Transition defines the order in which the process nodes have to be executed - e.g. if the manager approves the leave
+request the approval has to be sent to the employee and to HR. In order to move from <strong class="bold">Approve Notification</strong> node to
+<strong class="bold">Approve Finish</strong> node, a transition is required. While in transition, it passes some information to the next node.<p class="paragraph"/><strong class="bold">Add Transition</strong><p class="paragraph"/>To add transition to a node, follow the steps below:
+<ul class="star">
+<li>Click the <strong class="bold">Edit</strong> option in the <strong class="bold">Operations</strong> column of the <strong class="bold">Edit Process Types</strong> screen to open the <strong class="bold">Process Editor</strong></li>
+</ul><p class="paragraph"/>screen
+<ul class="star">
+<li>Go to the <strong class="bold">Process Nodes</strong> section, select the node and click the <strong class="bold">Plus</strong> button to open the <strong class="bold">Process Transitions</strong></li>
+</ul><p class="paragraph"/>screen
+<ul class="star">
+<li>Enter event in the <strong class="bold">Event</strong> field which is the message to the next transition node</li>
+<li>Select the next transition node from the list of nodes</li>
+<li>Click the <strong class="bold">Apply</strong> button to add transition, else click the <strong class="bold">Back</strong> button</li>
+</ul><p class="paragraph"/><img border="0" class="center" src="../img/usersGuide/processTransition_1.jpg"></img><p class="paragraph"/><img border="0" class="center" src="../img/usersGuide/processTransition_2.jpg"></img>
+<ul class="star">
+<li>To delete a transition, select the <strong class="bold">Delete</strong> icon/button.</li>
+<li>To edit the transition, click on the transition (e.g. - okay). The <strong class="bold">Process Transition</strong> opens. Edit the transition and</li>
+</ul><p class="paragraph"/> click the <strong class="bold">Apply</strong> button.<p class="paragraph"/><img border="0" class="center" src="../img/usersGuide/processTransition_3.jpg"></img><p class="paragraph"/>If the node is a <strong class="bold">Fork</strong> type, the transition is to multiple nodes, as mentioned below:<p class="paragraph"/><img border="0" class="center" src="../img/usersGuide/processTransition_4.jpg"></img><p class="paragraph"/>Here the transition of <strong class="bold">ApprovedOperation</strong> is to <strong class="bold">HRNotification</strong> and <strong class="bold">ApproveNotification</strong>.<p class="paragraph"/>To delete transition click <strong class="bold">Delete</strong> button. A message window appears. Click "OK" button to delete the transition.<p class="paragraph"/>
+
+
+                <div style="clear:both;margin-top:15px;"></div>
+                
+                    <div class="toc-item prev-left"><a href="../guide/installation.html">&lt;&lt; <strong>2</strong><span>Installation</span></a></div>
+                
+                    <div class="toc-item next-right"><a href="../guide/developersGuide.html"><strong>4</strong><span>Developer's Guide</span> >></a></div>
+                
+                <div style="clear:both"></div>
+            </div>
+        </td>
+        <td id="col2">
+            <div class="local clearfix">
+                <div class="local-title">
+                    <a href="../guide/index.html" target="mainFrame">Quick Reference</a>
+                    <span class="toggle">(<a href="#" onclick="localToggle(); return false;">hide</a>)</span>
+                </div>
+                <div class="menu">
+                    
+                </div>
+            </div>
+        </td>
+    </tr>
+</table>
+
+<div id="footer">
+    jCatalog Software AG
+    
+</div>
+
+<script type="text/javascript" src="../js/docs.js"></script>
+
+</body>
+</html>
