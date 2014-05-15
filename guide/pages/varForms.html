@@ -87,24 +87,24 @@ function addJsClass() {
                 
 
 <h2 id="varForms">4.5 Generating forms from Variable definitions</h2>
-<h4>Types of Forms</h4>
-GrailsFlow supports automatic execution of nodes and manual user input. Workflows often need the user to make decisions
+<strong class="bold">Types of Forms</strong><p class="paragraph"/>Grailsflow supports automatic execution of nodes and manual user input. Workflows often need the user to make decisions
 or give input to the process.<p class="paragraph"/>GrailsFlow has functions for worklist management integrated. Whenever a process designer specifies a wait node, the
 execution of the process stops when reaching that node. The node becomes visible in the worklist of the user that is
 currently assigned to that process node.<p class="paragraph"/>When he clicks on the node there are three possible interactions:
 <ul class="star">
-<li> automatic forms: the user sees all process variables that the process designer has given read access to. He can enter</li>
+<li> <strong class="bold">automatic form:</strong> the user sees all process variables that the process designer has given read access to. He can enter</li>
 </ul><p class="paragraph"/>values for variables. GrailsFlow also shows buttons for all events/transitions that leave the node, so the user can
 decide which transition to take by clicking on the button.
 <ul class="star">
-<li> manual form: GrailsFlow allows to upload forms that have been defined manually. These forms are shown instead of the</li>
+<li> <strong class="bold">manual form:</strong> GrailsFlow allows to upload forms that have been defined manually. These forms are shown instead of the</li>
 </ul><p class="paragraph"/>automatically generated form.
 <ul class="star">
-<li> manual forms and controller: This allows process designers to define their own forms management and their own</li>
+<li> <strong class="bold">manual forms and controller:</strong> This allows process designers to define their own forms management and their own</li>
 </ul><p class="paragraph"/>controllers. This is the most flexible way of interacting with the user; however it is also the biggest effort.
 Controller can deal with process variables or other Grails components and can also span multiple pages using the Grails
-WebFlow functionality.<p class="paragraph"/><h4>Create a Form</h4><p class="paragraph"/>In the Process Editor under Process Nodes click button 'Add' on to create a node.<p class="paragraph"/>Enter Node ID and select type as 'Wait' then variables visibility section is displayed. Define the visibility for each
-of the variables (INVISIBLE, READ_ONLY, REQUIRED and WRITE_READ). Select the form generation as<p class="paragraph"/>Use Automatic Form and click button 'Save'.<p class="paragraph"/>The user interface form is auto generated as below.<p class="paragraph"/><img border="0" class="center" src="../img/developersGuide/varForms_1.jpg"></img><p class="paragraph"/>The user interface form is auto generated as below.<p class="paragraph"/><img border="0" class="center" src="../img/developersGuide/varForms_2.jpg"></img><p class="paragraph"/>To create a manual form, select Use Custom Form, a text box appears for entering html code for the form. Enter the
+WebFlow functionality.<p class="paragraph"/><strong class="bold">Create a Form</strong><p class="paragraph"/>In the Process Editor under Process Nodes, click the "Add" button to create a node.<p class="paragraph"/>Enter Node ID and select type as 'Wait' to display the visibility section. Define the visibility for each of the
+variables (INVISIBLE, READ_ONLY, REQUIRED and WRITE_READ). Select form generation as - "Use Automatic Form" and click
+the "Save" button.<p class="paragraph"/>The user interface form is auto generated as below.<p class="paragraph"/><img border="0" class="center" src="../img/developersGuide/varForms_1.jpg"></img><p class="paragraph"/>The user interface form is auto generated as below.<p class="paragraph"/><img border="0" class="center" src="../img/developersGuide/varForms_2.jpg"></img><p class="paragraph"/>To create a manual form, select Use Custom Form, a text box appears for entering html code for the form. Enter the
 manual form code and click button 'Generate'<p class="paragraph"/><img border="0" class="center" src="../img/developersGuide/varForms_3.jpg"></img><p class="paragraph"/>
 To create a manual form with a controller select the option Use Custom Controller and Form and enter the code for
 Manual form and controller and click button 'Generate'<p class="paragraph"/><img border="0" class="center" src="../img/developersGuide/varForms_4.jpg"></img><p class="paragraph"/><p class="paragraph"/>If the editor is an external one, select Use External Editor option and enter the URL for the same.<p class="paragraph"/><img border="0" class="center" src="../img/developersGuide/varForms_5.jpg"></img><p class="paragraph"/>
@@ -154,7 +154,8 @@ Manual form and controller and click button 'Generate'<p class="paragraph"/><img
    <span class="java&#45;keyword">static</span> constraints = &#123;
        productId(required:<span class="java&#45;keyword">true</span>)
        address(required:<span class="java&#45;keyword">true</span>)
-   &#125;</pre></div><p class="paragraph"/><h4>Grailsflow Auto Forms Generation</h4><p class="paragraph"/><strong class="bold">size</strong><p class="paragraph"/>Usage: Uses a value to restrict the size of property input field
+   &#125;</pre></div><p class="paragraph"/>
+<strong class="bold">Grailsflow Auto Forms Generation</strong><p class="paragraph"/><strong class="bold">size</strong><p class="paragraph"/>Usage: Uses a value to restrict the size of property input field
 Example:
 <div class="code"><pre>productID(size: 35)</pre></div><p class="paragraph"/><strong class="bold">widget</strong><p class="paragraph"/>Usage: specifies the widget that represents this process variable property,
 Possible values:
@@ -164,27 +165,28 @@ Possible values:
 <li>list</li>
 </ol><p class="paragraph"/>Example:
 <div class="code"><pre>commentary(widget: <span class="java&#45;quote">"textarea"</span>)
-address(widget: <span class="java&#45;quote">"externalSearch"</span>)<p class="paragraph"/>status(widget: <span class="java&#45;quote">"list"</span>)</pre></div><p class="paragraph"/>External Search: If you want to use widget 'externalSearch', it is also important to specify 'displayKey' and 'template'
-attributes, because they specify template and bean property for rendering. The mechanism of external search rendering
-is the following: property is rendered as readonly input with 'search' and 'clear' link-icons, pressing 'search' link -
-you see the popup window with a 'template' page. It can be the page with the search form or it can contain the list of
-all available values for the property and the user has possibility to select one. Then the inputs of the property are
-preselected with these values. The requirements for template page are:
+address(widget: <span class="java&#45;quote">"externalSearch"</span>)<p class="paragraph"/>status(widget: <span class="java&#45;quote">"list"</span>)</pre></div><p class="paragraph"/><strong class="bold">External Search:</strong>  If you want to use widget 'externalSearch', it is also important to specify the 'displayKey' and
+'template' attributes, because they specify the template and bean property for rendering.<p class="paragraph"/>The mechanism of external search rendering is as follows: property is rendered as readonly input with 'search' and
+'clear' link-icons.  By clicking the 'search' link - you see the pop-up window with a 'template' page. It can be the
+page with the search form or it can contain the list of all available values for the property and the user has the
+option to possibily select one. Then the inputs of the property are pre-selected with these values. The requirements
+for the template page are:
 <ul class="star">
-<li>The template before closing should call opener function, the name of this function is available in template as</li>
-</ul><p class="paragraph"/>'callbackFunctionName' parameter. Also in template there are some more available parameters, they are: ID0 - the
-identifier property of the preselected value. fieldName0 - the property name (process variable name).
+<li> The template before closing should call opener function, the name of this function is available in the template as</li>
+</ul><p class="paragraph"/>the 'callbackFunctionName' parameter. Also in the template,  there are some more available parameters, they are: ID0 -
+the identifier property of the preselected value. fieldName0 - the property name (process variable name).
 <ul class="star">
-<li>It is possible to rewrite and create your own function that fills the opener inputs with selected value. But in this</li>
+<li> It is possible to rewrite and create your own function that fills the opener inputs with selected value. But in this</li>
 </ul><p class="paragraph"/>case you need to know how the widget Id's are formed.
 <ul class="star">
-<li>Pay attention how the opener inputs can be filled: if you want to call opener function, you should transmit some</li>
-</ul><p class="paragraph"/>params with the function, they are: 'key' - the identifier property of your selected value, and any other parameters
-that have the same names as properties of variable (specified as displayKey and remoteFields properties names), for
-example: key = 3 - the unique identifier of Address object. addressId = 'MIRAX GROUP' - value of Address display Key
-property city = 'London' - the value of city property street= 'Piccadilly' - the value of street property
+<li> Pay attention how the opener inputs can be filled: if you want to call opener function, you should transmit some</li>
+</ul><p class="paragraph"/>params with the function since this is the: 'key' - the identifier property of your selected values and any other
+parameters that have the same names as properties of variable (specified as displayKey and remoteFields properties
+names), for example: key = 3 - the unique identifier of Address object. addressId = 'MIRAX GROUP' - value of Address
+display Key property city = 'London' - the value of city property street= 'Piccadilly' - the value of street property
 If you want to fill owner fields with you own JavaScript function, please pay attention how the opener widgits Id's are
-formed. The key property with Id '${propertyName}' for opener window, the remoteFields have the following ID structure:<p class="paragraph"/>${propertyName}_${remoteField}, for example:
+formed. The key property with Id '${propertyName}' for opener window, the remoteFields have the following ID structure:<p class="paragraph"/>
+${propertyName}_${remoteField}, for example:
 <div class="code"><pre>opener.document.getElementById(<span class="java&#45;quote">"address"</span>).value = 3
     opener.document.getElementById(<span class="java&#45;quote">"address_addressId"</span>).value = addressID
     opener.document.getElementById(<span class="java&#45;quote">"address_city"</span>).value = city

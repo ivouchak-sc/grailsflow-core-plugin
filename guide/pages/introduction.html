@@ -87,7 +87,7 @@ function addJsClass() {
                 
 
 <h2 id="introduction">4.1 Overview</h2>
-This section gives you a brief overview about the structure of GrailsFlow and how the system works internally.<p class="paragraph"/>The most important elements and components are:
+This section gives you a brief overview about the structure of GrailsFlow and how the system works internally.<p class="paragraph"/>The most important components are:
 <ul class="star">
 <li>Process definitions</li>
 <li>Processes</li>
@@ -95,26 +95,28 @@ This section gives you a brief overview about the structure of GrailsFlow and ho
 <li>Worklist management</li>
 <li>Actions</li>
 <li>Documents</li>
-</ul><p class="paragraph"/><h4>Process Definitions</h4><p class="paragraph"/>The workflow engine consists of process definitions and the information about running processes. They define the basic
+</ul><p class="paragraph"/><strong class="bold">Process Definitions</strong><p class="paragraph"/>The workflow engine consists of process definitions and information about running processes. They define the basic
 steps of a process. We call these steps nodes.<p class="paragraph"/>Process Definitions are stored in Groovy classes using the builder syntax. You find examples in
-web-app/WEB-INF/workarea/processes/ in your GrailsFlow directory.<p class="paragraph"/>When editing processes, this informations gets parsed and stored into ProcessDef and ProcessDefNodes. After the editing
+web-app/WEB-INF/workarea/processes/ in your GrailsFlow directory.<p class="paragraph"/>When editing processes, this information gets parsed and stored into ProcessDef and ProcessDefNodes. After the editing
 process GrailsFlow creates new Groovy files from these definitions.<p class="paragraph"/>The node types are:
 <ul class="star">
-<li>activitiy nodes: the system executes Groovy code that is stored in the node.</li>
-<li>fork node: the engine allows splits so that multiple steps can be executed in parallel. Split nodes mark the beginning</li>
-</ul><p class="paragraph"/>of a parallel execution.
+<li>activity node - the system executes the Groovy code stored in the node ;</li>
+<li>fork node - engine allows splits for the parallel execution of multiple steps. Split nodes mark the beginning of</li>
+</ul><p class="paragraph"/>a parallel execution
 <ul class="star">
-<li>join nodes: this is the counterpart to split nodes, where multiple parallel executions are joined together.</li>
-<li>wait nodes: wait nodes expect user input. When the process excecution reaches a wait node, the node becomes visible in</li>
-</ul><p class="paragraph"/>the worklist. Typically the user enters/changes values of process variables or makes decisions about where to go to
-next (decides for/specifies an event).<p class="paragraph"/>We move from node to node via so called "events" (also called transitions). When a node gets executed it returns a value
-(name of the event). Based on this value the workflow engine moves to the next node that is connected via this event.<p class="paragraph"/><h4>Processes</h4><p class="paragraph"/>Running Processes as well as historical information is stored in:
+<li>join node - the counterpart to split nodes, where multiple parallel executions are joined together</li>
+<li>wait node - wait nodes expect user input. When the process execution reaches a wait node, the node becomes</li>
+</ul><p class="paragraph"/>visible in the worklist. Typically the user enters or changes values of process variables or makes decisions about
+where to go to next (decides for/specifies an event).<p class="paragraph"/>
+We move from node to node via so called "events" (also called transitions). When a node gets executed it returns a
+value (name of the event). Based on this value the workflow engine moves to the next node that is connected via
+this event.<p class="paragraph"/><strong class="bold">Processes</strong><p class="paragraph"/>Running Processes as well as historical information is stored in:
 <ul class="star">
 <li>Process and</li>
 <li>ProcessNode</li>
 </ul><p class="paragraph"/>Whenever a process enters a new node, a process node record is created in the database. After the process leaves the
 nodes, the record gets updated with status information.<p class="paragraph"/>This means ProcessNode includes all historical information about the process. When the process enters the same node
-twice, there are two records for this node.<p class="paragraph"/>This makes it easy to see the status of running or old processes by looking at the process and processNodes tables.<p class="paragraph"/><h4>Start process: Extendable Process Starting</h4><p class="paragraph"/>There is a possibility to start Process/send Event with the help of external groovy scripts located in
+twice, there are two records for this node.<p class="paragraph"/>This makes it easy to see the status of running or old processes by looking at the process and processNodes tables.<p class="paragraph"/><strong class="bold">Start process: Extendable Process Starting</strong><p class="paragraph"/>There is a possibility to start Process/send Event with the help of external groovy scripts located in
 src/samples/callbacks/. These scripts are called on /process/executeCallback/&#60;scriptFileName&#62; URL request. For example,
 request of /process/executeCallback/sendEvent will invoke execution of callbacks/sendEvent.groovy script.<p class="paragraph"/>Request, params and result are passed to callback script. Callback script should parse request to get
 processKey, nodeID, event, process variables and to store them in the result parameter.<p class="paragraph"/>For example:
@@ -137,27 +139,35 @@ appropriate node.<p class="paragraph"/>Parameters that are available in the call
 <li>result.variables (optional) - map of name-&#62;value pairs of process variables that should be updated,</li>
 <li>result.message (optional, default is "Callback received") - message to be send in response in case of successful execution,</li>
 <li>result.statusCode (optional, default is 200) - HTTP status code to be send in response.</li>
-</ul><p class="paragraph"/><h4>Process Variables</h4><p class="paragraph"/>ProcessVariables are all public variables declared in the process. The variables are read via reflection and stored in
-the ProcessVariable class as a map. Whenever the variables have changed, they get stored back into the database.<p class="paragraph"/>Therefore, process variables are always persisted in the database, so that the process can go on, even after the
+</ul><p class="paragraph"/><strong class="bold">Process Variables</strong><p class="paragraph"/>Process Variables are all public variables declared in the process. The variables are read via reflection and stored
+in the ProcessVariable class as a map. Whenever the variables have changed, they get stored back into the database.<p class="paragraph"/>Therefore, process variables are always persisted in the database, so that the process can go on, even after the
 application has been restarted. However, process variables do not include any historic information, only the current
-values. This is different from nodes, where we see the complete history in process nodes.<p class="paragraph"/><h4>Worklist management</h4><p class="paragraph"/>GrailsFlow supports automatic execution of nodes and manual user input. Workflows often need the user to make decisions
+values. This is different from nodes, where we see the complete history in process nodes.<p class="paragraph"/><strong class="bold">Worklist management</strong><p class="paragraph"/>GrailsFlow supports automatic execution of nodes and manual user input. Workflows often need the user to make decisions
 or give input to the process.<p class="paragraph"/>GrailsFlow has functions for worklist management integrated. Whenever a process designer specifies a wait node, the
 execution of the process stops when reaching that node. The node becomes visible in the worklist of the user that is
-currently assigned to that process node.<p class="paragraph"/>When he clicks on the node there are three possible interactions:
+currently assigned to that process node.<p class="paragraph"/>When a user clicks on the node there can be three possible interactions:
 <ul class="star">
-<li> automatic forms: the user sees all process variables that the process designer has given read access to. He can enter values for variables. GrailsFlow also shows buttons for all events/transitions that leave the node, so the user can decide which transition to take by clicking on the button.</li>
-<li> manual form: GrailsFlow allows to upload forms that have been defined manually. These forms are shown instead of the automatically generated form.</li>
-<li> manual forms and controller: This allows process designers to define their own forms management and their own controllers. This is the most flexible way of interacting with the user, however it is also the biggest effort. Controller can deal with process variables or other Grails components and can also span multiple pages using the Grails WebFlow functionality.</li>
-</ul><p class="paragraph"/><h4>Actions</h4><p class="paragraph"/>Grailsflow provides several predefined actions out of the box, eg. SendMail, Log, Evaluate. To define a new Action,
+<li><strong class="bold">automatic forms</strong> -  user sees all process variables the process designer has given read access to and can enter</li>
+</ul><p class="paragraph"/>values for variables. GrailsFlow also shows buttons for all events/transitions that leave the node, so the user can
+decide which transition to take by clicking on the button.
+<ul class="star">
+<li><strong class="bold">manual form</strong> - GrailsFlow allows the upload of forms that have been defined manually. These forms are shown instead</li>
+</ul><p class="paragraph"/>of the automatically generated form.
+<ul class="star">
+<li><strong class="bold">manual forms and controller</strong> - This allows process designers to define their own forms management and controllers.</li>
+</ul><p class="paragraph"/>This is the most flexible way of interacting with the user, however, it is also takes the biggest effort. Controller can
+deal with process variables or other Grails components as well as span multiple pages using the Grails WebFlow
+functionality.<p class="paragraph"/><strong class="bold">Actions</strong><p class="paragraph"/>Grailsflow provides several pre-defined actions out of the box, eg. SendMail, Log, Evaluate. To define a new Action,
 reate a new class that implements the Action interface and put it into "src&#103;roovy&#99;om&#106;catalog&#103;railsflow&#97;ctions".<p class="paragraph"/>GrailsFlow automatically collects the available actions and presents them in the action editor.<p class="paragraph"/>Actions can have parameters. These are defined as simple instance variables within the Action class. The action editor
 automatically creates a user interface for the parameters and ask the user for the values.<p class="paragraph"/>The user can select three different value type for the parameter of an action: process variables, constant values or
-arbitrary Groovy expressions.<p class="paragraph"/>At runtime, a new action is created, the values of the parameters or constants are assigned to the instance variables
-of the action and the "execute" methods is called.<p class="paragraph"/><h4>Documents</h4><p class="paragraph"/>Documents are a special type of process variables that allows to store arbitray files in a process. Your declare a
-process variable in your process class through the process designer with the type Documents. When the variables can be
-entered, GrailsFlow presents an upload button for documents. The file is uploaded and stored in a directory. We create
-one directory for each day. The file name is cleaned up and extended by the process id and a counter. The link to the
-file is stored in the DB.<p class="paragraph"/>If the variable can be changed in a later step, the file can be downloaded and a new version can be uploaded. The new
-version is stored the same way, so GrailsFlow provides a full version history for documents.
+arbitrary Groovy expressions.<p class="paragraph"/>At runtime, a new action is created, the values of the parameters or constants are assigned to the instance variables of
+the action and the "execute" methods are called.<p class="paragraph"/><strong class="bold">Documents</strong><p class="paragraph"/>Documents are a special type of process variable that allows user's to store arbitray files in a process. You declare a
+process variable in your process class through the Process Editor (or manually) with the type Documents. When the
+variables can be entered, GrailsFlow presents an upload button for documents. The file is uploaded and stored in a
+directory. We create one directory for each day. The file name is cleaned up and extended by the process id and a
+counter. The link to the file is stored in the DB.<p class="paragraph"/>The file can be downloaded and a new version can be uploaded, if the variable can be changed in a later step (node).
+The new version is stored the same way, so GrailsFlow provides a full version history for documents.
+
 
 
                 <div style="clear:both;margin-top:15px;"></div>

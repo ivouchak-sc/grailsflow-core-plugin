@@ -87,13 +87,13 @@ function addJsClass() {
                 
 
 <h2 id="customizeDueDate">4.9 Customize Due Dates calculation</h2>
-<h4>Customize Due Date calculation</h4><p class="paragraph"/>There is a possibility to customize <strong class="bold">Due Date</strong> calculation for <strong class="bold">Process Nodes</strong>. It is possible to configure calculation
-behaviour for all processes or for certain <strong class="bold">Process Type</strong>. By default, the process node due date calculated as<p class="paragraph"/><div class="code"><pre>node.dueOn = node.startedOn + nodeDef.dueDate</pre></div><p class="paragraph"/>where
+<strong class="bold">Customize Due Date calculation</strong><p class="paragraph"/>It is a possible to customize Due Date calculation for Process Nodes and configure calculation behaviour for all
+processes or for certain Process Type. By default, the process node due date calculated as:<p class="paragraph"/><div class="code"><pre>node.dueOn = node.startedOn + nodeDef.dueDate</pre></div><p class="paragraph"/>where
 <ul class="star">
 <li>node.startedOn - <strong class="bold">Date</strong> when node was ACTIVATED.</li>
 <li>nodeDef.dueDate - <strong class="bold">Long</strong> value from process definition.</li>
-</ul><p class="paragraph"/>But sometimes it is necessary to change behaviour, for example in case when the <strong class="bold">dueDate</strong> (node.dueOn) is a weekends we need to shift
-it. Use <strong class="bold">Config.groovy</strong> file of your application to configure <strong class="bold">Due Date</strong> calculation. See examples:<p class="paragraph"/><div class="code"><pre>grailsflow.customizedDueDate = &#123; Date dueDate &#45;&#62;
+</ul><p class="paragraph"/>Sometimes, it is necessary to change behaviour - e.g. if the <strong class="bold">dueDate</strong> (node.,dueOn) is a weekend, it will need to be
+shifted. Use the <strong class="bold">Config.groovy</strong> file of your application to configure <strong class="bold">Due Date</strong> calculation.<p class="paragraph"/><div class="code"><pre>grailsflow.customizedDueDate = &#123; Date dueDate &#45;&#62;
      Calendar date = Calendar.getInstance()
      date.setTime(dueDate)
      <span class="java&#45;keyword">if</span> (date.get(Calendar.DAY_OF_WEEK) == Calendar.SATURDAY) &#123;

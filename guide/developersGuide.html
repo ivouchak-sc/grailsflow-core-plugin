@@ -123,7 +123,7 @@ function addJsClass() {
 
 
 <h2 id="introduction">4.1 Overview</h2>
-This section gives you a brief overview about the structure of GrailsFlow and how the system works internally.<p class="paragraph"/>The most important elements and components are:
+This section gives you a brief overview about the structure of GrailsFlow and how the system works internally.<p class="paragraph"/>The most important components are:
 <ul class="star">
 <li>Process definitions</li>
 <li>Processes</li>
@@ -131,26 +131,28 @@ This section gives you a brief overview about the structure of GrailsFlow and ho
 <li>Worklist management</li>
 <li>Actions</li>
 <li>Documents</li>
-</ul><p class="paragraph"/><h4>Process Definitions</h4><p class="paragraph"/>The workflow engine consists of process definitions and the information about running processes. They define the basic
+</ul><p class="paragraph"/><strong class="bold">Process Definitions</strong><p class="paragraph"/>The workflow engine consists of process definitions and information about running processes. They define the basic
 steps of a process. We call these steps nodes.<p class="paragraph"/>Process Definitions are stored in Groovy classes using the builder syntax. You find examples in
-web-app/WEB-INF/workarea/processes/ in your GrailsFlow directory.<p class="paragraph"/>When editing processes, this informations gets parsed and stored into ProcessDef and ProcessDefNodes. After the editing
+web-app/WEB-INF/workarea/processes/ in your GrailsFlow directory.<p class="paragraph"/>When editing processes, this information gets parsed and stored into ProcessDef and ProcessDefNodes. After the editing
 process GrailsFlow creates new Groovy files from these definitions.<p class="paragraph"/>The node types are:
 <ul class="star">
-<li>activitiy nodes: the system executes Groovy code that is stored in the node.</li>
-<li>fork node: the engine allows splits so that multiple steps can be executed in parallel. Split nodes mark the beginning</li>
-</ul><p class="paragraph"/>of a parallel execution.
+<li>activity node - the system executes the Groovy code stored in the node ;</li>
+<li>fork node - engine allows splits for the parallel execution of multiple steps. Split nodes mark the beginning of</li>
+</ul><p class="paragraph"/>a parallel execution
 <ul class="star">
-<li>join nodes: this is the counterpart to split nodes, where multiple parallel executions are joined together.</li>
-<li>wait nodes: wait nodes expect user input. When the process excecution reaches a wait node, the node becomes visible in</li>
-</ul><p class="paragraph"/>the worklist. Typically the user enters/changes values of process variables or makes decisions about where to go to
-next (decides for/specifies an event).<p class="paragraph"/>We move from node to node via so called "events" (also called transitions). When a node gets executed it returns a value
-(name of the event). Based on this value the workflow engine moves to the next node that is connected via this event.<p class="paragraph"/><h4>Processes</h4><p class="paragraph"/>Running Processes as well as historical information is stored in:
+<li>join node - the counterpart to split nodes, where multiple parallel executions are joined together</li>
+<li>wait node - wait nodes expect user input. When the process execution reaches a wait node, the node becomes</li>
+</ul><p class="paragraph"/>visible in the worklist. Typically the user enters or changes values of process variables or makes decisions about
+where to go to next (decides for/specifies an event).<p class="paragraph"/>
+We move from node to node via so called "events" (also called transitions). When a node gets executed it returns a
+value (name of the event). Based on this value the workflow engine moves to the next node that is connected via
+this event.<p class="paragraph"/><strong class="bold">Processes</strong><p class="paragraph"/>Running Processes as well as historical information is stored in:
 <ul class="star">
 <li>Process and</li>
 <li>ProcessNode</li>
 </ul><p class="paragraph"/>Whenever a process enters a new node, a process node record is created in the database. After the process leaves the
 nodes, the record gets updated with status information.<p class="paragraph"/>This means ProcessNode includes all historical information about the process. When the process enters the same node
-twice, there are two records for this node.<p class="paragraph"/>This makes it easy to see the status of running or old processes by looking at the process and processNodes tables.<p class="paragraph"/><h4>Start process: Extendable Process Starting</h4><p class="paragraph"/>There is a possibility to start Process/send Event with the help of external groovy scripts located in
+twice, there are two records for this node.<p class="paragraph"/>This makes it easy to see the status of running or old processes by looking at the process and processNodes tables.<p class="paragraph"/><strong class="bold">Start process: Extendable Process Starting</strong><p class="paragraph"/>There is a possibility to start Process/send Event with the help of external groovy scripts located in
 src/samples/callbacks/. These scripts are called on /process/executeCallback/&#60;scriptFileName&#62; URL request. For example,
 request of /process/executeCallback/sendEvent will invoke execution of callbacks/sendEvent.groovy script.<p class="paragraph"/>Request, params and result are passed to callback script. Callback script should parse request to get
 processKey, nodeID, event, process variables and to store them in the result parameter.<p class="paragraph"/>For example:
@@ -173,40 +175,47 @@ appropriate node.<p class="paragraph"/>Parameters that are available in the call
 <li>result.variables (optional) - map of name-&#62;value pairs of process variables that should be updated,</li>
 <li>result.message (optional, default is "Callback received") - message to be send in response in case of successful execution,</li>
 <li>result.statusCode (optional, default is 200) - HTTP status code to be send in response.</li>
-</ul><p class="paragraph"/><h4>Process Variables</h4><p class="paragraph"/>ProcessVariables are all public variables declared in the process. The variables are read via reflection and stored in
-the ProcessVariable class as a map. Whenever the variables have changed, they get stored back into the database.<p class="paragraph"/>Therefore, process variables are always persisted in the database, so that the process can go on, even after the
+</ul><p class="paragraph"/><strong class="bold">Process Variables</strong><p class="paragraph"/>Process Variables are all public variables declared in the process. The variables are read via reflection and stored
+in the ProcessVariable class as a map. Whenever the variables have changed, they get stored back into the database.<p class="paragraph"/>Therefore, process variables are always persisted in the database, so that the process can go on, even after the
 application has been restarted. However, process variables do not include any historic information, only the current
-values. This is different from nodes, where we see the complete history in process nodes.<p class="paragraph"/><h4>Worklist management</h4><p class="paragraph"/>GrailsFlow supports automatic execution of nodes and manual user input. Workflows often need the user to make decisions
+values. This is different from nodes, where we see the complete history in process nodes.<p class="paragraph"/><strong class="bold">Worklist management</strong><p class="paragraph"/>GrailsFlow supports automatic execution of nodes and manual user input. Workflows often need the user to make decisions
 or give input to the process.<p class="paragraph"/>GrailsFlow has functions for worklist management integrated. Whenever a process designer specifies a wait node, the
 execution of the process stops when reaching that node. The node becomes visible in the worklist of the user that is
-currently assigned to that process node.<p class="paragraph"/>When he clicks on the node there are three possible interactions:
+currently assigned to that process node.<p class="paragraph"/>When a user clicks on the node there can be three possible interactions:
 <ul class="star">
-<li> automatic forms: the user sees all process variables that the process designer has given read access to. He can enter values for variables. GrailsFlow also shows buttons for all events/transitions that leave the node, so the user can decide which transition to take by clicking on the button.</li>
-<li> manual form: GrailsFlow allows to upload forms that have been defined manually. These forms are shown instead of the automatically generated form.</li>
-<li> manual forms and controller: This allows process designers to define their own forms management and their own controllers. This is the most flexible way of interacting with the user, however it is also the biggest effort. Controller can deal with process variables or other Grails components and can also span multiple pages using the Grails WebFlow functionality.</li>
-</ul><p class="paragraph"/><h4>Actions</h4><p class="paragraph"/>Grailsflow provides several predefined actions out of the box, eg. SendMail, Log, Evaluate. To define a new Action,
+<li><strong class="bold">automatic forms</strong> -  user sees all process variables the process designer has given read access to and can enter</li>
+</ul><p class="paragraph"/>values for variables. GrailsFlow also shows buttons for all events/transitions that leave the node, so the user can
+decide which transition to take by clicking on the button.
+<ul class="star">
+<li><strong class="bold">manual form</strong> - GrailsFlow allows the upload of forms that have been defined manually. These forms are shown instead</li>
+</ul><p class="paragraph"/>of the automatically generated form.
+<ul class="star">
+<li><strong class="bold">manual forms and controller</strong> - This allows process designers to define their own forms management and controllers.</li>
+</ul><p class="paragraph"/>This is the most flexible way of interacting with the user, however, it is also takes the biggest effort. Controller can
+deal with process variables or other Grails components as well as span multiple pages using the Grails WebFlow
+functionality.<p class="paragraph"/><strong class="bold">Actions</strong><p class="paragraph"/>Grailsflow provides several pre-defined actions out of the box, eg. SendMail, Log, Evaluate. To define a new Action,
 reate a new class that implements the Action interface and put it into "src&#103;roovy&#99;om&#106;catalog&#103;railsflow&#97;ctions".<p class="paragraph"/>GrailsFlow automatically collects the available actions and presents them in the action editor.<p class="paragraph"/>Actions can have parameters. These are defined as simple instance variables within the Action class. The action editor
 automatically creates a user interface for the parameters and ask the user for the values.<p class="paragraph"/>The user can select three different value type for the parameter of an action: process variables, constant values or
-arbitrary Groovy expressions.<p class="paragraph"/>At runtime, a new action is created, the values of the parameters or constants are assigned to the instance variables
-of the action and the "execute" methods is called.<p class="paragraph"/><h4>Documents</h4><p class="paragraph"/>Documents are a special type of process variables that allows to store arbitray files in a process. Your declare a
-process variable in your process class through the process designer with the type Documents. When the variables can be
-entered, GrailsFlow presents an upload button for documents. The file is uploaded and stored in a directory. We create
-one directory for each day. The file name is cleaned up and extended by the process id and a counter. The link to the
-file is stored in the DB.<p class="paragraph"/>If the variable can be changed in a later step, the file can be downloaded and a new version can be uploaded. The new
-version is stored the same way, so GrailsFlow provides a full version history for documents.
+arbitrary Groovy expressions.<p class="paragraph"/>At runtime, a new action is created, the values of the parameters or constants are assigned to the instance variables of
+the action and the "execute" methods are called.<p class="paragraph"/><strong class="bold">Documents</strong><p class="paragraph"/>Documents are a special type of process variable that allows user's to store arbitray files in a process. You declare a
+process variable in your process class through the Process Editor (or manually) with the type Documents. When the
+variables can be entered, GrailsFlow presents an upload button for documents. The file is uploaded and stored in a
+directory. We create one directory for each day. The file name is cleaned up and extended by the process id and a
+counter. The link to the file is stored in the DB.<p class="paragraph"/>The file can be downloaded and a new version can be uploaded, if the variable can be changed in a later step (node).
+The new version is stored the same way, so GrailsFlow provides a full version history for documents.
+
 
 
 <h2 id="nodeOwner">4.2 Changing a Node Owner dynamically</h2>
-Grailsflow allows to define assignees or owners of node. An assignee or node owner could be a specific user, a list of
-roles or groups. These are the persons that see the workitems, work on them and move them to the next status.<p class="paragraph"/>The owners of a node are predefined in the process editor, however they can be overwritten within the workflow. When a
+Grailsflow allows user's to define assignees or owners of node. An assignee or node owner could be a specific user, a
+list of roles or groups. These are the persons that see the workitems, work on them and move them to the next status.<p class="paragraph"/>The owners of a node are pre-defined in the process editor, however they can be overwritten within the workflow. When a
 worklist is shown, the system checks for all nodes that have the same user id, roles or groups in the assignee list that
 the current user has and shows those nodes in the worklist.<p class="paragraph"/>There are processes that require that the assignee of a node is determined/calculated dynamically, e.g some of them are
-visible only for an administrator, some are available for simple users, other for restricted groups, etc.<p class="paragraph"/>GrailsFlow supports this by providing a system variable nextOwners that allows to set the owners for the next nodes.
-This variable is not stored in the DB, but evaluated while executing a node and lives only in the action execution
-context.<p class="paragraph"/>The variable nextOwners has a type Map. The nodeId is the key and values are a list of users/role/groups. The variable
-nextOwner is of type List and contains a simple collection of user names/roles/groups.<p class="paragraph"/>When the actions of a node are finished, that next nodes are created and GrailsFlow writes the "nextOwners" as the
-"owners" into those nodes. In the definition of actions, they look and act like simple process variables.<p class="paragraph"/>The difference between 'nextOwners' and 'nextOwner' properties is that in 'nextOwners' we can specify different
-assignees for specific nodes, while 'nextOwner' allows to specify assignees for all following nodes. This is more
+visible only for an administrator, some are available for simple users, others for restricted groups, etc.<p class="paragraph"/>GrailsFlow supports this by providing a system variable nextOwners that allows them to set the owners for the next
+nodes. This variable is not stored in the DB, but evaluated while executing a node and lives only in the action
+execution context.<p class="paragraph"/>When the actions of a node are finished, that next nodes are created and GrailsFlow writes "nextOwners" as the "owners"
+into those nodes. In the definition of actions, they look and act like simple process variables.<p class="paragraph"/>The difference between 'nextOwners' and 'nextOwner' properties is that in 'nextOwners' , you can specify different
+assignees for specific nodes, while 'nextOwner' allows you to specify assignees for all following nodes. This is more
 convenient, if you have only one following node - in this case you do not need to specify 'nodeID' for that node.<p class="paragraph"/>The user names/roles/groups in assignees should have the same types/values, as the information coming from the
 AbstractWorklistProvider implementation. This is typically "USER_username", "ROLE_rolename" and "GROUP_groupname".<p class="paragraph"/>Example: if you want to create restrictions for user roles and your user class contains many roles, then you will have
 something like this in your process description:<p class="paragraph"/>In Process Definition:<p class="paragraph"/><div class="code"><pre>&#8230;
@@ -218,12 +227,13 @@ something like this in your process description:<p class="paragraph"/>In Process
 
 
 <h2 id="actions">4.3 Creating Actions</h2>
-<h4>Actions</h4><p class="paragraph"/>Actions are the principal unit that execute all activities and operations in GrailsFlow. They are written in plain
+<strong class="bold">Actions</strong><p class="paragraph"/>Actions are the principal unit that execute all activities and operations in GrailsFlow. They are written in plain
 Groovy and stored in a specified folder. The folder can be customized in Spring configuration (like paths to processes
-scripts and document attachments), on default it is configured to 'actions' folder in workarea. When the node is
-executing, the necessary action script is loaded as file, dynamically parsed to Java class and then executed (method
-execute() of the class is called).<p class="paragraph"/>When you write a new action, you have to subclass the abstract class Action. All actions can then be used in the action
-editor and the 'action' closure of the process definition.<p class="paragraph"/><h4>How to implement a custom action</h4><p class="paragraph"/>The class Action provides several methods that are further described here.
+scripts and document attachments), by default it is configured to the 'actions' folder in the workarea. When the node
+is executing, the necessary action script is loaded as a file, dynamically parsed to Java class and then executed
+(method execute() of the class is called).<p class="paragraph"/>When you write a new action, you have to subclass the abstract class Action. All actions can then be used in the action
+editor and the 'action' closure of the process definition.<p class="paragraph"/>
+<strong class="bold">How to implement a custom action</strong><p class="paragraph"/>The class Action provides several methods that are further described here.
 <ol>
 <li>Execute() method</li>
 </ol><p class="paragraph"/>The abstract Object execute() method need to be implemented. This methods "is" the actual action/does the operation that
@@ -244,7 +254,7 @@ implementation. It provides the
 <li>   locale,</li>
 <li>   siteBase,</li>
 <li>   requester.</li>
-</ul><p class="paragraph"/>Grailsflow provides a number of basic actions that are useful many workflows. Among them are:
+</ul><p class="paragraph"/>Grailsflow provides a number of basic actions that are useful in many workflows. Among them are:
 <ul class="star">
 <li>LogAction - writes some log information in the trace or the log file.</li>
 <li>EvaluateAction - evaluates arbitrary Groovy expressions. This is very powerful and generic and reduces the number of</li>
@@ -257,17 +267,17 @@ implementation. It provides the
 <h2 id="extStartProcess">4.4 Extendable Start Process</h2>
 In Grailsflow it is possible to start process in two ways:
 <ul class="star">
-<li> start process with defauls values by passing process name;</li>
+<li> start process with defaults values by passing process name;</li>
 <li> start process from external system (with requested variables values).</li>
-</ul><p class="paragraph"/>Using first way, you can start process with default values (that are predefined in process definition script). When you
-start process and your first node is manual (the node of type 'Wait') you will be automatically redirected to the manual
-form and only when you submit it (change/set values for the process variables), the process will be started.<p class="paragraph"/>But sometimes there is a situation when external system wants to start the process. The system should provide the
+</ul><p class="paragraph"/>In the first, you can start process with default values (pre-defined in process definition script). When you start the
+process and your first node is manual (the node of type 'Wait') you will be automatically redirected to the manual form
+and the process will be started only when you submit it (change/set values for the process variables).<p class="paragraph"/>But sometimes there is a situation when the external system wants to start the process. The system should provide the
 starting data for process (the values for process variables). For example, the several different systems use the same
 process definition 'CreateProduct' for creating product. For starting the process, the system should provide 'productId'
 and 'catalogId' values. The problem is that systems can have (and usually have) different formats for sending
-parameters, e.g. in XML. It means that for each and every system we need a special 'parser' script for parameters, and
-then when Grailsflow will get the parameters in usual form it can start process using standard procedure.<p class="paragraph"/>To start a process from external system is possible to do with using Grailsflow 'Extendable StartProcess' feature. When
-you want to use it you need:
+parameters, e.g. in XML. It means that for each and every system, a special 'parser' script is needed for parameters,
+and then when Grailsflow gets the parameters in usual form it can start the process using standard procedure.<p class="paragraph"/>It is possible to start a process from an external system using Grailsflow 'Extendable StartProcess' feature. When you
+want to use it you need:
 <ol>
 <li>Have a Groovy 'callback' script in application workarea (the application contains Grailsflow plugin installed). This</li>
 </ol><p class="paragraph"/>script should be places in workarea directory according to 'callbacksPath' bean value. The bean is defined in
@@ -319,24 +329,24 @@ result.variables = variables</pre></div><p class="paragraph"/>Then you place scr
 
 
 <h2 id="varForms">4.5 Generating forms from Variable definitions</h2>
-<h4>Types of Forms</h4>
-GrailsFlow supports automatic execution of nodes and manual user input. Workflows often need the user to make decisions
+<strong class="bold">Types of Forms</strong><p class="paragraph"/>Grailsflow supports automatic execution of nodes and manual user input. Workflows often need the user to make decisions
 or give input to the process.<p class="paragraph"/>GrailsFlow has functions for worklist management integrated. Whenever a process designer specifies a wait node, the
 execution of the process stops when reaching that node. The node becomes visible in the worklist of the user that is
 currently assigned to that process node.<p class="paragraph"/>When he clicks on the node there are three possible interactions:
 <ul class="star">
-<li> automatic forms: the user sees all process variables that the process designer has given read access to. He can enter</li>
+<li> <strong class="bold">automatic form:</strong> the user sees all process variables that the process designer has given read access to. He can enter</li>
 </ul><p class="paragraph"/>values for variables. GrailsFlow also shows buttons for all events/transitions that leave the node, so the user can
 decide which transition to take by clicking on the button.
 <ul class="star">
-<li> manual form: GrailsFlow allows to upload forms that have been defined manually. These forms are shown instead of the</li>
+<li> <strong class="bold">manual form:</strong> GrailsFlow allows to upload forms that have been defined manually. These forms are shown instead of the</li>
 </ul><p class="paragraph"/>automatically generated form.
 <ul class="star">
-<li> manual forms and controller: This allows process designers to define their own forms management and their own</li>
+<li> <strong class="bold">manual forms and controller:</strong> This allows process designers to define their own forms management and their own</li>
 </ul><p class="paragraph"/>controllers. This is the most flexible way of interacting with the user; however it is also the biggest effort.
 Controller can deal with process variables or other Grails components and can also span multiple pages using the Grails
-WebFlow functionality.<p class="paragraph"/><h4>Create a Form</h4><p class="paragraph"/>In the Process Editor under Process Nodes click button 'Add' on to create a node.<p class="paragraph"/>Enter Node ID and select type as 'Wait' then variables visibility section is displayed. Define the visibility for each
-of the variables (INVISIBLE, READ_ONLY, REQUIRED and WRITE_READ). Select the form generation as<p class="paragraph"/>Use Automatic Form and click button 'Save'.<p class="paragraph"/>The user interface form is auto generated as below.<p class="paragraph"/><img border="0" class="center" src="../img/developersGuide/varForms_1.jpg"></img><p class="paragraph"/>The user interface form is auto generated as below.<p class="paragraph"/><img border="0" class="center" src="../img/developersGuide/varForms_2.jpg"></img><p class="paragraph"/>To create a manual form, select Use Custom Form, a text box appears for entering html code for the form. Enter the
+WebFlow functionality.<p class="paragraph"/><strong class="bold">Create a Form</strong><p class="paragraph"/>In the Process Editor under Process Nodes, click the "Add" button to create a node.<p class="paragraph"/>Enter Node ID and select type as 'Wait' to display the visibility section. Define the visibility for each of the
+variables (INVISIBLE, READ_ONLY, REQUIRED and WRITE_READ). Select form generation as - "Use Automatic Form" and click
+the "Save" button.<p class="paragraph"/>The user interface form is auto generated as below.<p class="paragraph"/><img border="0" class="center" src="../img/developersGuide/varForms_1.jpg"></img><p class="paragraph"/>The user interface form is auto generated as below.<p class="paragraph"/><img border="0" class="center" src="../img/developersGuide/varForms_2.jpg"></img><p class="paragraph"/>To create a manual form, select Use Custom Form, a text box appears for entering html code for the form. Enter the
 manual form code and click button 'Generate'<p class="paragraph"/><img border="0" class="center" src="../img/developersGuide/varForms_3.jpg"></img><p class="paragraph"/>
 To create a manual form with a controller select the option Use Custom Controller and Form and enter the code for
 Manual form and controller and click button 'Generate'<p class="paragraph"/><img border="0" class="center" src="../img/developersGuide/varForms_4.jpg"></img><p class="paragraph"/><p class="paragraph"/>If the editor is an external one, select Use External Editor option and enter the URL for the same.<p class="paragraph"/><img border="0" class="center" src="../img/developersGuide/varForms_5.jpg"></img><p class="paragraph"/>
@@ -386,7 +396,8 @@ Manual form and controller and click button 'Generate'<p class="paragraph"/><img
    <span class="java&#45;keyword">static</span> constraints = &#123;
        productId(required:<span class="java&#45;keyword">true</span>)
        address(required:<span class="java&#45;keyword">true</span>)
-   &#125;</pre></div><p class="paragraph"/><h4>Grailsflow Auto Forms Generation</h4><p class="paragraph"/><strong class="bold">size</strong><p class="paragraph"/>Usage: Uses a value to restrict the size of property input field
+   &#125;</pre></div><p class="paragraph"/>
+<strong class="bold">Grailsflow Auto Forms Generation</strong><p class="paragraph"/><strong class="bold">size</strong><p class="paragraph"/>Usage: Uses a value to restrict the size of property input field
 Example:
 <div class="code"><pre>productID(size: 35)</pre></div><p class="paragraph"/><strong class="bold">widget</strong><p class="paragraph"/>Usage: specifies the widget that represents this process variable property,
 Possible values:
@@ -396,27 +407,28 @@ Possible values:
 <li>list</li>
 </ol><p class="paragraph"/>Example:
 <div class="code"><pre>commentary(widget: <span class="java&#45;quote">"textarea"</span>)
-address(widget: <span class="java&#45;quote">"externalSearch"</span>)<p class="paragraph"/>status(widget: <span class="java&#45;quote">"list"</span>)</pre></div><p class="paragraph"/>External Search: If you want to use widget 'externalSearch', it is also important to specify 'displayKey' and 'template'
-attributes, because they specify template and bean property for rendering. The mechanism of external search rendering
-is the following: property is rendered as readonly input with 'search' and 'clear' link-icons, pressing 'search' link -
-you see the popup window with a 'template' page. It can be the page with the search form or it can contain the list of
-all available values for the property and the user has possibility to select one. Then the inputs of the property are
-preselected with these values. The requirements for template page are:
+address(widget: <span class="java&#45;quote">"externalSearch"</span>)<p class="paragraph"/>status(widget: <span class="java&#45;quote">"list"</span>)</pre></div><p class="paragraph"/><strong class="bold">External Search:</strong>  If you want to use widget 'externalSearch', it is also important to specify the 'displayKey' and
+'template' attributes, because they specify the template and bean property for rendering.<p class="paragraph"/>The mechanism of external search rendering is as follows: property is rendered as readonly input with 'search' and
+'clear' link-icons.  By clicking the 'search' link - you see the pop-up window with a 'template' page. It can be the
+page with the search form or it can contain the list of all available values for the property and the user has the
+option to possibily select one. Then the inputs of the property are pre-selected with these values. The requirements
+for the template page are:
 <ul class="star">
-<li>The template before closing should call opener function, the name of this function is available in template as</li>
-</ul><p class="paragraph"/>'callbackFunctionName' parameter. Also in template there are some more available parameters, they are: ID0 - the
-identifier property of the preselected value. fieldName0 - the property name (process variable name).
+<li> The template before closing should call opener function, the name of this function is available in the template as</li>
+</ul><p class="paragraph"/>the 'callbackFunctionName' parameter. Also in the template,  there are some more available parameters, they are: ID0 -
+the identifier property of the preselected value. fieldName0 - the property name (process variable name).
 <ul class="star">
-<li>It is possible to rewrite and create your own function that fills the opener inputs with selected value. But in this</li>
+<li> It is possible to rewrite and create your own function that fills the opener inputs with selected value. But in this</li>
 </ul><p class="paragraph"/>case you need to know how the widget Id's are formed.
 <ul class="star">
-<li>Pay attention how the opener inputs can be filled: if you want to call opener function, you should transmit some</li>
-</ul><p class="paragraph"/>params with the function, they are: 'key' - the identifier property of your selected value, and any other parameters
-that have the same names as properties of variable (specified as displayKey and remoteFields properties names), for
-example: key = 3 - the unique identifier of Address object. addressId = 'MIRAX GROUP' - value of Address display Key
-property city = 'London' - the value of city property street= 'Piccadilly' - the value of street property
+<li> Pay attention how the opener inputs can be filled: if you want to call opener function, you should transmit some</li>
+</ul><p class="paragraph"/>params with the function since this is the: 'key' - the identifier property of your selected values and any other
+parameters that have the same names as properties of variable (specified as displayKey and remoteFields properties
+names), for example: key = 3 - the unique identifier of Address object. addressId = 'MIRAX GROUP' - value of Address
+display Key property city = 'London' - the value of city property street= 'Piccadilly' - the value of street property
 If you want to fill owner fields with you own JavaScript function, please pay attention how the opener widgits Id's are
-formed. The key property with Id '${propertyName}' for opener window, the remoteFields have the following ID structure:<p class="paragraph"/>${propertyName}_${remoteField}, for example:
+formed. The key property with Id '${propertyName}' for opener window, the remoteFields have the following ID structure:<p class="paragraph"/>
+${propertyName}_${remoteField}, for example:
 <div class="code"><pre>opener.document.getElementById(<span class="java&#45;quote">"address"</span>).value = 3
     opener.document.getElementById(<span class="java&#45;quote">"address_addressId"</span>).value = addressID
     opener.document.getElementById(<span class="java&#45;quote">"address_city"</span>).value = city
@@ -446,50 +458,51 @@ Example:
 
 
 <h2 id="manualForms">4.6 Manual Forms</h2>
-<h4>Why do we use Manual Forms.</h4><p class="paragraph"/>Sometimes it’s not convenient to use Grailsflow automatic forms for process flow. They have a number of restrictions.
-All automatic forms have the same layout: the list of variables and the list of available events. In Grailsflow there
-is a possibility to create manual (or custom) form. On your manual form you can use any styles, scripts, functionality.
-See example.<p class="paragraph"/>Automatic form for HolidayRequest process definitions:<p class="paragraph"/><img border="0" class="center" src="../img/developersGuide/manualForms_1.jpg"></img><p class="paragraph"/>Custom form for the same process definition:<p class="paragraph"/><img border="0" class="center" src="../img/developersGuide/manualForms_2.jpg"></img><p class="paragraph"/><h4>Based on Grails: Groovy + GSPs.</h4><p class="paragraph"/>The manual form creation if based on Groovy and GSP concepts. The manual (or custom) form is a GSP template that will be
-rendered on the ‘Node Details’ page. When you decide that you need to create a form, the following links about Grails,
-Groovy and GSP (groovy server pages) can be useful for you:
+<strong class="bold">Why do we use Manual Forms</strong><p class="paragraph"/>Sometimes it’s not convenient to use Grailsflow automatic forms for process flow. They have a number of restrictions.<p class="paragraph"/>All automatic forms have the same layout: the list of variables and the list of available events. In Grailsflow, there
+is a possibility to create manual or custom forms. On your manual form you can use any styles, scripts, functionality.
+See example.<p class="paragraph"/>Automatic form for HolidayRequest process definitions:<p class="paragraph"/><img border="0" class="center" src="../img/developersGuide/manualForms_1.jpg"></img><p class="paragraph"/>Custom form for the same process definition:<p class="paragraph"/><img border="0" class="center" src="../img/developersGuide/manualForms_2.jpg"></img><p class="paragraph"/><strong class="bold">Based on Grails: Groovy + GSPs</strong><p class="paragraph"/>The manual form creation if based on Groovy and GSP concepts - The manual (or custom) form is a GSP template that will
+be rendered on the ‘Node Details’ page. When you decide that you need to create a form, the following links about
+Grails, Groovy and GSP (groovy server pages) can be useful for you:
 <ul class="star">
 <li><a href="http://www.grails.org/" target="blank">http://www.grails.org/</a></li>
 <li><a href="http://groovy.codehaus.org/" target="blank">http://groovy.codehaus.org/</a></li>
 <li><a href="http://groovy.codehaus.org/GSP" target="blank">http://groovy.codehaus.org/GSP</a></li>
-</ul><p class="paragraph"/><h4>How to create Manual Forms and integrate into Process definition.</h4><p class="paragraph"/>When you decide that you need a manual form instead of automatic for your node, you have two ways:
+</ul><p class="paragraph"/><strong class="bold">How to create Manual Forms and integrate into Process definition</strong><p class="paragraph"/>When you decide that you need a manual instead of an automatic form for your node, there are two ways to do it:
 <ul class="star">
 <li> Create simple Manual form;</li>
-<li> Create Manual form with Custom Controller;</li>
-</ul><p class="paragraph"/>The information about second way you can get in chapter 11. This feature is working only in development mode.
-When you finish with the form and press ‘Generate’ button, the GSP template is generated and stored in the application
-views. When the node will be activated, the manual form will be rendered to the user. Each form belongs to the process
-node and stored in the views under path ‘views/manualForms/&#60;ProcessType&#62;/_&#60;ProcessNode&#62;.gsp’.
+<li> Create Manual form with Custom Controller</li>
+</ul><p class="paragraph"/>The information for the second (Create Manual form with Custom Controller) option  can be found in chapter 11. This
+feature works only in development mode.<p class="paragraph"/>When you finish with the form and press the ‘Generate’ button, the GSP template is generated and stored in the
+application views. When the node is activated, the manual form will be rendered to the user. Each form belongs to the
+process node and stored in views as - path‘views/manualForms/&#60;ProcessType&#62;/_&#60;ProcessNode&#62;.gsp’.
 The Manual form is rendered as the part of the 'Node Details' page. Only server messages (standard error messages) can
 be added to the page automatically (at the top of the page). If your form cannot be rendered, the error message will be
-displayed.<p class="paragraph"/><h4>Access of Process Variables.</h4><p class="paragraph"/>On the manual form you can access all process variables. They are in bean ‘nodeDetails’ that is available on the manual
-form. You can get them by using the following signature:<p class="paragraph"/>${nodeDetails.variables}<p class="paragraph"/>Where ‘variables’ is a Map that contains entries
+displayed.<p class="paragraph"/>
+<strong class="bold">Access of Process Variables</strong><p class="paragraph"/>On the manual form you can access all process variables. They are in bean ‘nodeDetails’ that is available on the manual
+form. You can get them by using the following signature:<p class="paragraph"/>${nodeDetails.variables}<p class="paragraph"/>Where 'variables' is a Map that contains entries
 variableName: variableDetails
 VariableDetails bean contains the following list of properties:
 <ul class="star">
-<li>   name           String variable name</li>
-<li>   typeName  (changed to 'type' since version 1.0)   type of variable</li>
-<li>   label            Map of languageID -&#62; variable label</li>
-<li>   description   Map of languageID -&#62; variable description</li>
-<li>   value            Object variable value</li>
-<li>   visibility        Variable visibility</li>
-<li>   required       Is variable required or not</li>
-<li>   view             View of variable (See more information in chapter 8)</li>
+<li>   <strong class="bold">name</strong>           String variable name</li>
+<li>   <strong class="bold">typeName</strong>  (changed to <strong class="bold">type</strong> since version 1.0)   type of variable</li>
+<li>   <strong class="bold">label</strong>            Map of languageID -&#62; variable label</li>
+<li>   <strong class="bold">description</strong>   Map of languageID -&#62; variable description</li>
+<li>   <strong class="bold">value</strong>           Object variable value</li>
+<li>   <strong class="bold">visibility</strong>        Variable visibility</li>
+<li>   <strong class="bold">required</strong>      Is variable required or not</li>
+<li>   <strong class="bold">view</strong>             View of variable (See more information in chapter 8)</li>
 </ul><p class="paragraph"/>For example, you can access property 'value' of variable using the following notation:
 ${nodeDetails.variables.requesterName.value}<p class="paragraph"/><img border="0" class="center" src="../img/developersGuide/manualForms_3.jpg"></img><p class="paragraph"/>If you want your variable to be updated after form submitting you need to follow the rule that variable should have
-property ‘name’ specified like:<p class="paragraph"/>name=”var_&#60;variableName&#62;”.<p class="paragraph"/><h4>Available Events (transitions).</h4><p class="paragraph"/>Also on the manual forms you can get information about all available transitions from current node. They are stored in
-bean ‘nodeDetails’ and can be accessed using signature:<p class="paragraph"/>${nodeDetails.events}<p class="paragraph"/>Where “events” is a set of objects. Each object contains the next information about transition:
+property 'name' specified like:<p class="paragraph"/>name="var_&#60;variableName&#62;".<p class="paragraph"/>
+<strong class="bold">Available Events (transitions)</strong><p class="paragraph"/>Also on the manual forms you can get information about all available transitions from current node. They are stored in
+bean ‘nodeDetails’ and can be accessed using signature:<p class="paragraph"/>${nodeDetails.events}<p class="paragraph"/>Where "events" is a set of objects. Each object contains the next information about transition:
 <ul class="star">
 <li>   event;</li>
 <li>   label (the Map of entries: languageID -&#62; event label) - it is used for making events translatable.</li>
 </ul><p class="paragraph"/>    If you want to use transition on UI you need to take into account the following rule: your HTML submit component
     should have property ‘name’ specified like
     name = “event_&#60;event&#62;” .<p class="paragraph"/>See example:<p class="paragraph"/><img border="0" class="center" src="../img/developersGuide/manualForms_4.jpg"></img><p class="paragraph"/>Pay attention, that if you want to submit any information to the server you need to place it in  &#60;g:form&#62; tag. For more
-information check <a href="http://www.grails.org/Tag+-+form" target="blank">http://www.grails.org/Tag+-+form</a>.<p class="paragraph"/><h4>Available Beans and Services.</h4><p class="paragraph"/>There is a bean “nodeDetails” that is available on manual form. This bean is of type
+information check <a href="http://www.grails.org/Tag+-+form" target="blank">http://www.grails.org/Tag+-+form</a>.<p class="paragraph"/><strong class="bold">Available Beans and Services</strong><p class="paragraph"/>There is a bean "nodeDetails" that is available on manual form. This bean is of type
 com.jcatalog.grailsflow.engine.NodeDetails and contains the following info:<p class="paragraph"/>NodeDetails has following properties:
 <ul class="star">
 <li>   process        Object contains information about process</li>
@@ -503,14 +516,15 @@ com.jcatalog.grailsflow.engine.NodeDetails and contains the following info:<p cl
 <li>   assignees      Set&#60;String&#62;   of assignee IDs</li>
 <li>   events           Set&#60;EventDetails&#62; of events</li>
 <li>   variables        Map of variableName -&#62; variableDetails</li>
-</ul><p class="paragraph"/><h4>How to access DB entries.</h4><p class="paragraph"/>On the custom form it is possible to access database instances using standard Grails possibilities (working with
+</ul><p class="paragraph"/><strong class="bold">How to access DB entries</strong><p class="paragraph"/>On the custom form it is possible to access database instances using standard Grails possibilities (working with
 domains) and Groovy tags:
-&#60;g:select from="${com.jcatalog.core.Country.list()}"
-          optionKey="countryId"
-          optionValue="countryId"
-          value="${orderAddress?.country}"/&#62;<p class="paragraph"/>This example shows how to create selectbox with Countries (countryID are shown).<p class="paragraph"/>If you need to access the DB table, you need to specify the domain class of it (full class name) and then call the one
-of the dynamic methods that Grails provides for domains.<p class="paragraph"/>For example, you can get all entries from table Product:<p class="paragraph"/><div class="code"><pre>com.jcatalog.product.Product.list()</pre></div><p class="paragraph"/>or find products using some filters:
-<div class="code"><pre>com.jcatalog.product.Product.findAllByProductIdLike(“%Printer%”)<p class="paragraph"/>com.jcatalog.product.Product.findWhere(productId:“Printer”, catalogId: “HP”)</pre></div><p class="paragraph"/>For more information about available dynamic methods,  see  <a href="http://grails.org/DomainClass+Dynamic+Methods" target="blank">http://grails.org/DomainClass+Dynamic+Methods</a> .<p class="paragraph"/><h4>Custom tags provided by Grailsflow.</h4><p class="paragraph"/>For the automatic form you can specify ‘view’ and default values for each process variable. For the manual form you can
+<div class="code"><pre>&#60;g:select from=<span class="java&#45;quote">"$&#123;com.jcatalog.core.Country.list()&#125;"</span>
+          optionKey=<span class="java&#45;quote">"countryId"</span>
+          optionValue=<span class="java&#45;quote">"countryId"</span>
+          value=<span class="java&#45;quote">"$&#123;orderAddress?.country&#125;"</span>/&#62;</pre></div><p class="paragraph"/>This example shows how to create selectbox with Countries (countryID are shown).<p class="paragraph"/>If you need to access the DB table, you need to specify the domain class (full class name) and then call one of the
+dynamic methods that Grails provides for domains.<p class="paragraph"/>For example, you can get all entries from table Product:<p class="paragraph"/><div class="code"><pre>com.jcatalog.product.Product.list()</pre></div><p class="paragraph"/>or find products using some filters:
+<div class="code"><pre>com.jcatalog.product.Product.findAllByProductIdLike(“%Printer%”)<p class="paragraph"/>com.jcatalog.product.Product.findWhere(productId:“Printer”, catalogId: “HP”)</pre></div><p class="paragraph"/>For more information about available dynamic methods,  see  <a href="http://grails.org/DomainClass+Dynamic+Methods" target="blank">http://grails.org/DomainClass+Dynamic+Methods</a> .<p class="paragraph"/>
+<strong class="bold">Custom tags provided by Grailsflow</strong><p class="paragraph"/>For the automatic form you can specify ‘view’ and default values for each process variable. For the manual form you can
 use all the same ‘views’ or tags. Among them:
 <ul class="star">
 <li>   SimpleView</li>
@@ -523,10 +537,9 @@ use all the same ‘views’ or tags. Among them:
 <li>   ListObjectsView</li>
 <li>   ExternalSearchObjectView</li>
 <li>   DefaultView</li>
-</ul><p class="paragraph"/>The ‘view’ property can be specified for each process variable in variable editor. Then if you specify the view you can
-ask Grailsflow to use this ‘view’ for rendering variable. For this reason, you can use ‘variableInput’ Grailsflow tag
-(implemented in developing version):<p class="paragraph"/><div class="code"><pre>&#60;gf:variableInput variable=<span class="java&#45;quote">"$&#123;variable&#125;"</span>/&#62;</pre></div><p class="paragraph"/>If you do not specify ‘view’ templates for each process variable you can use view templates directly on the manual page:
-<div class="code"><pre>&#60;g:customizingTemplate
+</ul><p class="paragraph"/>TThe 'view' property can be specified for each process variable in the variable editor. Then, if you specify the view,
+you can ask Grailsflow to use this 'view' for rendering the variable. For this reason, you can use 'variableInput'
+Grailsflow tag (implemented in developing version):<p class="paragraph"/><div class="code"><pre>&#60;gf:variableInput variable=<span class="java&#45;quote">"$&#123;variable&#125;"</span>/&#62;</pre></div><p class="paragraph"/>If you do not specify 'view' templates for each process variable you can use view templates directly on the manual page:<p class="paragraph"/><div class="code"><pre>&#60;g:customizingTemplate
  template=<span class="java&#45;quote">"$&#123; com.jcatalog.grailsflow.model.view.CheckBoxView.template&#125;”
  model="</span>&#91;variable: variable, view: variable.view, parameterName: parameterName&#93;"/&#62;</pre></div><p class="paragraph"/>In the tag there are the following parameters:
 <ul class="star">
@@ -541,7 +554,7 @@ Also it's possible to get external search component using tag 'customizingTempla
  template=<span class="java&#45;quote">"$&#123;com.jcatalog.grailsflow.model.view.ExternalSearchObjectView.template&#125;”
  model="</span>&#91;variable: variable, view: variable.view, parameterName: parameterName&#93;"/&#62;</pre></div><p class="paragraph"/>In that case, all parameters that are necessary for ExternalSearchObjectView (e.g. displayKey, URL for external search)
 will be taken from ‘variable.view’ object. But pay attention in that case you need to specify all these attributes for
-the variable in Process Variable Editor.<p class="paragraph"/><img border="0" class="center" src="../img/developersGuide/manualForms_5.jpg"></img><p class="paragraph"/>If you did not configure ‘View’ for the process variable definition, it is possible to use External search too. You can
+the variable in Process Variable Editor.<p class="paragraph"/><img border="0" class="center" src="../img/developersGuide/manualForms_5.jpg"></img><p class="paragraph"/>If you did not configure 'View' for the process variable definition, it is possible to use External search too. You can
 do it using Grails &#60;g:render&#62; tag. For ExternalSearchObjectView there are three parameters that you can specify:
 <ul class="star">
 <li>   displayKey (property for display in input field);</li>
@@ -556,31 +569,27 @@ do it using Grails &#60;g:render&#62; tag. For ExternalSearchObjectView there ar
  additionalFields: 'name1, city'),
  parameterName: 'externalSearchObjectView_address'&#93;"</span>/&#62;</pre></div><p class="paragraph"/>Where:
 <ul class="star">
-<li>   contextPath    Path for template searching</li>
+<li>   contextPath      Path for template searching</li>
 <li>   template         Template for rendering</li>
-<li>   model             Information that should be available for the template</li>
-</ul><p class="paragraph"/>In the ‘model’ you put ‘variable’ object. As you do not have a view specified for the variable, we can create it:
-<div class="code"><pre><span class="java&#45;keyword">new</span> com.jcatalog.grailsflow.model.view.ExternalSearchObjectView(…)</pre></div><p class="paragraph"/>In the brackets it is possible to define properties for this ‘view’.
-new com.jcatalog.grailsflow.model.view.ExternalSearchObjectView(displayKey:
-'addressID', searchUrl: 'search/address.gsp', additionalFields: 'name1, city')<p class="paragraph"/>As it was mentioned before, the events and variables have Maps of labels and descriptions (only variables have
-descriptions). You can show the labels and descriptions according to the requested locale using Grailsflow tag
-‘translatedValue’.<p class="paragraph"/>For example:
+<li>   model            Information that should be available for the template</li>
+</ul><p class="paragraph"/>In the 'model' you put 'variable' object. As you do not have a view specified for the variable, we can create it:
+<div class="code"><pre><span class="java&#45;keyword">new</span> com.jcatalog.grailsflow.model.view.ExternalSearchObjectView(…)</pre></div><p class="paragraph"/>In the brackets, it is possible to define properties for this 'view'.<p class="paragraph"/><div class="code"><pre><span class="java&#45;keyword">new</span> com.jcatalog.grailsflow.model.view.ExternalSearchObjectView(displayKey: 'addressID', searchUrl: 'search/address.gsp', additionalFields: 'name1, city')</pre></div><p class="paragraph"/>As mentioned before, the events and variables have Maps of labels and descriptions (only variables have descriptions).
+You can show the labels and descriptions according to the requested locale using Grailsflow tag 'translatedValue'’.<p class="paragraph"/>For example:
 <div class="code"><pre>&#60;g:translatedValue translations=<span class="java&#45;quote">"$&#123;variable.label&#125;"</span> <span class="java&#45;keyword">default</span>=<span class="java&#45;quote">"$&#123;variable.name&#125;"</span> /&#62;</pre></div><p class="paragraph"/>or
-<div class="code"><pre>&#60;g:translatedValue translations=<span class="java&#45;quote">"$&#123;variable.description&#125;"</span> <span class="java&#45;keyword">default</span>=<span class="java&#45;quote">""</span> /&#62;</pre></div><p class="paragraph"/><h4>How to include user owned GSP templates.</h4><p class="paragraph"/>It is possible to include your own prepared templates into the manual form.You can do it using Grailsflow tag
+<div class="code"><pre>&#60;g:translatedValue translations=<span class="java&#45;quote">"$&#123;variable.description&#125;"</span> <span class="java&#45;keyword">default</span>=<span class="java&#45;quote">""</span> /&#62;</pre></div><p class="paragraph"/><strong class="bold">How to include user owned GSP templates</strong><p class="paragraph"/>It is possible to include your own prepared templates into the manual form.You can do it using Grailsflow tag
 “customizingTemplate”.
-<div class="code"><pre>&#60;g:customizingTemplate template=<span class="java&#45;quote">"/myForms/eventForwarding"</span> model=<span class="java&#45;quote">"&#91;currentAssignees: nodeDetails.assignees&#93;"</span>/&#62;</pre></div><p class="paragraph"/><h4>Customize Return Controller and Action.</h4><p class="paragraph"/>By default after manual step form execution you will be forwarded to the Process Details page. You can customize this
-behavior by specifying return controller and action in your manual page.
-For example you can set it to 'showWorklist' - it means that after submitting form you will be redirected to the
-Worklist page. Please see the following example:
-<div class="code"><pre>&#60;input type=<span class="java&#45;quote">"hidden"</span> name=<span class="java&#45;quote">"returnController"</span> value=<span class="java&#45;quote">"process"</span>/ &#62;
+<div class="code"><pre>&#60;g:customizingTemplate template=<span class="java&#45;quote">"/myForms/eventForwarding"</span> model=<span class="java&#45;quote">"&#91;currentAssignees: nodeDetails.assignees&#93;"</span>/&#62;</pre></div><p class="paragraph"/><strong class="bold">Customize Return Controller and Action</strong><p class="paragraph"/>By default, after the manual step form execution, you will be forwarded to the Process Details page. You can customize
+this behavior by specifying the return controller and action in your manual page. For example you can set it to
+'showWorklist' - this means that after form submission, you will be redirected to the Worklist page. Please see the
+following example:<p class="paragraph"/><div class="code"><pre>&#60;input type=<span class="java&#45;quote">"hidden"</span> name=<span class="java&#45;quote">"returnController"</span> value=<span class="java&#45;quote">"process"</span>/ &#62;
 &#60;input type=<span class="java&#45;quote">"hidden"</span> name=<span class="java&#45;quote">"returnAction"</span> value=<span class="java&#45;quote">"showWorklist"</span>/ &#62;</pre></div><p class="paragraph"/>Releases of Grailsflow-1.0 and higher use parameters 'resultController', 'resultAction' instead of 'returnController',
-'returnAction'.<p class="paragraph"/><h4>Multi-Step pages.</h4><p class="paragraph"/>This feature is working only in the development mode of Grails. It gives possibility to enhance process flow (add some
-additional functionality and steps) without changing process definition. You can do it using multi-step page. For using
-this feature you need to select ‘Use Custom Controller and Form’ in Node Editor. In that case your ‘manual form’ content
-(that you entered in the textarea) will be rendered as the first step. It should contain links/buttons that leads to
-the actions in your Custom Controller. Your Custom Controller can make some actions and then render the next ‘step page’
-(such page you can create using ‘Add Multi-Step Page’ link). Then the step can lead to the Custom Controller and
-Controller will render the next step or redirect to the Grailsflow controller and continue the flow.<p class="paragraph"/>See some screenshots:<p class="paragraph"/><img border="0" class="center" src="../img/developersGuide/manualForms_6.jpg"></img><p class="paragraph"/>Add one more Step:<p class="paragraph"/><img border="0" class="center" src="../img/developersGuide/manualForms_7.jpg"></img><p class="paragraph"/>Multi-Step page belongs to node and stored in the views under path:<p class="paragraph"/>‘views/&#60;ProcessType&#62;&#60;ProcessNode&#62;/&#60;StepName&#62;.gsp’,<p class="paragraph"/>Pay attention that the name for the controller is generated by Grailsflow and it has view:<p class="paragraph"/>&#60;ProcessID_NodeID&#62;Controller.groovy<p class="paragraph"/>In the example above you can see that the form has “controller = ‘test_SetValues’”. Where ‘Test’ – is a name of Process,
+'returnAction'.<p class="paragraph"/><strong class="bold">Multi-Step pages</strong><p class="paragraph"/>This feature works only in the development mode of Grails. It makes it possible to enhance process flow (add some
+additional functionality and steps) without changing process definition. This can be done by using multi-step page. For
+this, you need to select ‘Use Custom Controller and Form’ in Node Editor. In that case your ‘manual form’ content
+(entered in the textarea) will be rendered as the first step. It should contain links/buttons that leads to the actions
+in your Custom Controller. Your Custom Controller can make some actions and then render the next ‘step page’ (page can
+be created using the ‘Add Multi-Step Page’ link). This step can lead to the Custom Controller and the Controller will
+render the next step or redirect to the Grailsflow controller and continue the flow.<p class="paragraph"/>Multi-Step page belongs to the node and stored in the views under path, see some screenshots:<p class="paragraph"/><img border="0" class="center" src="../img/developersGuide/manualForms_6.jpg"></img><p class="paragraph"/>Add one more Step:<p class="paragraph"/><img border="0" class="center" src="../img/developersGuide/manualForms_7.jpg"></img><p class="paragraph"/>Multi-Step page belongs to node and stored in the views under path:<p class="paragraph"/>‘views/&#60;ProcessType&#62;&#60;ProcessNode&#62;/&#60;StepName&#62;.gsp’,<p class="paragraph"/>Pay attention that the name for the controller is generated by Grailsflow and it has view:<p class="paragraph"/>&#60;ProcessID_NodeID&#62;Controller.groovy<p class="paragraph"/>In the example above you can see that the form has “controller = ‘test_SetValues’”. Where ‘Test’ – is a name of Process,
 and ‘SetValues’ is a name of node for which you prepare the manual form.<p class="paragraph"/>Pay attention that manual (or custom) form is included  in GSP page as template. This template is included in<p class="paragraph"/>&#60;g:form action="sendEvent" controller="process" ...&#62;  tag, it means that you should not use more forms in your manual
 page. If you need to submit other form action you can use JavaScript features to change form action and controller.
 For example:
@@ -609,13 +618,13 @@ no activity is called.<p class="paragraph"/>
 
 
 <h2 id="customizeDueDate">4.9 Customize Due Dates calculation</h2>
-<h4>Customize Due Date calculation</h4><p class="paragraph"/>There is a possibility to customize <strong class="bold">Due Date</strong> calculation for <strong class="bold">Process Nodes</strong>. It is possible to configure calculation
-behaviour for all processes or for certain <strong class="bold">Process Type</strong>. By default, the process node due date calculated as<p class="paragraph"/><div class="code"><pre>node.dueOn = node.startedOn + nodeDef.dueDate</pre></div><p class="paragraph"/>where
+<strong class="bold">Customize Due Date calculation</strong><p class="paragraph"/>It is a possible to customize Due Date calculation for Process Nodes and configure calculation behaviour for all
+processes or for certain Process Type. By default, the process node due date calculated as:<p class="paragraph"/><div class="code"><pre>node.dueOn = node.startedOn + nodeDef.dueDate</pre></div><p class="paragraph"/>where
 <ul class="star">
 <li>node.startedOn - <strong class="bold">Date</strong> when node was ACTIVATED.</li>
 <li>nodeDef.dueDate - <strong class="bold">Long</strong> value from process definition.</li>
-</ul><p class="paragraph"/>But sometimes it is necessary to change behaviour, for example in case when the <strong class="bold">dueDate</strong> (node.dueOn) is a weekends we need to shift
-it. Use <strong class="bold">Config.groovy</strong> file of your application to configure <strong class="bold">Due Date</strong> calculation. See examples:<p class="paragraph"/><div class="code"><pre>grailsflow.customizedDueDate = &#123; Date dueDate &#45;&#62;
+</ul><p class="paragraph"/>Sometimes, it is necessary to change behaviour - e.g. if the <strong class="bold">dueDate</strong> (node.,dueOn) is a weekend, it will need to be
+shifted. Use the <strong class="bold">Config.groovy</strong> file of your application to configure <strong class="bold">Due Date</strong> calculation.<p class="paragraph"/><div class="code"><pre>grailsflow.customizedDueDate = &#123; Date dueDate &#45;&#62;
      Calendar date = Calendar.getInstance()
      date.setTime(dueDate)
      <span class="java&#45;keyword">if</span> (date.get(Calendar.DAY_OF_WEEK) == Calendar.SATURDAY) &#123;

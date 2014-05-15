@@ -87,12 +87,13 @@ function addJsClass() {
                 
 
 <h2 id="actions">4.3 Creating Actions</h2>
-<h4>Actions</h4><p class="paragraph"/>Actions are the principal unit that execute all activities and operations in GrailsFlow. They are written in plain
+<strong class="bold">Actions</strong><p class="paragraph"/>Actions are the principal unit that execute all activities and operations in GrailsFlow. They are written in plain
 Groovy and stored in a specified folder. The folder can be customized in Spring configuration (like paths to processes
-scripts and document attachments), on default it is configured to 'actions' folder in workarea. When the node is
-executing, the necessary action script is loaded as file, dynamically parsed to Java class and then executed (method
-execute() of the class is called).<p class="paragraph"/>When you write a new action, you have to subclass the abstract class Action. All actions can then be used in the action
-editor and the 'action' closure of the process definition.<p class="paragraph"/><h4>How to implement a custom action</h4><p class="paragraph"/>The class Action provides several methods that are further described here.
+scripts and document attachments), by default it is configured to the 'actions' folder in the workarea. When the node
+is executing, the necessary action script is loaded as a file, dynamically parsed to Java class and then executed
+(method execute() of the class is called).<p class="paragraph"/>When you write a new action, you have to subclass the abstract class Action. All actions can then be used in the action
+editor and the 'action' closure of the process definition.<p class="paragraph"/>
+<strong class="bold">How to implement a custom action</strong><p class="paragraph"/>The class Action provides several methods that are further described here.
 <ol>
 <li>Execute() method</li>
 </ol><p class="paragraph"/>The abstract Object execute() method need to be implemented. This methods "is" the actual action/does the operation that
@@ -113,7 +114,7 @@ implementation. It provides the
 <li>   locale,</li>
 <li>   siteBase,</li>
 <li>   requester.</li>
-</ul><p class="paragraph"/>Grailsflow provides a number of basic actions that are useful many workflows. Among them are:
+</ul><p class="paragraph"/>Grailsflow provides a number of basic actions that are useful in many workflows. Among them are:
 <ul class="star">
 <li>LogAction - writes some log information in the trace or the log file.</li>
 <li>EvaluateAction - evaluates arbitrary Groovy expressions. This is very powerful and generic and reduces the number of</li>

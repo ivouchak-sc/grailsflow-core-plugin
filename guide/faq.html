@@ -85,7 +85,45 @@ function addJsClass() {
                 
 
 <h1 id="faq">5 Frequently Asked Questions</h1>
-faq should be here.
+
+<h4>1. How to customize worklist page</h4><p class="paragraph"/>There are several ways to customize worklist page. If you need to enhance 
+worklist table with more columns such as any process variable values, then 
+you can configure additional columns using Spring 
+('additionalWorklistColumns' bean):<p class="paragraph"/><div class="code"><pre>&#60;bean id=<span class="java&#45;quote">"additionalWorklistColumns"</span> class=<span class="java&#45;quote">"java.util.ArrayList"</span>&#62;
+    &#60;constructor&#45;arg&#62;
+      &#60;list&#62;
+        &#60;value&#62;productId&#60;/value&#62;
+        &#60;value&#62;name&#60;/value&#62;
+        &#60;value&#62;requesterName&#60;/value&#62;
+      &#60;/list&#62;
+    &#60;/constructor&#45;arg&#62;
+  &#60;/bean&#62;</pre></div><p class="paragraph"/>
+Also there is a filtering on worklist. It helps searching for process nodes 
+with some known variables values.There is a very important note here!The 
+filtering can slow down your worklist loading, if you have a lot of processes 
+in the list. If there are more then 500 processes in the worklist we get 
+variables by splitting the parameter list into smaller chunks and then 
+combining the results. But such functionality requires time for execution and 
+can slow down performance. So, by default, the filtering works well if there 
+are no more entries than then maxRestrictedProcesses size. The behaviour can 
+be changed by reconfiguring some available Spring beans or even to disable 
+filtering functionality at all.<p class="paragraph"/><strong class="bold">isWorklistFilterAvailable</strong> - this bean defines if we need the filtering 
+functionality, the default value is configured to TRUE<p class="paragraph"/><div class="code"><pre>isWorklistFilterAvailable(java.lang.<span class="java&#45;object">Boolean</span>, <span class="java&#45;object">Boolean</span>.TRUE)</pre></div><p class="paragraph"/><strong class="bold">maxRestrictedProcesses</strong> - this bean contains the Integer value for common 
+quantity of restricted processes used in SQL 'in' clause (default value is 
+'2000' entries)<p class="paragraph"/><div class="code"><pre>maxRestrictedProcesses(java.lang.<span class="java&#45;object">Integer</span>, <span class="java&#45;quote">"2000"</span>)</pre></div><p class="paragraph"/>Another way to customize worklist is to use your custom page with the same 
+name and path: 
+  <em class="italic">views/process/showWorklist.gsp</em> <p class="paragraph"/><p class="paragraph"/><h4>2. How to redirect to any custom page after sending event</h4><p class="paragraph"/>By default, usually after submitting manual form the user is redirected to 
+'showProcessDetails' page. If you want to customize this behaviour, specify 
+the following values on your custom gsp page:<p class="paragraph"/><div class="code"><pre>&#60;input type=<span class="java&#45;quote">"hidden"</span> name=<span class="java&#45;quote">"resultController"</span> value=<span class="java&#45;quote">"someControllerHere"</span>/ &#62;
+&#60;input type=<span class="java&#45;quote">"hidden"</span> name=<span class="java&#45;quote">"resultAction"</span> value=<span class="java&#45;quote">"someActionHere"</span>/ &#62;</pre></div><p class="paragraph"/>
+Also here yu can specify any additional values that should be submitted:<p class="paragraph"/><div class="code"><pre>&#60;input type=<span class="java&#45;quote">"hidden"</span> name=<span class="java&#45;quote">"userName"</span> value=<span class="java&#45;quote">"$&#123;someBean.userName&#125;"</span>/ &#62;</pre></div><p class="paragraph"/><p class="paragraph"/><h4>3. How to create custom page with elements of standard generated form</h4><p class="paragraph"/>If you like to use automitic form generation and don't want to create any 
+special new form for variable values, you can use grailsflow template for 
+your custom page:<p class="paragraph"/><div class="code"><pre>&#60;gf:customizingTemplate template=<span class="java&#45;quote">"/manualForms/variablesForm"</span>
+      model=<span class="java&#45;quote">"&#91;variables: nodeDetails.variables&#93;"</span> /&#62;</pre></div><p class="paragraph"/>If you want to have additional node Information on your custom page, use 
+grailsflow template <strong class="bold">nodeInfo</strong>:<p class="paragraph"/><div class="code"><pre>&#60;gf:customizingTemplate template=<span class="java&#45;quote">"/manualForms/nodeInfo"</span>
+       model=<span class="java&#45;quote">"&#91;nodeDetails: nodeDetails&#93;"</span>/&#62;</pre></div><p class="paragraph"/>Also , if there is need to assign node to another user/role/group, it is 
+possible to use:<p class="paragraph"/><div class="code"><pre>&#60;gf:customizingTemplate template=<span class="java&#45;quote">"/manualForms/eventForwarding"</span>
+        model=<span class="java&#45;quote">"&#91;currentAssignees: nodeDetails.assignees&#93;"</span>/&#62;</pre></div><p class="paragraph"/><p class="paragraph"/>
 
 
                 <div style="clear:both;margin-top:15px;"></div>
