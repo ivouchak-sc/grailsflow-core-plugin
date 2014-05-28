@@ -39,6 +39,9 @@ function addJsClass() {
                     <div class="toc-item" style="margin-left:0"><a href="../guide/faq.html"><strong>5</strong><span>Frequently Asked Questions</span></a>
                     </div>
                     
+                    <div class="toc-item" style="margin-left:0"><a href="../guide/glossary.html"><strong>6</strong><span>Glossary</span></a>
+                    </div>
+                    
                 </div>
             </div>
         </li>
@@ -68,6 +71,8 @@ function addJsClass() {
                 <span id='toggle-col1' class="toggle">(<a href="#" onclick="localToggle(); return false;">Quick Reference</a>)</span>
 
                 
+                    <div class="toc-item next-right"><a href="../guide/glossary.html"><strong>6</strong><span>Glossary</span> >></a></div>
+                
 
 
                 <div class="project">
@@ -85,11 +90,7 @@ function addJsClass() {
                 
 
 <h1 id="faq">5 Frequently Asked Questions</h1>
-
-<h4>1. How to customize worklist page</h4><p class="paragraph"/>There are several ways to customize worklist page. If you need to enhance 
-worklist table with more columns such as any process variable values, then 
-you can configure additional columns using Spring 
-('additionalWorklistColumns' bean):<p class="paragraph"/><div class="code"><pre>&#60;bean id=<span class="java&#45;quote">"additionalWorklistColumns"</span> class=<span class="java&#45;quote">"java.util.ArrayList"</span>&#62;
+<h4> 1. How to customize worklist page. </h4><p class="paragraph"/>There are several ways to customize the worklist page. To enhance the worklist table with more columns - such as any process variable values etc., then configure the additional columns using the Spring ('additionalWorklistColumns' bean) :<p class="paragraph"/><div class="code"><pre>&#60;bean id=<span class="java&#45;quote">"additionalWorklistColumns"</span> class=<span class="java&#45;quote">"java.util.ArrayList"</span>&#62;
     &#60;constructor&#45;arg&#62;
       &#60;list&#62;
         &#60;value&#62;productId&#60;/value&#62;
@@ -97,38 +98,29 @@ you can configure additional columns using Spring
         &#60;value&#62;requesterName&#60;/value&#62;
       &#60;/list&#62;
     &#60;/constructor&#45;arg&#62;
-  &#60;/bean&#62;</pre></div><p class="paragraph"/>
-Also there is a filtering on worklist. It helps searching for process nodes 
-with some known variables values.There is a very important note here!The 
-filtering can slow down your worklist loading, if you have a lot of processes 
-in the list. If there are more then 500 processes in the worklist we get 
-variables by splitting the parameter list into smaller chunks and then 
-combining the results. But such functionality requires time for execution and 
-can slow down performance. So, by default, the filtering works well if there 
-are no more entries than then maxRestrictedProcesses size. The behaviour can 
-be changed by reconfiguring some available Spring beans or even to disable 
-filtering functionality at all.<p class="paragraph"/><strong class="bold">isWorklistFilterAvailable</strong> - this bean defines if we need the filtering 
-functionality, the default value is configured to TRUE<p class="paragraph"/><div class="code"><pre>isWorklistFilterAvailable(java.lang.<span class="java&#45;object">Boolean</span>, <span class="java&#45;object">Boolean</span>.TRUE)</pre></div><p class="paragraph"/><strong class="bold">maxRestrictedProcesses</strong> - this bean contains the Integer value for common 
-quantity of restricted processes used in SQL 'in' clause (default value is 
-'2000' entries)<p class="paragraph"/><div class="code"><pre>maxRestrictedProcesses(java.lang.<span class="java&#45;object">Integer</span>, <span class="java&#45;quote">"2000"</span>)</pre></div><p class="paragraph"/>Another way to customize worklist is to use your custom page with the same 
-name and path: 
-  <em class="italic">views/process/showWorklist.gsp</em> <p class="paragraph"/><p class="paragraph"/><h4>2. How to redirect to any custom page after sending event</h4><p class="paragraph"/>By default, usually after submitting manual form the user is redirected to 
-'showProcessDetails' page. If you want to customize this behaviour, specify 
-the following values on your custom gsp page:<p class="paragraph"/><div class="code"><pre>&#60;input type=<span class="java&#45;quote">"hidden"</span> name=<span class="java&#45;quote">"resultController"</span> value=<span class="java&#45;quote">"someControllerHere"</span>/ &#62;
-&#60;input type=<span class="java&#45;quote">"hidden"</span> name=<span class="java&#45;quote">"resultAction"</span> value=<span class="java&#45;quote">"someActionHere"</span>/ &#62;</pre></div><p class="paragraph"/>
-Also here yu can specify any additional values that should be submitted:<p class="paragraph"/><div class="code"><pre>&#60;input type=<span class="java&#45;quote">"hidden"</span> name=<span class="java&#45;quote">"userName"</span> value=<span class="java&#45;quote">"$&#123;someBean.userName&#125;"</span>/ &#62;</pre></div><p class="paragraph"/><p class="paragraph"/><h4>3. How to create custom page with elements of standard generated form</h4><p class="paragraph"/>If you like to use automitic form generation and don't want to create any 
-special new form for variable values, you can use grailsflow template for 
-your custom page:<p class="paragraph"/><div class="code"><pre>&#60;gf:customizingTemplate template=<span class="java&#45;quote">"/manualForms/variablesForm"</span>
-      model=<span class="java&#45;quote">"&#91;variables: nodeDetails.variables&#93;"</span> /&#62;</pre></div><p class="paragraph"/>If you want to have additional node Information on your custom page, use 
-grailsflow template <strong class="bold">nodeInfo</strong>:<p class="paragraph"/><div class="code"><pre>&#60;gf:customizingTemplate template=<span class="java&#45;quote">"/manualForms/nodeInfo"</span>
-       model=<span class="java&#45;quote">"&#91;nodeDetails: nodeDetails&#93;"</span>/&#62;</pre></div><p class="paragraph"/>Also , if there is need to assign node to another user/role/group, it is 
-possible to use:<p class="paragraph"/><div class="code"><pre>&#60;gf:customizingTemplate template=<span class="java&#45;quote">"/manualForms/eventForwarding"</span>
-        model=<span class="java&#45;quote">"&#91;currentAssignees: nodeDetails.assignees&#93;"</span>/&#62;</pre></div><p class="paragraph"/><p class="paragraph"/>
+  &#60;/bean&#62;</pre></div><p class="paragraph"/>Also, filtering is possible in the worklist. It helps in searching for process nodes with some known variable values.<p class="paragraph"/><strong class="bold">Important</strong>  - Filtering can slow down the loading of your worklist, if you have a lot of processes in the list.<p class="paragraph"/>If there are more then 500 processes in the worklist, get variables by splitting the parameter list into smaller sections and then combining the results. However, this requires time for execution and can slow down performance. So, by default, the filtering works well if there are no more entries than the maxRestrictedProcesses size. The behaviour can be changed by re-configuring some available Spring beans or even disabling the filtering functionality.<p class="paragraph"/><strong class="bold">isWorklistFilterAvailable</strong> - if needed, this bean defines the filtering functionality and the default value is configured to TRUE<p class="paragraph"/><div class="code"><pre>isWorklistFilterAvailable(java.lang.<span class="java&#45;object">Boolean</span>, <span class="java&#45;object">Boolean</span>.TRUE)</pre></div><p class="paragraph"/><strong class="bold">maxRestrictedProcesses</strong> - this bean contains the Integer value for common quantity of restricted processes used in the SQL 'in' clause (default value is '2000' entries)<p class="paragraph"/><div class="code"><pre>maxRestrictedProcesses(java.lang.<span class="java&#45;object">Integer</span>, <span class="java&#45;quote">"2000"</span>)</pre></div><p class="paragraph"/>Another way to customize worklist is to use your custom page with the same 
+name and path :   <em class="italic">views/process/showWorklist.gsp</em> <p class="paragraph"/><h4> 2. How to redirect to any custom page after sending an event.</h4><p class="paragraph"/>Usually, after submitting the manual form, the user is redirected, by default, to the 'showProcessDetails' page. To customize this behaviour, specify the following values on your custom gsp page :<p class="paragraph"/><div class="code"><pre>&#60;input type=<span class="java&#45;quote">"hidden"</span> name=<span class="java&#45;quote">"resultController"</span> value=<span class="java&#45;quote">"someControllerHere"</span>/ &#62;
+ &#60;input type=<span class="java&#45;quote">"hidden"</span> name=<span class="java&#45;quote">"resultAction"</span> value=<span class="java&#45;quote">"someActionHere"</span>/ &#62;</pre></div><p class="paragraph"/>Specify any additional values that should be submitted here :<p class="paragraph"/><div class="code"><pre>&#60;input type=<span class="java&#45;quote">"hidden"</span> name=<span class="java&#45;quote">"userName"</span> value=<span class="java&#45;quote">"$&#123;someBean.userName&#125;"</span>/ &#62;</pre></div><p class="paragraph"/><h4> 3. How to create a custom page with elements of a standard generated form</h4><p class="paragraph"/>If you like to use automitic form generation and don't want to create any 
+special new form for variable values, use the grailsflow template for the custom page :<p class="paragraph"/><div class="code"><pre>&#60;gf:customizingTemplate template=<span class="java&#45;quote">"/manualForms/variablesForm"</span>
+      model=<span class="java&#45;quote">"&#91;variables: nodeDetails.variables&#93;"</span> /&#62;</pre></div><p class="paragraph"/>For additional node Information on your custom page, use grailsflow template <strong class="bold">nodeInfo</strong>:<p class="paragraph"/><div class="code"><pre>&#60;gf:customizingTemplate template=<span class="java&#45;quote">"/manualForms/nodeInfo"</span>
+       model=<span class="java&#45;quote">"&#91;nodeDetails: nodeDetails&#93;"</span>/&#62;</pre></div><p class="paragraph"/>To assign a node to another user/role/group, use :<p class="paragraph"/><div class="code"><pre>&#60;gf:customizingTemplate template=<span class="java&#45;quote">"/manualForms/eventForwarding"</span>
+        model=<span class="java&#45;quote">"&#91;currentAssignees: nodeDetails.assignees&#93;"</span>/&#62;</pre></div><p class="paragraph"/>
+<h4> 4. If you don't want to have automatic starting for NodeActivatorJob and DueDateJob during application running</h4><p class="paragraph"/>In that case there are properties that can be configured in your application (e.g. in Config.groovy):<p class="paragraph"/><div class="code"><pre>grailsflow.scheduler.nodeActivator.autoStart = <span class="java&#45;keyword">false</span>    // disable auto starting <span class="java&#45;keyword">for</span> Engine Job
+ grailsflow.scheduler.nodeDueDate.autoStart = <span class="java&#45;keyword">false</span>    // disable auto starting <span class="java&#45;keyword">for</span> Engine Job
+ grailsflow.scheduler.eventsEmailCheck.autoStart = <span class="java&#45;keyword">false</span>    // disabled by <span class="java&#45;keyword">default</span></pre></div><p class="paragraph"/>Also it is possible to specify start delay and repeat interval for Grailsflow jobs:<p class="paragraph"/><div class="code"><pre>grailsflow.scheduler.nodeActivator.startDelay = 60000         // starts in one minute after application startup<p class="paragraph"/> grailsflow.scheduler.nodeActivator.repeatInterval = 15000     // executes every 15 seconds<p class="paragraph"/> grailsflow.scheduler.nodeDueDate.startDelay = 60000
+ grailsflow.scheduler.nodeDueDate.repeatInterval = 60000       // executes every minute<p class="paragraph"/> grailsflow.scheduler.eventsEmailCheck.startDelay = 60000   // executes every minute<p class="paragraph"/> grailsflow.scheduler.eventsEmailCheck.repeatInterval = 60000 // executes every minute</pre></div><p class="paragraph"/><h4> 5.  How to configure E-mail settings for Grailsflow-core</h4><p class="paragraph"/>The user can specify mail settings in Config.groovy. There are the following settings:<p class="paragraph"/><div class="code"><pre>grailsflow.events.mail.enabled=<span class="java&#45;keyword">false</span>
+grailsflow.events.mail.address=<span class="java&#45;quote">"somebody@mail.xxx"</span>
+grailsflow.events.mail.host=<span class="java&#45;quote">"mail.xxx"</span>
+grailsflow.events.mail.account=<span class="java&#45;quote">"smith"</span>
+grailsflow.events.mail.password=<span class="java&#45;quote">"pass"</span></pre></div><p class="paragraph"/><h4> 6. How to configure my custom i18n translations for Grailsflow</h4><p class="paragraph"/>It is possible to specify additional i18n bundles locations for Grailsflow translations in Config.groovy<p class="paragraph"/><div class="code"><pre>grailsflow.i18n.locations = &#91;<span class="java&#45;quote">"WEB&#45;INF/grails&#45;app/i18n/"</span>&#93;</pre></div>
+
 
 
                 <div style="clear:both;margin-top:15px;"></div>
                 
                     <div class="toc-item prev-left"><a href="../guide/developersGuide.html">&lt;&lt; <strong>4</strong><span>Developer's Guide</span></a></div>
+                
+                    <div class="toc-item next-right"><a href="../guide/glossary.html"><strong>6</strong><span>Glossary</span> >></a></div>
                 
                 <div style="clear:both"></div>
             </div>
