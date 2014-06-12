@@ -2,7 +2,7 @@
                       "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en">
 <head>
-    <title>5 Frequently Asked Questions 1.3.4-SNAPSHOT</title>
+    <title>5 Frequently Asked Questions 1.4</title>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
     <link rel="stylesheet" href="../css/main.css" type="text/css" media="screen, print" title="Style" charset="utf-8"/>
     <link rel="stylesheet" href="../css/pdf.css" type="text/css" media="print" title="PDF" charset="utf-8"/>
@@ -80,7 +80,7 @@ function addJsClass() {
 
                     <p><strong>Authors:</strong> Stephan Albers, July Antonicheva</p>
 
-                    <p><strong>Version:</strong> 1.3.4-SNAPSHOT</p>
+                    <p><strong>Version:</strong> 1.4</p>
 
                     
                 </div>
@@ -108,7 +108,7 @@ special new form for variable values, use the grailsflow template for the custom
 <h4> 4. If you don't want to have automatic starting for NodeActivatorJob and DueDateJob during application running</h4><p class="paragraph"/>In that case there are properties that can be configured in your application (e.g. in Config.groovy):<p class="paragraph"/><div class="code"><pre>grailsflow.scheduler.nodeActivator.autoStart = <span class="java&#45;keyword">false</span>    // disable auto starting <span class="java&#45;keyword">for</span> Engine Job
  grailsflow.scheduler.nodeDueDate.autoStart = <span class="java&#45;keyword">false</span>    // disable auto starting <span class="java&#45;keyword">for</span> Engine Job
  grailsflow.scheduler.eventsEmailCheck.autoStart = <span class="java&#45;keyword">false</span>    // disabled by <span class="java&#45;keyword">default</span></pre></div><p class="paragraph"/>Also it is possible to specify start delay and repeat interval for Grailsflow jobs:<p class="paragraph"/><div class="code"><pre>grailsflow.scheduler.nodeActivator.startDelay = 60000         // starts in one minute after application startup<p class="paragraph"/> grailsflow.scheduler.nodeActivator.repeatInterval = 15000     // executes every 15 seconds<p class="paragraph"/> grailsflow.scheduler.nodeDueDate.startDelay = 60000
- grailsflow.scheduler.nodeDueDate.repeatInterval = 60000       // executes every minute<p class="paragraph"/> grailsflow.scheduler.eventsEmailCheck.startDelay = 60000   // executes every minute<p class="paragraph"/> grailsflow.scheduler.eventsEmailCheck.repeatInterval = 60000 // executes every minute</pre></div><p class="paragraph"/><h4> 5.  How to configure E-mail settings for Grailsflow-core</h4><p class="paragraph"/>The user can specify mail settings in Config.groovy. There are the following settings:<p class="paragraph"/><div class="code"><pre>grailsflow.events.mail.enabled=<span class="java&#45;keyword">false</span>
+ grailsflow.scheduler.nodeDueDate.repeatInterval = 60000       // executes every minute<p class="paragraph"/> grailsflow.scheduler.eventsEmailCheck.startDelay = 60000   // executes every minute<p class="paragraph"/> grailsflow.scheduler.eventsEmailCheck.repeatInterval = 60000 // executes every minute</pre></div><p class="paragraph"/><h4> 5.  How to configure E-mail settings for Grailsflow</h4><p class="paragraph"/>The user can specify mail settings in Config.groovy. There are the following settings:<p class="paragraph"/><div class="code"><pre>grailsflow.events.mail.enabled=<span class="java&#45;keyword">false</span>
 grailsflow.events.mail.address=<span class="java&#45;quote">"somebody@mail.xxx"</span>
 grailsflow.events.mail.host=<span class="java&#45;quote">"mail.xxx"</span>
 grailsflow.events.mail.account=<span class="java&#45;quote">"smith"</span>
