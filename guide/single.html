@@ -837,9 +837,7 @@ AbstractWorklistProvider implementation. This is typically "USER_username", "ROL
 something like this in your process description:<p class="paragraph"/>In Process Definition:<p class="paragraph"/><div class="code"><pre>&#8230;
     action &#123;
       &#8230;
-      AssignTo(<span class="java&#45;keyword">var</span>:'nextAssignee') &#123;
-        Evaluate(expression: '&#91;<span class="java&#45;quote">"ROLE_USER"</span>, <span class="java&#45;quote">"ROLE_ADMIN"</span>&#93;')
-      &#125;<p class="paragraph"/>    &#125;</pre></div>
+      def nextAssignee = Evaluate(expression: '&#91;<span class="java&#45;quote">"ROLE_USER"</span>, <span class="java&#45;quote">"ROLE_ADMIN"</span>&#93;')<p class="paragraph"/>    &#125;</pre></div>
 
 
 <h2 id="actions">4.3 Creating Actions</h2>
