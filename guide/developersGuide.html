@@ -2,7 +2,7 @@
                       "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en">
 <head>
-    <title>4 Developer's Guide 1.4</title>
+    <title>4 Developer's Guide 1.5-SNAPSHOT</title>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
     <link rel="stylesheet" href="../css/main.css" type="text/css" media="screen, print" title="Style" charset="utf-8"/>
     <link rel="stylesheet" href="../css/pdf.css" type="text/css" media="print" title="PDF" charset="utf-8"/>
@@ -80,7 +80,7 @@ function addJsClass() {
 
                     <p><strong>Authors:</strong> Stephan Albers, July Antonicheva</p>
 
-                    <p><strong>Version:</strong> 1.4</p>
+                    <p><strong>Version:</strong> 1.5-SNAPSHOT</p>
 
                     
                 </div>
@@ -114,6 +114,9 @@ function addJsClass() {
                     </div>
                     
                     <div class="toc-item" style="margin-left:0px"><a href="#customizeDueDate"><strong>4.9</strong><span>Customize Due Dates calculation</span></a>
+                    </div>
+                    
+                    <div class="toc-item" style="margin-left:0px"><a href="#getProcessInfoInJson"><strong>4.10</strong><span>How to get Process Management Results in JSON</span></a>
                     </div>
                     
                 </div>
@@ -646,6 +649,26 @@ shifted. Use the <strong class="bold">Config.groovy</strong> file of your applic
          <span class="java&#45;keyword">return</span> date.time
      &#125; <span class="java&#45;keyword">else</span> <span class="java&#45;keyword">return</span> date.time
  &#125;</pre></div>
+
+
+
+<h2 id="getProcessInfoInJson">4.10 How to get Process Management Results in JSON</h2>
+<strong class="bold">How to get Process Management Results in JSON</strong><p class="paragraph"/>Sometimes the developers don't want to get Grailsflow core pages with results of process management
+(e.g. process details, or search results), but need information for their own pages. So, it is possible to get
+Process Management Results in JSON format. For this reason simply put additional parameter
+<strong class="bold">format=JSON</strong> in your request. For more details about implementation, please check Grails closure
+ <a href="http://grails.org/doc/2.3.x/ref/Controllers/withFormat.html" target="blank">withFormat</a><p class="paragraph"/>The mechanism is working for process management actions such as
+<ul class="star">
+<li>'showTypes'</li>
+<li>'search'</li>
+<li>'showWorklist'</li>
+<li>'showProcessDetails'</li>
+<li>'showNodeDetails'</li>
+<li>'startProcess'</li>
+<li>'killProcess'</li>
+<li>'sendEvent'</li>
+</ul><p class="paragraph"/> For example,<p class="paragraph"/> <div class="code"><pre>http://localhost:8080/grailsflow&#45;demo/process/showWorklist?format=json</pre></div><p class="paragraph"/> or
+ <div class="code"><pre>http://localhost:8080/grailsflow&#45;demo/process/search?format=json</pre></div>
 
 
 
