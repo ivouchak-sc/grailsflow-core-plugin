@@ -1,0 +1,151 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+                      "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en">
+<head>
+    <title>4.11 Support of clustering 1.7-SNAPSHOT</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+    <link rel="stylesheet" href="../css/main.css" type="text/css" media="screen, print" title="Style" charset="utf-8"/>
+    <link rel="stylesheet" href="../css/pdf.css" type="text/css" media="print" title="PDF" charset="utf-8"/>
+    <script type="text/javascript">
+function addJsClass() {
+    var classes = document.body.className.split(" ");
+    classes.push("js");
+    document.body.className = classes.join(" ");
+}
+    </script>
+</head>
+
+<body class="body" onload="addJsClass();">
+<div id="navigation">
+    <ul>
+        <li>
+            <div id="nav-summary" onmouseover="toggleNavSummary(false)" onmouseout="toggleNavSummary(true)">
+                <a href="../../guide/index.html" class="button">Table of contents</a>
+
+                <div id="nav-summary-childs" style="display:none;">
+                    
+                    <div class="toc-item" style="margin-left:0"><a href="../../guide/overview.html"><strong>1</strong><span>Overview</span></a>
+                    </div>
+                    
+                    <div class="toc-item" style="margin-left:0"><a href="../../guide/installation.html"><strong>2</strong><span>Configuration and installation</span></a>
+                    </div>
+                    
+                    <div class="toc-item" style="margin-left:0"><a href="../../guide/usersGuide.html"><strong>3</strong><span>User's Guide</span></a>
+                    </div>
+                    
+                    <div class="toc-item" style="margin-left:0"><a href="../../guide/developersGuide.html"><strong>4</strong><span>Developer's Guide</span></a>
+                    </div>
+                    
+                    <div class="toc-item" style="margin-left:0"><a href="../../guide/faq.html"><strong>5</strong><span>Frequently Asked Questions</span></a>
+                    </div>
+                    
+                    <div class="toc-item" style="margin-left:0"><a href="../../guide/glossary.html"><strong>6</strong><span>Glossary</span></a>
+                    </div>
+                    
+                </div>
+            </div>
+        </li>
+        <li class="separator selected">
+            <a id="ref-button" onclick="localToggle(); return false;" href="#">Quick Reference</a>
+        </li>
+    </ul>
+</div>
+<div id="header">
+    <div class="images clearfix">
+        
+        
+    </div>
+    <p>jCatalog Software AG</p>
+</div>
+
+
+<table id="colset" border="0" cellpadding="0" cellspacing="0">
+    <tr>
+        <td id="col1">
+            <div id="main" class="corner-all">
+
+                
+                    <div class="toc-item prev-left"><a href="../../guide/usersGuide.html">&lt;&lt; <strong>3</strong><span>User's Guide</span></a></div>
+                
+
+                <span id='toggle-col1' class="toggle">(<a href="#" onclick="localToggle(); return false;">Quick Reference</a>)</span>
+
+                
+                    <div class="toc-item next-right"><a href="../../guide/faq.html"><strong>5</strong><span>Frequently Asked Questions</span> >></a></div>
+                
+
+
+                <div class="project">
+                    <h1>4.11 Support of clustering - Reference Documentation</h1>
+
+                    <p><strong>Authors:</strong> Stephan Albers, July Antonicheva</p>
+
+                    <p><strong>Version:</strong> 1.7-SNAPSHOT</p>
+
+                    
+                </div>
+
+                
+
+                
+
+<h2 id="supportClustering">4.11 Support of clustering</h2>
+<h4>Support of Clustering</h4><p class="paragraph"/>There are situations when it is necessary to have a kind of load balancer. For example, when the user
+have several installation of Grailsflow on the one server or when we need to work in cluster mode.<p class="paragraph"/>Grailsflow plugin has a kind of load balancer. The idea is based on the following aspects: every automatically executed
+node creates lock (entry in <strong class="bold">GrailsflowLock</strong> table) for process before execution. After node execution the lock is removed. Locks
+are stored in <strong class="bold">GrailsflowLock</strong> table. Also there is a table <strong class="bold">ClusterInfo</strong>, it contains information about clusters. In Grailsflow s*- There is
+a <strong class="bold">ClusterCheckerJob</strong> that fires according to configured values (  <em class="italic">grailsflow.scheduler.clusterChecker.repeatInterval</em> 
+value). The job updates <strong class="bold">ClusterInfo</strong> entry about the cluster in which it runs and then checks information about other
+clusters - if they are expired, e.g. they didn't update <strong class="bold">ClusterInfo</strong> entry for more then
+<strong class="bold">(grailsflow.scheduler.clusterChecker.repeatInterval x 2)</strong> time , then we assume that the cluster is not runnable. If the
+cluster is desided to be stopped, we remove all its locks from <strong class="bold">GrailsflowLock</strong> and delete its <strong class="bold">ClusterInfo</strong> entry. Also the
+<strong class="bold">ClusterCheckerJob</strong> checks the locks for expired time. If the locks are inactive more then
+ <em class="italic">grailsflow.clusterChecker.lockExpiredInterval</em>  time, it means that the process is not running or probably the node cannot
+be executed or process is not responding. In that case the process should be killed and it lock is deleted.<p class="paragraph"/>Properties to configure:
+<ol>
+<li> <div class="code"><pre>grailsflow.clusterName = <span class="java&#45;quote">"Some_cluster_name"</span></pre></div></li>
+</ol><p class="paragraph"/>    By default, it is configured in plugin descriptor by the following way:<p class="paragraph"/>    <div class="code"><pre>grailsflow.clusterName = <span class="java&#45;quote">"gfw_$&#123;<span class="java&#45;keyword">new</span> Date().time&#125;_$&#123;<span class="java&#45;keyword">new</span> Random().nextInt(1000000)&#125;"</span></pre></div>
+<ol>
+<li> <div class="code"><pre>grailsflow.clusterChecker.lockExpiredInterval = <span class="java&#45;quote">"2000000"</span></pre></div></li>
+</ol><p class="paragraph"/>    This is a long value, value interval when the locks are expired and should be deleted and processes are killed. The
+    default value is <strong class="bold">6000000</strong> ms.
+<ol>
+<li>  Configuration for ClusterCheckerJob:</li>
+</ol><p class="paragraph"/>    <div class="code"><pre>grailsflow.scheduler.clusterChecker.autoStart = <span class="java&#45;keyword">false</span> // by <span class="java&#45;keyword">default</span> its '<span class="java&#45;keyword">true</span>'
+    grailsflow.scheduler.clusterChecker.startDelay = 10000  // 30 sec by <span class="java&#45;keyword">default</span>
+    grailsflow.scheduler.clusterChecker.repeatInterval = 50000 // 1 minute by <span class="java&#45;keyword">default</span></pre></div><p class="paragraph"/><p class="paragraph"/>
+
+
+
+                <div style="clear:both;margin-top:15px;"></div>
+                
+                    <div class="toc-item prev-left"><a href="../../guide/usersGuide.html">&lt;&lt; <strong>3</strong><span>User's Guide</span></a></div>
+                
+                    <div class="toc-item next-right"><a href="../../guide/faq.html"><strong>5</strong><span>Frequently Asked Questions</span> >></a></div>
+                
+                <div style="clear:both"></div>
+            </div>
+        </td>
+        <td id="col2">
+            <div class="local clearfix">
+                <div class="local-title">
+                    <a href="../../guide/index.html" target="mainFrame">Quick Reference</a>
+                    <span class="toggle">(<a href="#" onclick="localToggle(); return false;">hide</a>)</span>
+                </div>
+                <div class="menu">
+                    
+                </div>
+            </div>
+        </td>
+    </tr>
+</table>
+
+<div id="footer">
+    jCatalog Software AG
+    
+</div>
+
+<script type="text/javascript" src="../js/docs.js"></script>
+
+</body>
+</html>

@@ -4,6 +4,7 @@ com.jcatalog.grailsflow.bean
 com.jcatalog.grailsflow.builder
 com.jcatalog.grailsflow.cache
 com.jcatalog.grailsflow.client
+com.jcatalog.grailsflow.cluster
 com.jcatalog.grailsflow.demo.jobs
 com.jcatalog.grailsflow.engine
 com.jcatalog.grailsflow.engine.concurrent

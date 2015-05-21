@@ -2,7 +2,7 @@
                       "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en">
 <head>
-    <title>3.5 Use Processes 1.6</title>
+    <title>3.5 Use Processes 1.7-SNAPSHOT</title>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
     <link rel="stylesheet" href="../css/main.css" type="text/css" media="screen, print" title="Style" charset="utf-8"/>
     <link rel="stylesheet" href="../css/pdf.css" type="text/css" media="print" title="PDF" charset="utf-8"/>
@@ -80,7 +80,7 @@ function addJsClass() {
 
                     <p><strong>Authors:</strong> Stephan Albers, July Antonicheva</p>
 
-                    <p><strong>Version:</strong> 1.6</p>
+                    <p><strong>Version:</strong> 1.7-SNAPSHOT</p>
 
                     
                 </div>
@@ -98,10 +98,13 @@ function addJsClass() {
                     <div class="toc-item" style="margin-left:0px"><a href="#showEmbeddedWorklist"><strong>3.3</strong><span>Show Embedded Worklist</span></a>
                     </div>
                     
-                    <div class="toc-item" style="margin-left:0px"><a href="#listProcesses"><strong>3.4</strong><span>List Processes</span></a>
+                    <div class="toc-item" style="margin-left:0px"><a href="#forwardNode"><strong>3.4</strong><span>Forward Node</span></a>
                     </div>
                     
-                    <div class="toc-item" style="margin-left:0px"><a href="#killProcess"><strong>3.5</strong><span>Kill Process</span></a>
+                    <div class="toc-item" style="margin-left:0px"><a href="#listProcesses"><strong>3.5</strong><span>List Processes</span></a>
+                    </div>
+                    
+                    <div class="toc-item" style="margin-left:0px"><a href="#killProcess"><strong>3.6</strong><span>Kill Process</span></a>
                     </div>
                     
                 </div>
@@ -155,13 +158,39 @@ The functionality of the <strong class="bold">Show Embedded Worklist</strong> is
 Worklist displays in a pop-up window, without any headers.<p class="paragraph"/>The Embedded worklist helps you to view the nodes simultaneously, while working on other screen<p class="paragraph"/>Refer Show Worklist section for more details.<p class="paragraph"/><img border="0" class="center" src="../img/usersGuide/embeddedWorklist.jpg"></img>
 
 
-<h2 id="listProcesses">3.5.4 List Processes</h2>
+<h2 id="forwardNode">3.5.4 Forward Node</h2>
+It is possible to forward Node to another assignee. The forwarding is available on automatically generated manual forms
+or can be added to custom form using Grailsflow template, e.g.
+<div class="code"><pre>&#60;gf:customizingTemplate template=<span class="java&#45;quote">"/manualForms/eventForwarding"</span>
+        model=<span class="java&#45;quote">"&#91;currentAssignees: nodeDetails.assignees&#93;"</span>/&#62;</pre></div><p class="paragraph"/><img border="0" class="center" src="../img/usersGuide/forwardNode.jpg"></img><p class="paragraph"/>
+The node can be forwarded to another Users, Roles or Groups. To define assignment correctly, the special prefixes are
+used. For Users it is <strong class="bold">'USER_'</strong>, for Roles - <strong class="bold">'ROLE_'</strong>, for Group - <strong class="bold">'GROUP_'</strong><p class="paragraph"/>The assignment for Nodes can be done in process definition, e.g.
+<div class="code"><pre>ManagerApproveHolidaysWait(dueDate: 432300000, editorType: ConstantUtils.EDITOR_MANUAL) &#123;
+        variable( message: ConstantUtils.READ_ONLY, requesterName: ConstantUtils.READ_ONLY, holidaysEnd: ConstantUtils.READ_ONLY, resolution: ConstantUtils.WRITE_READ, holidaysStart: ConstantUtils.READ_ONLY)
+        assignees( roles: &#91; <span class="java&#45;quote">"MANAGER"</span>, <span class="java&#45;quote">"ADMIN"</span> &#93; )
+        action &#123;
+            Log(logMessage: 'Manager makes decision...')
+        &#125;
+        on(<span class="java&#45;quote">"approve"</span>).to(&#91; <span class="java&#45;quote">"ApprovedOperation"</span> &#93;)
+        on(<span class="java&#45;quote">"reject"</span>).to(&#91; <span class="java&#45;quote">"RejectNotification"</span> &#93;)
+      &#125;</pre></div><p class="paragraph"/>
+The forwarding is available through Grailsflow service and can be called directly using the following method
+<div class="code"><pre>processManagerService.forwardProcessNode(node, newAssignees, loggedUser)</pre></div><p class="paragraph"/>where the method parameters are
+<ol>
+<li><strong class="bold">node</strong> - is a ProcessNode instance to be forwarded</li>
+<li><strong class="bold">newAssignees</strong> - is a collection <strong class="bold">Collection&#60;String&#62; forwardedTo</strong> of new assignees with special prefixes (for Users it is <strong class="bold">'USER_'</strong>, for Roles - <strong class="bold">'ROLE_'</strong>, for Group - <strong class="bold">'GROUP_'</strong>)</li>
+<li><strong class="bold">loggedUser</strong> - is a name of user who forwards node</li>
+</ol><p class="paragraph"/>The method doesn't check node for available assignees, so pay attention that if you use method from your own code, you
+should check firstly if the node is available for <strong class="bold">loggedUser</strong>.<p class="paragraph"/>
+
+
+<h2 id="listProcesses">3.5.5 List Processes</h2>
 <strong class="bold">List Processes</strong> displays all the Processes with status, create date, modified date and finished date.<p class="paragraph"/><img border="0" class="center" src="../img/usersGuide/listProcesses_1.jpg"></img><p class="paragraph"/>You can click on the <strong class="bold">Process (ID)</strong> to view details about the process.<p class="paragraph"/><img border="0" class="center" src="../img/usersGuide/listProcesses_2.jpg"></img><p class="paragraph"/>To kill a currently running process click on the link <strong class="bold">Kill</strong>.<p class="paragraph"/>To view the graphical representation of a Process click on the link Graphic.<p class="paragraph"/>The Graphical representation shows all nodes of the selected process
 (visited nodes, untouched nodes, interactive nodes which are currently waiting for user actions, etc.)
 with their statuses (color coded).<p class="paragraph"/><img border="0" class="center" src="../img/usersGuide/listProcesses_3.jpg"></img><p class="paragraph"/><p class="paragraph"/>
 
 
-<h2 id="killProcess">3.5.5 Kill Process</h2>
+<h2 id="killProcess">3.5.6 Kill Process</h2>
 A process can be killed - this means that all process activities should be stopped and all active nodes and process
 should be set to status 'KILLED'.<p class="paragraph"/>When the process starts the killing procedure from UI, first of all we interrupt the process invocation thread, then
 update process status (and all active nodes) to 'KILLING'.<p class="paragraph"/>In the next step - we check actions thread - the thread where we execute actions code. If there is no alive actions

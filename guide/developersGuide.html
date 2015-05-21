@@ -2,7 +2,7 @@
                       "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en">
 <head>
-    <title>4 Developer's Guide 1.6</title>
+    <title>4 Developer's Guide 1.7-SNAPSHOT</title>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
     <link rel="stylesheet" href="../css/main.css" type="text/css" media="screen, print" title="Style" charset="utf-8"/>
     <link rel="stylesheet" href="../css/pdf.css" type="text/css" media="print" title="PDF" charset="utf-8"/>
@@ -80,7 +80,7 @@ function addJsClass() {
 
                     <p><strong>Authors:</strong> Stephan Albers, July Antonicheva</p>
 
-                    <p><strong>Version:</strong> 1.6</p>
+                    <p><strong>Version:</strong> 1.7-SNAPSHOT</p>
 
                     
                 </div>
@@ -117,6 +117,9 @@ function addJsClass() {
                     </div>
                     
                     <div class="toc-item" style="margin-left:0px"><a href="#getProcessInfoInJson"><strong>4.10</strong><span>How to get Process Management Results in JSON</span></a>
+                    </div>
+                    
+                    <div class="toc-item" style="margin-left:0px"><a href="#supportClustering"><strong>4.11</strong><span>Support of clustering</span></a>
                     </div>
                     
                 </div>
@@ -669,6 +672,34 @@ Process Management Results in JSON format. For this reason simply put additional
 <li>'sendEvent'</li>
 </ul><p class="paragraph"/> For example,<p class="paragraph"/> <div class="code"><pre>http://localhost:8080/grailsflow&#45;demo/process/showWorklist?format=json</pre></div><p class="paragraph"/> or
  <div class="code"><pre>http://localhost:8080/grailsflow&#45;demo/process/search?format=json</pre></div>
+
+
+
+<h2 id="supportClustering">4.11 Support of clustering</h2>
+<h4>Support of Clustering</h4><p class="paragraph"/>There are situations when it is necessary to have a kind of load balancer. For example, when the user
+have several installation of Grailsflow on the one server or when we need to work in cluster mode.<p class="paragraph"/>Grailsflow plugin has a kind of load balancer. The idea is based on the following aspects: every automatically executed
+node creates lock (entry in <strong class="bold">GrailsflowLock</strong> table) for process before execution. After node execution the lock is removed. Locks
+are stored in <strong class="bold">GrailsflowLock</strong> table. Also there is a table <strong class="bold">ClusterInfo</strong>, it contains information about clusters. In Grailsflow s*- There is
+a <strong class="bold">ClusterCheckerJob</strong> that fires according to configured values (  <em class="italic">grailsflow.scheduler.clusterChecker.repeatInterval</em> 
+value). The job updates <strong class="bold">ClusterInfo</strong> entry about the cluster in which it runs and then checks information about other
+clusters - if they are expired, e.g. they didn't update <strong class="bold">ClusterInfo</strong> entry for more then
+<strong class="bold">(grailsflow.scheduler.clusterChecker.repeatInterval x 2)</strong> time , then we assume that the cluster is not runnable. If the
+cluster is desided to be stopped, we remove all its locks from <strong class="bold">GrailsflowLock</strong> and delete its <strong class="bold">ClusterInfo</strong> entry. Also the
+<strong class="bold">ClusterCheckerJob</strong> checks the locks for expired time. If the locks are inactive more then
+ <em class="italic">grailsflow.clusterChecker.lockExpiredInterval</em>  time, it means that the process is not running or probably the node cannot
+be executed or process is not responding. In that case the process should be killed and it lock is deleted.<p class="paragraph"/>Properties to configure:
+<ol>
+<li> <div class="code"><pre>grailsflow.clusterName = <span class="java&#45;quote">"Some_cluster_name"</span></pre></div></li>
+</ol><p class="paragraph"/>    By default, it is configured in plugin descriptor by the following way:<p class="paragraph"/>    <div class="code"><pre>grailsflow.clusterName = <span class="java&#45;quote">"gfw_$&#123;<span class="java&#45;keyword">new</span> Date().time&#125;_$&#123;<span class="java&#45;keyword">new</span> Random().nextInt(1000000)&#125;"</span></pre></div>
+<ol>
+<li> <div class="code"><pre>grailsflow.clusterChecker.lockExpiredInterval = <span class="java&#45;quote">"2000000"</span></pre></div></li>
+</ol><p class="paragraph"/>    This is a long value, value interval when the locks are expired and should be deleted and processes are killed. The
+    default value is <strong class="bold">6000000</strong> ms.
+<ol>
+<li>  Configuration for ClusterCheckerJob:</li>
+</ol><p class="paragraph"/>    <div class="code"><pre>grailsflow.scheduler.clusterChecker.autoStart = <span class="java&#45;keyword">false</span> // by <span class="java&#45;keyword">default</span> its '<span class="java&#45;keyword">true</span>'
+    grailsflow.scheduler.clusterChecker.startDelay = 10000  // 30 sec by <span class="java&#45;keyword">default</span>
+    grailsflow.scheduler.clusterChecker.repeatInterval = 50000 // 1 minute by <span class="java&#45;keyword">default</span></pre></div><p class="paragraph"/><p class="paragraph"/>
 
 
 
